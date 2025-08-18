@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_groups', function (Blueprint $table) {
+        Schema::create('statemasters', function (Blueprint $table) {
             $table->id();
-            $table->string('master_group_name')->nullable();
-            $table->string('dr_cr')->nullable();
-            
+            $table->string('stateCode');
+            $table->string('stateName');
+
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_groups');
+        Schema::dropIfExists('statemasters');
     }
 };

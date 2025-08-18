@@ -50,6 +50,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('master-group', App\Http\Controllers\Admin\Masters\MasterGroupController::class);
     Route::resource('group-master-category', App\Http\Controllers\Admin\Masters\MasterGroupController::class);
     Route::resource('year-master', App\Http\Controllers\Admin\Masters\YearmasterController::class);
+    Route::resource('state-master', App\Http\Controllers\Admin\Masters\StatemasterController::class);
 
 
     // Masters

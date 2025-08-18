@@ -113,7 +113,27 @@ class PermissionTableSeeder extends Seeder
                 'id' => 20,
                 'name' => 'yearmasters.delete',
                 'group' => 'yearmasters',
-            ]
+            ],
+            [
+                'id' => 21,
+                'name' => 'statemasters.view',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 22,
+                'name' => 'statemasters.create',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 23,
+                'name' => 'statemasters.edit',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 24,
+                'name' => 'statemasters.delete',
+                'group' => 'statemasters',
+            ],
             
 
 
