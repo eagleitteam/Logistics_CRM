@@ -82,10 +82,14 @@
                                 <li class="nav-item">
                                     <a href="{{ route('master-group.index') }}" class="nav-link {{ request()->routeIs('master-group.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group</a>
                                 </li>
-                           
-                        </ul>
-                    </div>
-                </li>
+                                @can('yearmasters.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('year-master.index') }}" class="nav-link {{ request()->routeIs('year-master.index') ? 'active' : '' }}" data-key="t-horizontal">Year Master</a>
+                                </li>
+                            @endcan
+                            </ul>
+                        </div>
+                    </li>
                 @endcanany
             </ul>
         </div>
