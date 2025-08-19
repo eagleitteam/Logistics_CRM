@@ -19297,4 +19297,16 @@ span.flatpickr-weekday {
     transform: scale(1.1);
 }
 
+/* add css for table sr no */
+.table-action-column {
+    white-space: nowrap;
+    width: 1%;
+    text-align: center;
+}
+
+.table-srno-column {
+    width: 0.5%;
+    text-align: center;
+}
+
 /*# sourceMappingURL=app.min.css.map */

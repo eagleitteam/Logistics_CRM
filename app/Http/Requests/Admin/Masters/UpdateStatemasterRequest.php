@@ -22,8 +22,8 @@ class UpdateStatemasterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stateCode' => 'required',
-            'stateName' => 'required',
+            'stateCode' => 'required|unique:states,stateCode,' . $id,
+            'stateName' => 'required|unique:states,stateName,' . $id,
         ];
     }
 }

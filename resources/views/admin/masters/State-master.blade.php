@@ -92,9 +92,9 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
-                            <thead>
+                            <thead style="background-color: rgba(var(--vz-light-rgb), .75);">
                                 <tr>
-                                    <th>Sr No.</th>
+                                    <th class="table-srno-column">Sr No.</th>
                                     <th>State Code</th>
                                     <th>State Name</th>
                                     <th>Action</th>

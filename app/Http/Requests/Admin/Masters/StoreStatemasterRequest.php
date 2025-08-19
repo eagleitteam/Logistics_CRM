@@ -22,8 +22,8 @@ class StoreStatemasterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stateCode' => 'required',
-            'stateName' => 'required',
+            'stateCode' => 'required|unique',
+            'stateName' => 'required|unique',
         ];
     }
 }
