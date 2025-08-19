@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin\Masters;
 
 use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\Admin\Masters\StoreMasterGroupRequest;
-use App\Http\Requests\Admin\Masters\UpdateMasterGroupRequest;
+use App\Http\Requests\Admin\Masters\StoreMasterGroupCategoryRequest;
+use App\Http\Requests\Admin\Masters\UpdateMasterGroupCategoryRequest;
 use App\Models\MasterGroupCategory;
 use App\Models\MasterGroup;
 use Illuminate\Http\Request;
@@ -20,8 +20,9 @@ class MasterGroupCategoryController extends Controller
     public function index()
     {
         $GroupsMasterCategory = MasterGroupCategory::latest()->get();
+        $MasterGroup = MasterGroup::where('deleted_at','=',null)->get();
 
-        return view('admin.masters.master-group')->with(['masterGroups' => $masterGroups]);
+        return view('admin.masters.master-group-category')->with(['GroupsMasterCategory' => $GroupsMasterCategory, 'MasterGroup'=>$MasterGroup]);
     }
 
     /**
@@ -35,12 +36,12 @@ class MasterGroupCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMasterGroupRequest $request)
+    public function store(StoreMasterGroupCategoryRequest $request)
     {
         try {
             DB::beginTransaction();
             $input = $request->validated();
-           MasterGroup::create(Arr::only($input, (new MasterGroup())->getFillable()));
+           MasterGroupCategory::create(Arr::only($input, (new MasterGroupCategory())->getFillable()));
             DB::commit();
 
             return response()->json(['success' => 'master group created successfully!']);
@@ -60,28 +61,29 @@ class MasterGroupCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-   public function edit(MasterGroup $MasterGroup, Request $request)
+   public function edit(MasterGroupCategory $group_master_category, Request $request)
 {
-
+    
    return response()->json([
-        'result'      => 1,
-        'MasterGroup' => $MasterGroup,
+        'result' => 1,
+        'MasterGroupCategory' => $group_master_category,
     ]);
 }
+
 
     /**
      * Update the specified resource in storage.
      */
-public function update(UpdateMasterGroupRequest $request, MasterGroup $MasterGroup)
+public function update(UpdateMasterGroupCategoryRequest $request, MasterGroupCategory $group_master_category)
     {
         try {
             DB::beginTransaction();
             $input = $request->validated();
-            $MasterGroup = MasterGroup::find($request->edit_model_id);
-            $MasterGroup->update(Arr::only($input, $MasterGroup->getFillable()));
+            $group_master_category = MasterGroupCategory::find($request->edit_model_id);
+            $group_master_category->update(Arr::only($input, $group_master_category->getFillable()));
             DB::commit();
 
-            return response()->json(['success' => 'Master Group updated successfully!']);
+            return response()->json(['success' => 'Master Group Category updated successfully!']);
         } catch (\Exception $e) {
             return $this->respondWithAjax($e, 'updating', 'Vehicle');
         }
@@ -90,15 +92,15 @@ public function update(UpdateMasterGroupRequest $request, MasterGroup $MasterGro
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MasterGroup $MasterGroup, Request $request)
+    public function destroy(MasterGroupCategory $group_master_category, Request $request)
     {
         try {
             DB::beginTransaction();
-            $MasterGroup->delete();
+            $group_master_category->delete();
             DB::commit();
-            return response()->json(['success' => 'master group deleted successfully!']);
+            return response()->json(['success' => 'master group category deleted successfully!']);
         } catch (\Exception $e) {
-            return $this->respondWithAjax($e, 'deleting', 'MasterGroup');
+            return $this->respondWithAjax($e, 'deleting', 'group_master_category');
         }
     }
 }

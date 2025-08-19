@@ -53,11 +53,11 @@
                                     <label class="form-label">Group List</label>
                                     <select class="form-select" name="group_id" id="group_id">
                                         <option value="">Select Group</option>
-                                        @foreach($groups as $group)
+                                        @foreach($MasterGroupCategory as $group)
                                             <option value="{{ $group->id }}"
-                                                    data-master="{{ $group->master_id }}"
+                                                    data-master="{{ $group->master_group_id }}"
                                                     data-master-name="{{ $group->mastergroup->group_name ?? '' }}">
-                                                {{ $group->group_name }}
+                                                {{$group->mastergroup->master_group_name}} << {{ $group->group_name }} 
                                             </option>
                                         @endforeach
                                     </select>
@@ -68,10 +68,10 @@
                                     <label class="form-label">Sub-Group List</label>
                                     <select class="form-select" name="subgroup_id" id="subgroup_id_1">
                                         <option value="">Select Sub-Group</option>
-                                        @foreach($subgroups as $subgroup)
-                                            <option value="{{ $subgroup->id }}" data-master="{{ $subgroup->master_id }}">
-                                                {{ $subgroup->subGroup_name }}
-                                            </option>
+                                        @foreach($SubGroupMaster as $subgroup)
+                                        <option value="{{ $subgroup->id }}" data-master="{{ $subgroup->master_group_id }}" data-category="{{ $subgroup->master_group_category_id }}">
+                                        {{ optional($subgroup->MasterGroup)->master_group_name }} << {{ optional($subgroup->MasterGroupCategory)->group_name }} << {{ $subgroup->sub_group_name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -335,7 +335,7 @@
                                     <label for="stateInput" class="form-label">State <span class="text-danger">*</span></label>
                                     <select id="stateInput" class="form-select" name="state">
                                         <option value="" >Choose...</option>
-                                        @foreach ($StateNameWithCode as $state)
+                                        @foreach ($statemasters as $state)
                                             <option value="{{ optional($state)->id }}">{{ optional($state)->stateName }}</option>
                                             
                                         @endforeach

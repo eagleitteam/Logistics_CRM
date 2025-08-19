@@ -7,23 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterGroup;
+use App\Models\MasterGroupCategory;
 
-class MasterGroupCategory extends BaseModel
+class SubGroupMaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
         protected $fillable = [
         'master_group_id',
-        'group_name',
+        'master_group_category_id',
+        'sub_group_name',
         'dr_cr',
         'updated_by',
         'deleted_by',
         ];
 
-         public function masterGroup()
-    {
+        public function MasterGroup()
+        {
         return $this->belongsTo(MasterGroup::class, 'master_group_id', 'id');
-    }
+        }
+        public function MasterGroupCategory()
+        {
+        return $this->belongsTo(MasterGroupCategory::class, 'master_group_category_id', 'id');
+        }
         public static function booted()
         {
         static::created(function (self $user)
@@ -55,4 +61,3 @@ class MasterGroupCategory extends BaseModel
         });
         }
 }
-

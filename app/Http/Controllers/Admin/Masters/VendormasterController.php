@@ -11,6 +11,9 @@ use App\Models\Yearmaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterGroupCategory;
+use App\Models\MasterGroup;
+use App\Models\SubGroupMaster;
 
 class VendormasterController extends Controller
 {
@@ -20,8 +23,11 @@ class VendormasterController extends Controller
     public function index()
     {
         $vendormasters = Vendormaster::latest()->get();
+        $masterGroups = MasterGroup::latest()->get();
+        $MasterGroupCategory = MasterGroupCategory::latest()->get();
+        $SubGroupMaster = SubGroupMaster::latest()->get();
 
-        return view('admin.masters.vendor-master-tableList')->with(['vendormasters' => $vendormasters]);
+        return view('admin.masters.vendor-master-tableList')->with(['vendormasters' => $vendormasters,'masterGroups' =>$masterGroups,'MasterGroupCategory'=>$MasterGroupCategory,'SubGroupMaster'=>$SubGroupMaster]);
     }
 
     /**
@@ -35,7 +41,11 @@ class VendormasterController extends Controller
 
         $vendormasters = Vendormaster::latest()->get();
 
-        return view('admin.masters.vendor-master-addPage')->with(['vendormasters' => $vendormasters, 'statemasters' => $statemasters, 'yearmasters' => $yearmasters]);
+        $masterGroups = MasterGroup::latest()->get();
+        $MasterGroupCategory = MasterGroupCategory::latest()->get();
+        $SubGroupMaster = SubGroupMaster::latest()->get();
+
+        return view('admin.masters.vendor-master-addPage')->with(['vendormasters' => $vendormasters, 'statemasters' => $statemasters, 'yearmasters' => $yearmasters,'masterGroups' =>$masterGroups,'MasterGroupCategory'=>$MasterGroupCategory,'SubGroupMaster'=>$SubGroupMaster]);
     }
 
     /**
