@@ -134,6 +134,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'statemasters.delete',
                 'group' => 'statemasters',
             ],
+            [
+                'id' => 25,
+                'name' => 'vendormaster.view',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 26,
+                'name' => 'vendormaster.create',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 27,
+                'name' => 'vendormaster.edit',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 28,
+                'name' => 'vendormaster.delete',
+                'group' => 'vendormaster',
+            ],
             
 
 

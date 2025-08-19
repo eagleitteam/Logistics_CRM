@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('toll_stm')->nullable();
             $table->string('remark')->nullable();
             $table->string('vendor_name')->nullable();
-            $table->string('capacity')->nullable();
             $table->string('status')->nullable();
+            
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
