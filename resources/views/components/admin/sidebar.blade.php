@@ -82,6 +82,12 @@
                                 <li class="nav-item">
                                     <a href="{{ route('master-group.index') }}" class="nav-link {{ request()->routeIs('master-group.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('group-master-category.index') }}" class="nav-link {{ request()->routeIs('group-master-category.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group Category</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('sub-group-master.index') }}" class="nav-link {{ request()->routeIs('sub-group-master.index') ? 'active' : '' }}" data-key="t-horizontal">Sub Group Master</a>
+                                </li>
                                 @can('yearmasters.view')
                                     <li class="nav-item">
                                         <a href="{{ route('year-master.index') }}" class="nav-link {{ request()->routeIs('year-master.index') ? 'active' : '' }}" data-key="t-horizontal">Year Master</a>

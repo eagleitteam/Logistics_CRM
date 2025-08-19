@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
-                                    <button id="addToTable" class="btn btn-primary">Add Group Master Category<i class="fa fa-plus"></i></button>
+                                    <button id="addToTable" class="btn btn-primary">Add Sub Group Master<i class="fa fa-plus"></i></button>
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -143,9 +143,9 @@
                             <thead>
                                 <tr>
                                     <th>Sr No.</th>
-                                    <th>Group master Category Name</th>
-                                    <th>Group master Category Name</th>
-                                    <th>Group master Category Name</th>
+                                    <th> master Group Name</th>
+                                    <th> master Group Category Name</th>
+                                    <th>Sub Group Name</th>
                                     <th>Debit / Credit</th>
                                     <th>Action</th>
                                 </tr>
