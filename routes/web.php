@@ -48,7 +48,14 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('vehicle-types', App\Http\Controllers\Admin\Masters\VehicleTypeMasterController::class);
     Route::resource('self-vehicle', App\Http\Controllers\Admin\Masters\SelfVehicleController::class);
     Route::resource('master-group', App\Http\Controllers\Admin\Masters\MasterGroupController::class);
-    Route::resource('group-master-category', App\Http\Controllers\Admin\Masters\MasterGroupController::class);
+    Route::resource('group-master-category', App\Http\Controllers\Admin\Masters\MasterGroupCategoryController::class);
+    Route::resource('sub-group-master', App\Http\Controllers\Admin\Masters\SubGroupMasterController::class);
+    Route::get('/get-master-group-categories', [App\Http\Controllers\Admin\Masters\SubGroupMasterController::class, 'getMasterGroupCategories'])->name('get.master.group.categories');
+
+    Route::resource('year-master', App\Http\Controllers\Admin\Masters\YearmasterController::class);
+    Route::resource('state-master', App\Http\Controllers\Admin\Masters\StatemasterController::class);
+    Route::resource('vendor-master', App\Http\Controllers\Admin\Masters\VendorMasterController::class);
+
 
 
     // Masters

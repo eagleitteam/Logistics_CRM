@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title"> Master-Group</x-slot>
-    <x-slot name="heading"> Master-Group</x-slot>
+    <x-slot name="title"> Sub Group Master</x-slot>
+    <x-slot name="heading"> Sub Group Master</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -14,18 +14,29 @@
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="master_group_id">Master Group Name<span class="text-danger">*</span></label>
-                                <select class="form-select " id="master_group_id" name="master_group_id">
+                                <label class="col-form-label" for="master_group_id">Master Group Name <span class="text-danger">*</span></label>
+                                   <select class="form-select " id="master_group_id" name="master_group_id">
                                     <option value="" selected>Selected ...</option>
-                                    <option value="1">Debit</option>
-                                    <option value="2">Credit</option>
-                                </select>
-                                <span class="text-danger invalid master_group_id_err"></span>
+                                    @foreach($MasterGroup as $group)
+                                    <option value="{{$group->id}}">{{$group->master_group_name}}</option>
+                                    @endforeach
+                                </select>           
+                               <span class="text-danger invalid master_group_id_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="group_name">Group Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="group_name" name="group_name" type="text" placeholder="Enter Group Master Name">
-                                <span class="text-danger invalid group_name_err"></span>
+                                <label class="col-form-label" for="master_group_category_id">Master Group Category Name <span class="text-danger">*</span></label>
+                                   <select class="form-select " id="master_group_category_id" name="master_group_category_id">
+                                    <option value="" selected>Selected ...</option>
+                                    @foreach($MasterGroupCategory as $group_category)
+                                    <option value="{{$group_category->id}}">{{$group_category->group_name}}</option>
+                                    @endforeach
+                                </select>           
+                               <span class="text-danger invalid master_group_id_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="sub_group_name"> Sub Group Master Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="sub_group_name" name="sub_group_name" type="text" placeholder="Enter Sub Group Name">
+                                <span class="text-danger invalid sub_group_name_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="dr_cr">Debit / Credit <span class="text-danger">*</span></label>
@@ -57,30 +68,40 @@
                 @csrf
                 <section class="card">
                     <header class="card-header">
-                        <h4 class="card-title">Edit Master Group Category</h4>
+                        <h4 class="card-title">Edit Sub Group Master </h4>
                     </header>
 
                     <div class="card-body py-2">
 
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
-
-                         <div class="col-md-4">
-                                <label class="col-form-label" for="master_group_id">Master Group Name<span class="text-danger">*</span></label>
-                                <select class="form-select " id="edit_master_group_id" name="master_group_id">
+                             <div class="col-md-4">
+                                <label class="col-form-label" for="master_group_id">Master Group Name <span class="text-danger">*</span></label>
+                                   <select class="form-select " id="edit_master_group_id" name="master_group_id">
                                     <option value="" selected>Selected ...</option>
-                                    <option value="1">Debit</option>
-                                    <option value="2">Credit</option>
-                                </select>
-                                <span class="text-danger invalid master_group_id_err"></span>
+                                    @foreach($MasterGroup as $group)
+                                    <option value="{{$group->id}}">{{$group->master_group_name}}</option>
+                                    @endforeach
+                                </select>           
+                               <span class="text-danger invalid master_group_id_err"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="master_group_category_id">Master Group Category Name <span class="text-danger">*</span></label>
+                                   <select class="form-select " id="edit_master_group_category_id" name="master_group_category_id">
+                                    <option value="" selected>Selected ...</option>
+                                     @foreach($MasterGroupCategory as $group_category)
+                                    <option value="{{$group_category->id}}">{{$group_category->group_name}}</option>
+                                    @endforeach
+                                </select>           
+                               <span class="text-danger invalid master_group_id_err"></span>
                             </div>
 
                              <div class="col-md-4">
-                                <label class="col-form-label" for="group_name">Group Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="edit_group_name" name="group_name" type="text" placeholder="Enter Group Master Name">
+                                <label class="col-form-label" for="group_name">Group master Category Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="edit_sub_group_name" name="sub_group_name" type="text" placeholder="Enter Master Sub Group Name">
                                 <span class="text-danger invalid group_name_err"></span>
                             </div>
-
                             <div class="col-md-4">
                                 <label class="col-form-label" for="dr_cr">Debit / Credit <span class="text-danger">*</span></label>
                                 <select class="form-select " id="edit_dr_cr" name="dr_cr">
@@ -110,7 +131,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
-                                    <button id="addToTable" class="btn btn-primary">Add Master Group Category<i class="fa fa-plus"></i></button>
+                                    <button id="addToTable" class="btn btn-primary">Add Group Master Category<i class="fa fa-plus"></i></button>
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -122,30 +143,34 @@
                             <thead>
                                 <tr>
                                     <th>Sr No.</th>
-                                    <th>Master Group Name</th>
-                                    <th>Group Category Name</th>
+                                    <th>Group master Category Name</th>
+                                    <th>Group master Category Name</th>
+                                    <th>Group master Category Name</th>
                                     <th>Debit / Credit</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($masterGroups as $masterGroup)
+                                @foreach ($SubGroupMaster as $GroupsMaster)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $masterGroup->master_group_name }}</td>
-                                        <td>{{ $masterGroup->group_name }}</td>
+                                        <td>{{ $GroupsMaster->MasterGroup->master_group_name ?? 'N/A' }}</td>
+
+                                        {{-- Master Group Category Name --}}
+                                        <td>{{ $GroupsMaster->MasterGroupCategory->group_name ?? 'N/A' }}</td>
+                                        <td>{{ $GroupsMaster->sub_group_name }}</td>
                                         @php
                                             $drCrLabel = [
                                                 1 => 'Debit',
                                                 2 => 'Credit',
                                             ];
                                         @endphp
-                                        <td>{{ $drCrLabel[$masterGroup->dr_cr] ?? 'N/A' }}</td>
-                                            {{-- <td>{{ $masterGroup->dr_cr }}</td> --}}
+                                        <td>{{ $drCrLabel[$GroupsMaster->dr_cr] ?? 'N/A' }}</td>
+                                            {{-- <td>{{ $GroupsMaster->dr_cr }}</td> --}}
                                         <td>
 
-                                                <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Master Group" data-id="{{ $masterGroup->id }}"><i data-feather="edit"></i></button>
-                                                <button class="btn btn-danger rem-element px-2 py-1" title="Delete Master Group" data-id="{{ $masterGroup->id }}"><i data-feather="trash-2"></i> </button>
+                                                <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Master Group" data-id="{{ $GroupsMaster->id }}"><i data-feather="edit"></i></button>
+                                                <button class="btn btn-danger rem-element px-2 py-1" title="Delete Master Group" data-id="{{ $GroupsMaster->id }}"><i data-feather="trash-2"></i> </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -172,7 +197,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('master-group.store') }}',
+            url: '{{ route('sub-group-master.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -182,7 +207,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
-                        window.location.href = '{{ route('master-group.index') }}';
+                        window.location.href = '{{ route('sub-group-master.index') }}';
                     });
                 else
                     swal("Error!", data.error2, "error");
@@ -209,7 +234,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('master-group.edit', ':model_id') }}";
+        var url = "{{ route('sub-group-master.edit', ':model_id') }}";
             
 
         $.ajax({
@@ -219,11 +244,14 @@
                 '_token': "{{ csrf_token() }}"
             },
             success: function(data, textStatus, jqXHR) {
+                 console.log(data); // Add this
                 editFormBehaviour();
                 if (!data.error) {
-                    $("#editForm input[name='edit_model_id']").val(data.MasterGroup.id);
-                    $("#edit_master_group_name").val(data.MasterGroup.master_group_name);
-                    $("#edit_dr_cr").val(data.MasterGroup.dr_cr);
+                    $("#editForm input[name='edit_model_id']").val(data.SubGroupMaster.id);
+                    $("#edit_master_group_id").val(data.SubGroupMaster.master_group_id);
+                    $("#edit_master_group_category_id").val(data.SubGroupMaster.master_group_category_id);
+                    $("#edit_sub_group_name").val(data.SubGroupMaster.sub_group_name);
+                    $("#edit_dr_cr").val(data.SubGroupMaster.dr_cr);
                 } else {
                     alert(data.error);
                 }
@@ -233,6 +261,76 @@
             },
         });
     });
+
+
+       $('#master_group_id').on('change', function () {
+    var masterGroupId = $(this).val();
+
+    if (masterGroupId !== "") {
+        $.ajax({
+            url: "{{ route('get.master.group.categories') }}",
+            type: "GET",
+            data: { master_group_id: masterGroupId },
+            success: function (data) {
+                console.log('Received Categories:', data); // Debug
+
+                $('#master_group_category_id').empty();
+
+                if (data.categories && data.categories.length > 0) {
+                    $.each(data.categories, function (key, category) {
+                        $('#master_group_category_id').append(
+                            '<option value="' + category.id + '">' + category.group_name + '</option>'
+                        );
+                    });
+                } else {
+                    $('#master_group_category_id').append('<option value="">No categories found</option>');
+                }
+            },
+            error: function (xhr) {
+                console.error('Fetch error:', xhr.responseText);
+                alert("Unable to fetch categories");
+            }
+        });
+    } else {
+        $('#master_group_category_id').html('<option value="">Select Master Group first</option>');
+    }
+});
+
+// EDIT FORM: On change of master group in edit form
+$('#edit_master_group_id').on('change', function () {
+    var masterGroupId = $(this).val();
+
+    if (masterGroupId !== "") {
+        $.ajax({
+            url: "{{ route('get.master.group.categories') }}",
+            type: "GET",
+            data: { master_group_id: masterGroupId },
+            success: function (data) {
+                console.log('Edit Form - Received Categories:', data); // Debug
+
+                $('#edit_master_group_category_id').empty();
+
+                if (data.categories && data.categories.length > 0) {
+                    $.each(data.categories, function (key, category) {
+                        $('#edit_master_group_category_id').append(
+                            '<option value="' + category.id + '">' + category.group_name + '</option>'
+                        );
+                    });
+                } else {
+                    $('#edit_master_group_category_id').append('<option value="">No categories found</option>');
+                }
+            },
+            error: function (xhr) {
+                console.error('Edit Form - Fetch error:', xhr.responseText);
+                alert("Unable to fetch categories for edit form");
+            }
+        });
+    } else {
+        $('#edit_master_group_category_id').html('<option value="">Select Master Group first</option>');
+    }
+});
+
+
 </script>
 
 
@@ -245,7 +343,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('master-group.update', ':model_id') }}";
+            var url = "{{ route('sub-group-master.update', ':model_id') }}";
 
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -258,7 +356,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master-group.index') }}';
+                            window.location.href = '{{ route('sub-group-master.index') }}';
                         });
                     else
                         swal("Error!", data.error2, "error");
@@ -293,7 +391,7 @@
             .then((willDelete) => {
                 if (willDelete) {
                     var model_id = $(this).attr("data-id");
-                    var url = "{{ route('master-group.destroy', ':model_id') }}";
+                    var url = "{{ route('sub-group-master.destroy', ':model_id') }}";
 
                     $.ajax({
                         url: url.replace(':model_id', model_id),

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicle_type_masters', function (Blueprint $table) {
+        Schema::create('sub_group_masters', function (Blueprint $table) {
             $table->id();
-            $table->text('type_name');
-            $table->text('model_no');
-            $table->date('date');
-
+            $table->text('master_group_id');
+            $table->text('master_group_category_id');
+            $table->text('sub_group_name');
+            $table->text('dr_cr');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicle_type_masters');
+        Schema::dropIfExists('sub_group_masters');
     }
 };

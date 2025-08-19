@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicle_type_masters', function (Blueprint $table) {
+        Schema::create('yearmasters', function (Blueprint $table) {
             $table->id();
-            $table->text('type_name');
-            $table->text('model_no');
-            $table->date('date');
+            $table->string('title');
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicle_type_masters');
+        Schema::dropIfExists('yearmasters');
     }
 };

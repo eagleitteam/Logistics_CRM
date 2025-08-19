@@ -4,19 +4,19 @@
         <!-- Dark Logo-->
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_sm.png') }}" alt="" height="50" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_lg.png') }}" alt="" height="50" />
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_sm.png') }}" alt="" height="50" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_lg.png') }}" alt="" height="50" />
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -82,10 +82,29 @@
                                 <li class="nav-item">
                                     <a href="{{ route('master-group.index') }}" class="nav-link {{ request()->routeIs('master-group.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group</a>
                                 </li>
-                           
-                        </ul>
-                    </div>
-                </li>
+                                @can('yearmasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('year-master.index') }}" class="nav-link {{ request()->routeIs('year-master.index') ? 'active' : '' }}" data-key="t-horizontal">Year Master</a>
+                                    </li>
+                                @endcan
+                                @can('statemasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('state-master.index') }}" class="nav-link {{ request()->routeIs('state-master.index') ? 'active' : '' }}" data-key="t-horizontal">State Master</a>
+                                    </li>
+                                @endcan
+                                @can('vendormaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('vendor-master.create') }}" class="nav-link {{ request()->routeIs('vendor-master.create') ? 'active' : '' }}" data-key="t-horizontal">Add Vendor Master</a>
+                                    </li>
+                                @endcan
+                                @can('vendormaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('vendor-master.index') }}" class="nav-link {{ request()->routeIs('vendor-master.index') ? 'active' : '' }}" data-key="t-horizontal">Vendor Master List</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
                 @endcanany
             </ul>
         </div>

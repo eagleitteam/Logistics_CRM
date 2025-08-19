@@ -1,14 +1,17 @@
 #buttons-datatables_wrapper .dt-buttons button {
     border: 1px solid #eee;
-    background-color: #8c68cdad;
-    color: #fff;
+    background-color: #afe5f4;
+    /* color: #fff; */
+    color: #011f29;
     padding: 4px 12px;
     border-radius: 3px;
     transition: all 0.2s ease-in-out;
 }
 
 #buttons-datatables_wrapper .dt-buttons button:hover {
-    background-color: #8c68cdd1;
+    /* background-color: #8c68cdd1; */
+    background-color: #335f9d;
+    color: #ffffff;
 }
 
 #buttons-datatables_wrapper .dt-buttons {
