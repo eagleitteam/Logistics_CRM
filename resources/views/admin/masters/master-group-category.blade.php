@@ -28,15 +28,7 @@
                                 <input class="form-control" id="group_name" name="group_name" type="text" placeholder="Enter Group Name">
                                 <span class="text-danger invalid group_name_err"></span>
                             </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="dr_cr">Debit / Credit <span class="text-danger">*</span></label>
-                                <select class="form-select " id="dr_cr" name="dr_cr">
-                                    <option value="" selected>Selected ...</option>
-                                    <option value="1">Debit</option>
-                                    <option value="2">Credit</option>
-                                </select>
-                                <span class="text-danger invalid dr_cr_err"></span>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -81,15 +73,7 @@
                                 <input class="form-control" id="edit_group_name" name="group_name" type="text" placeholder="Enter Master Group Name">
                                 <span class="text-danger invalid group_name_err"></span>
                             </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="dr_cr">Debit / Credit <span class="text-danger">*</span></label>
-                                <select class="form-select " id="edit_dr_cr" name="dr_cr">
-                                    <option value="" selected>Selected ...</option>
-                                    <option value="1">Debit</option>
-                                    <option value="2">Credit</option>
-                                </select>
-                                <span class="text-danger invalid dr_cr_err"></span>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -123,7 +107,7 @@
                                 <tr>
                                     <th>Sr No.</th>
                                     <th>Group master Category Name</th>
-                                    <th>Debit / Credit</th>
+                                    <th>Under Master Group</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -132,14 +116,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $masterGroup->group_name }}</td>
-                                        @php
-                                            $drCrLabel = [
-                                                1 => 'Debit',
-                                                2 => 'Credit',
-                                            ];
-                                        @endphp
-                                        <td>{{ $drCrLabel[$masterGroup->dr_cr] ?? 'N/A' }}</td>
-                                            {{-- <td>{{ $masterGroup->dr_cr }}</td> --}}
+                                        <td>{{ $masterGroup->masterGroup->master_group_name ?? 'N/A' }}</td>
                                         <td>
 
                                                 <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Master Group" data-id="{{ $masterGroup->id }}"><i data-feather="edit"></i></button>

@@ -15,7 +15,6 @@ class MasterGroupCategory extends BaseModel
         protected $fillable = [
         'master_group_id',
         'group_name',
-        'dr_cr',
         'updated_by',
         'deleted_by',
         ];

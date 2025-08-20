@@ -25,7 +25,7 @@ class StoreSubGroupMasterRequest extends FormRequest
             'master_group_id' => 'required',
             'master_group_category_id' => 'required',
             'sub_group_name' => 'required',
-            'dr_cr' => 'required',
+
         ];
     }
 }

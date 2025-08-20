@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('master_group_id');
             $table->string('group_name');
-            $table->string('dr_cr');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');

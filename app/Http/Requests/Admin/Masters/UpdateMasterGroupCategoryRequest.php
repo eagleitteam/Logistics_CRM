@@ -25,7 +25,7 @@ class UpdateMasterGroupCategoryRequest extends FormRequest
         return [
             'master_group_id' => 'required',
             'group_name' => 'required',
-            'dr_cr' => 'required',
+
         ];
     }
 }

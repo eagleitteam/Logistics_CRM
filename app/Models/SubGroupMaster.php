@@ -17,7 +17,6 @@ class SubGroupMaster extends BaseModel
         'master_group_id',
         'master_group_category_id',
         'sub_group_name',
-        'dr_cr',
         'updated_by',
         'deleted_by',
         ];

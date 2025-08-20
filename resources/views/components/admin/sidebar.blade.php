@@ -77,7 +77,7 @@
                                     <a href="{{ route('vehicle-types.index') }}" class="nav-link {{ request()->routeIs('vehicle-types.index') ? 'active' : '' }}" data-key="t-horizontal">Vehicle Type</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('self-vehicle.index') }}" class="nav-link {{ request()->routeIs('self-vehicle.index') ? 'active' : '' }}" data-key="t-horizontal">Self Vehicle</a>
+                                    <a href="{{ route('self-vehicle.index') }}" class="nav-link {{ request()->routeIs('self-vehicle.index') ? 'active' : '' }}" data-key="t-horizontal">Add Vehicle</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('master-group.index') }}" class="nav-link {{ request()->routeIs('master-group.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group</a>
