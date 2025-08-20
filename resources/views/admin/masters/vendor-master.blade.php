@@ -1,6 +1,6 @@
 <x-admin.layout>
     <x-slot name="title">Add vendor Master</x-slot>
-    <x-slot name="heading">Add vendor Master11</x-slot>
+    <x-slot name="heading">Add vendor Master</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     <style>
@@ -80,17 +80,26 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name" class="col-form-label">Vendor Company Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" placeholder="Company Name" id="name">
+                                    <input type="text" class="form-control" name="vendor_name" placeholder="Company Name" id="name">
                                     <span class="text-danger invalid name_err"></span>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <div class="mb-3">
-                                    <label for="gstNoInput" class="form-label">GST NO <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="gstNoInput"  >
-                                    <span class="text-danger invalid gst_no_err"></span>
+                                    <label for="name" class="col-form-label">GST Register Status<span class="text-danger">*</span></label>
+                                    <div class="form-check form-switch form-switch-lg form-switch-success" dir="ltr">
+                                        <input type="hidden" name="gst_status" id="gst_status" value="0"> <!-- hidden field for value -->
+                                        <input type="checkbox" class="form-check-input" id="customSwitchsizelg">
+                                        <label class="form-check-label" for="customSwitchsizelg">Click If 'Registered'</label>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="col-md-4" id="gst_div" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="gstNoInput" class="col-form-label">GST NO <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="gstNoInput">
+                                    <span class="text-danger invalid gst_no_err"></span>
                                 </div>
                             </div>
 
@@ -161,15 +170,19 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="stateInput" class="form-label">State <span class="text-danger">*</span></label>
-                                    <select id="stateInput" class="form-select" name="state" >
+                                    <select id="stateInput" class="form-select" name="state">
                                         <option value="" selected disabled>Choose...</option>
-                                        @foreach ($statemasters as $statemasters)
-                                                <option value="{{ optional($statemasters)->id }}">{{ optional($statemasters)->stateName }}</option>
+                                        @foreach ($statemasters as $statemaster)
+                                            <option value="{{ $statemaster->id }}" data-statecode="{{ $statemaster->stateCode }}">
+                                                {{ $statemaster->stateName }}
+                                            </option>
                                         @endforeach
                                     </select>
-                                    
                                 </div>
                             </div>
+                            
+                            {{-- hidden field for statecode --}}
+                                <input type="hidden" name="statecode" id="statecode">
 
                             <!-- TDS Information -->
                             <div class="col-md-3">
@@ -449,6 +462,35 @@
 
 </x-admin.layout>
 
+<!-- gst status -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const switchEl = document.getElementById("customSwitchsizelg");
+        const gstDiv = document.getElementById("gst_div");
+        const gstStatus = document.getElementById("gst_status");
+
+        // initial check
+        if (switchEl.checked) {
+            gstDiv.style.display = "block";
+            gstStatus.value = "1";
+        }
+
+        switchEl.addEventListener("change", function () {
+            if (this.checked) {
+                gstDiv.style.display = "block";
+                gstStatus.value = "1";
+            } else {
+                gstDiv.style.display = "none";
+                gstStatus.value = "0";
+                document.getElementById("gstNoInput").value = ""; // optional: clear GST no when unchecked
+            }
+        });
+    });
+
+</script>
+
+<!-- Master name drop down -->
 
 <script>
     $(document).ready(function () {
@@ -485,6 +527,16 @@
         });
     });
 </script>
+
+ <!-- state code -->
+
+ <script>
+    document.getElementById('stateInput').addEventListener('change', function() {
+        let code = this.options[this.selectedIndex].getAttribute('data-statecode');
+        document.getElementById('statecode').value = code;
+    });
+
+ </script>
 
 
 
@@ -545,9 +597,12 @@
             success: function(data, textStatus, jqXHR) {
                 editFormBehaviour();
                 if (!data.error) {
-                    $("#editForm input[name='edit_model_id']").val(data.statemasters.id);
-                    $("#editForm input[name='stateCode']").val(data.statemasters.stateCode);
-                    $("#editForm input[name='stateName']").val(data.statemasters.stateName);
+                    $("#editForm input[name='edit_model_id']").val(data.vendormasters.id);
+                    $("#editForm input[name='title']").val(data.vendormasters.title);
+                    $("#editForm input[name='start_date']").val(data.vendormasters.start_date);
+                    $("#editForm input[name='end_date']").val(data.vendormasters.end_date);
+                    $("#editForm input[name='status']").val(data.vendormasters.status);
+                    $("#editForm input[name='freeze_status']").val(data.vendormasters.freeze_status);
                 } else {
                     alert(data.error);
                 }
@@ -604,3 +659,48 @@
 </script>
 
 
+<!-- Delete -->
+<script>
+    $("#buttons-datatables").on("click", ".rem-element", function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure to delete this vendor Master?",
+                icon: "warning",
+                buttons: ["Cancel", "Confirm"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var model_id = $(this).attr("data-id");
+                    var url = "{{ route('vendor-master.destroy', ':model_id') }}";
+
+                    $.ajax({
+                        url: url.replace(':model_id', model_id),
+                        type: 'POST',
+                        data: {
+                            '_method': "DELETE",
+                            '_token': "{{ csrf_token() }}",
+                            'model_id': model_id
+                        },
+                        success: function(data, textStatus, jqXHR) {
+                            if (!data.error && !data.error2) {
+                                swal("Success!", data.success, "success")
+                                    .then((action) => {
+                                        window.location.reload();
+                                    });
+                            } else {
+                                if (data.error) {
+                                    swal("Error!", data.error, "error");
+                                } else {
+                                    swal("Error!", data.error2, "error");
+                                }
+                            }
+                        },
+                        error: function(error, jqXHR, textStatus, errorThrown) {
+                            swal("Error!", "Something went wrong", "error");
+                        },
+                    });
+                }
+            });
+    });
+</script>

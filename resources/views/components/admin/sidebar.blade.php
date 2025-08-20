@@ -100,12 +100,7 @@
                                 @endcan
                                 @can('vendormaster.view')
                                     <li class="nav-item">
-                                        <a href="{{ route('vendor-master.create') }}" class="nav-link {{ request()->routeIs('vendor-master.create') ? 'active' : '' }}" data-key="t-horizontal">Add Vendor Master</a>
-                                    </li>
-                                @endcan
-                                @can('vendormaster.view')
-                                    <li class="nav-item">
-                                        <a href="{{ route('vendor-master.index') }}" class="nav-link {{ request()->routeIs('vendor-master.index') ? 'active' : '' }}" data-key="t-horizontal">Vendor Master List</a>
+                                        <a href="{{ route('vendor-master.index') }}" class="nav-link {{ request()->routeIs('vendor-master.index') ? 'active' : '' }}" data-key="t-horizontal">Vendor Master</a>
                                     </li>
                                 @endcan
                             </ul>
