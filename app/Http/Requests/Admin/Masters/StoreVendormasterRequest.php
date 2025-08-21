@@ -42,13 +42,17 @@ class StoreVendormasterRequest extends FormRequest
             'state' => 'required|string|max:191',   // varchar in DB
             'statecode' => 'required|integer',      // if you keep it as integer
 
-            'master_group_Category' => 'required|integer|max:191',
-            'master_id' => 'required_if:master_group_Category,3|integer|exists:master_groups,id',
-            'group_id' => 'required_if:master_group_Category,2|integer|exists:master_group_categories,id',
-            'subgroup_id' => 'required_if:master_group_Category,1|integer|exists:sub_group_masters,id',
+            'categories' => 'required|integer|max:191',
+            'master_id' => 'required_if:categories,3|exists:master_groups,id',
+            'group_id' => 'nullable|required_if:categories,2|exists:master_group_categories,id',
+            'subgroup_id' => 'nullable|required_if:categories,1|exists:sub_group_masters,id',
+
+            // 'group_id' => 'required_if:categories,2|exists:master_group_categories,id',
+            // 'subgroup_id' => 'required_if:categories,1|exists:sub_group_masters,id',
 
             'opening_amt' => 'nullable|numeric',
-            'dr_cr' => 'nullable|required_with:opening_amt|in:0,1',
+            'dr_cr' => 'nullable|required_with:opening_amt|in:1,2',
+            // 'year_master' => 'nullable|required_with:opening_amt|integer|max:10',
             'year_master' => 'nullable|required_with:opening_amt|integer|max:10',
         ];
     }

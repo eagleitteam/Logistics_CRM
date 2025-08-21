@@ -71,21 +71,13 @@ class VendormasterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-   public function edit(Vendormaster $vendormaster, Request $request)
+   public function edit(Vendormaster $vendor_master, Request $request)
 {
-
-    $vendormaster = Vendormaster::find($request->model_id);
-    if ($vendormaster) {
         return response()->json([
             'result' => 1,
-            'vendormasters' => $vendormaster,
+            'vendor_master' => $vendor_master,
         ]);
-    } else {
-        return response()->json([
-            'result' => 0,
-            'message' => 'Vendormaster not found',
-        ]);
-    }
+    
 
 }
 
