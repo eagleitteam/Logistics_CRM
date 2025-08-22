@@ -154,7 +154,46 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'vendormaster.delete',
                 'group' => 'vendormaster',
             ],
-            
+            [
+                'id' => 29,
+                'name' => 'clientmaster.view',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 30,
+                'name' => 'clientmaster.create',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 31,
+                'name' => 'clientmaster.edit',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 32,
+                'name' => 'clientmaster.delete',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 33,
+                'name' => 'drivermaster.view',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 34,
+                'name' => 'drivermaster.create',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 35,
+                'name' => 'drivermaster.edit',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 36,
+                'name' => 'drivermaster.delete',
+                'group' => 'drivermaster',
+            ],
 
 
         ];

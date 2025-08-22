@@ -12,6 +12,7 @@ use App\Models\MasterGroup;
 use App\Models\Statemaster;
 use App\Models\MasterGroupCategory;
 use App\Models\SubGroupMaster;
+use App\Models\Clientmaster;
 
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -484,6 +485,165 @@ class MastersSeeder extends Seeder
                     'master_group_id' => $subgroup['master_group_id'],
                     'master_group_category_id' => $subgroup['master_group_category_id'],
                     'sub_group_name'  => $subgroup['sub_group_name'],
+                ]
+            );
+        }
+
+        // Clients Master
+        $clientmasters = [
+            [
+                'id' => 1,
+                'client_name' => 'ABC Pvt Ltd',
+                'billing_address' => 'Thane, Maharashtra',
+                'gst_status' => 1,
+                'gst_no' => '22AAAAA0000A1Z5',
+                'contact_name' => 'Praful Chavan',
+                'contact_no' => '9877182207',
+                'alternate_contact_no' => '9987180007',
+                'email' => 'praful.abc@gmail.com',
+                'city' => 'New Delhi',
+                'pincode' => '400605',
+                'state' => 27,
+                'billing_type' => 1,
+                'billing_date' => '2025-08-22',
+                'categories' => 1,
+                'master_id' => 1,
+                'group_id' => 1,
+                'subgroup_id' => null,
+                'opening_amt' => 25000.00,
+                'dr_cr' => 1,
+                'year_master' => 1,
+                'status' => 1,
+
+            ],
+            [
+                'id' => 2,
+                'client_name' => 'XYZ Enterprises',
+                'billing_address' => 'Andheri East, Mumbai',
+                'gst_status' => 1,
+                'gst_no' => '27BBBBB1111B2Z6',
+                'contact_name' => 'Rahul Mehta',
+                'contact_no' => '9123456789',
+                'alternate_contact_no' => '9876543210',
+                'email' => 'rahul.xyz@gmail.com',
+                'city' => 'Mumbai',
+                'pincode' => '400059',
+                'state' => 27,
+                'billing_type' => 2,
+                'billing_date' => '2025-08-23',
+                'categories' => 2,
+                'master_id' => 1,
+                'group_id' => 2,
+                'subgroup_id' => null,
+                'opening_amt' => 15000.00,
+                'dr_cr' => 0,
+                'year_master' => 1,
+                'status' => 1,
+
+            ],
+            [
+                'id' => 3,
+                'client_name' => 'Tech Innovators',
+                'billing_address' => 'Sector 18, Noida',
+                'gst_status' => 1,
+                'gst_no' => '09CCCCC2222C3Z7',
+                'contact_name' => 'Anjali Verma',
+                'contact_no' => '9812345678',
+                'alternate_contact_no' => '9911223344',
+                'email' => 'anjali.tech@gmail.com',
+                'city' => 'Noida',
+                'pincode' => '201301',
+                'state' => 9,
+                'billing_type' => 1,
+                'billing_date' => '2025-08-24',
+                'categories' => 3,
+                'master_id' => 1,
+                'group_id' => 3,
+                'subgroup_id' => null,
+                'opening_amt' => 5000.00,
+                'dr_cr' => 1,
+                'year_master' => 1,
+                'status' => 1,
+
+            ],
+            [
+                'id' => 4,
+                'client_name' => 'Green Supplies',
+                'billing_address' => 'Park Street, Kolkata',
+                'gst_status' => 0,
+                'gst_no' => null,
+                'contact_name' => 'Sourav Banerjee',
+                'contact_no' => '9876501234',
+                'alternate_contact_no' => '9833098765',
+                'email' => 'sourav.green@gmail.com',
+                'city' => 'Kolkata',
+                'pincode' => '700016',
+                'state' => 19,
+                'billing_type' => 1,
+                'billing_date' => '2025-08-25',
+                'categories' => 1,
+                'master_id' => 1,
+                'group_id' => 4,
+                'subgroup_id' => null,
+                'opening_amt' => 0.00,
+                'dr_cr' => 0,
+                'year_master' => 1,
+                'status' => 1,
+
+            ],
+            [
+                'id' => 5,
+                'client_name' => 'NextGen Solutions',
+                'billing_address' => 'MG Road, Bengaluru',
+                'gst_status' => 1,
+                'gst_no' => '29DDDDD3333D4Z8',
+                'contact_name' => 'Vikas Reddy',
+                'contact_no' => '9900112233',
+                'alternate_contact_no' => '9988776655',
+                'email' => 'vikas.nextgen@gmail.com',
+                'city' => 'Bengaluru',
+                'pincode' => '560001',
+                'state' => 29,
+                'billing_type' => 2,
+                'billing_date' => '2025-08-26',
+                'categories' => 4,
+                'master_id' => 1,
+                'group_id' => 5,
+                'subgroup_id' => null,
+                'opening_amt' => 30000.00,
+                'dr_cr' => 1,
+                'year_master' => 1,
+                'status' => 1,
+
+            ]
+        ];
+
+        foreach ($clientmasters as $client) {
+            Clientmaster::updateOrCreate(
+                ['id' => $client['id']],
+                [
+                    'id' => $client['id'],
+                    'client_name' => $client['client_name'],
+                    'billing_address' => $client['billing_address'],
+                    'gst_status' => $client['gst_status'],
+                    'gst_no' => $client['gst_no'],
+                    'contact_name' => $client['contact_name'],
+                    'contact_no' => $client['contact_no'],
+                    'alternate_contact_no' => $client['alternate_contact_no'],
+                    'email' => $client['email'],
+                    'city' => $client['city'],
+                    'pincode' => $client['pincode'],
+                    'state' => $client['state'],
+                    'billing_type' => $client['billing_type'],
+                    'billing_date' => $client['billing_date'],
+                    'categories' => $client['categories'],
+                    'master_id' => $client['master_id'],
+                    'group_id' => $client['group_id'],
+                    'subgroup_id' => $client['subgroup_id'],
+                    'opening_amt' => $client['opening_amt'],
+                    'dr_cr' => $client['dr_cr'],
+                    'year_master' => $client['year_master'],
+                    'status' => $client['status'],
                 ]
             );
         }

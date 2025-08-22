@@ -103,6 +103,16 @@
                                         <a href="{{ route('vendor-master.index') }}" class="nav-link {{ request()->routeIs('vendor-master.index') ? 'active' : '' }}" data-key="t-horizontal">Vendor Master</a>
                                     </li>
                                 @endcan
+                                @can('clientmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('client-master.index') }}" class="nav-link {{ request()->routeIs('client-master.index') ? 'active' : '' }}" data-key="t-horizontal">Client Master</a>
+                                    </li>
+                                @endcan
+                                @can('drivermaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('driver-master.index') }}" class="nav-link {{ request()->routeIs('driver-master.index') ? 'active' : '' }}" data-key="t-horizontal">Driver Master</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
