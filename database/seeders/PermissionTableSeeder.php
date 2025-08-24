@@ -214,6 +214,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'gstmaster.delete',
                 'group' => 'gstmaster',
             ],
+            [
+                'id' => 41,
+                'name' => 'fuelmaster.view',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 42,
+                'name' => 'fuelmaster.create',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 43,
+                'name' => 'fuelmaster.edit',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 44,
+                'name' => 'fuelmaster.delete',
+                'group' => 'fuelmaster',
+            ],
 
 
         ];

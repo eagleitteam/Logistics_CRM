@@ -118,6 +118,11 @@
                                         <a href="{{ route('gst-master.index') }}" class="nav-link {{ request()->routeIs('gst-master.index') ? 'active' : '' }}" data-key="t-horizontal">GST Master</a>
                                     </li>
                                 @endcan
+                                @can('fuelmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('fuel-master.index') }}" class="nav-link {{ request()->routeIs('fuel-master.index') ? 'active' : '' }}" data-key="t-horizontal">Fuel Master</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>

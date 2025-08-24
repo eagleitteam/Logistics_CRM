@@ -32,8 +32,8 @@ class StoreClientmasterRequest extends FormRequest
             'billing_date' => 'required_if:billing_type,1|date',
 
             'contact_name' => 'required|string|max:191',
-            'contact_no' => 'required|digits_between:6,15',
-            'alternate_contact_no' => 'nullable|digits_between:6,15',
+            'contact_no' => 'required|digits:10',
+            'alternate_contact_no' => 'nullable|digits:10',
 
             'email' => 'required|email|max:191',
             'city' => 'required|string|max:191',
