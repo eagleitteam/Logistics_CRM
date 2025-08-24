@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Masters;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateVendormasterRequest extends FormRequest
 {
@@ -22,8 +23,8 @@ class UpdateVendormasterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vendor_name' => 'required|string|max:255|unique:vendors,vendor_name,' . $id,
-            'vendor_address' => 'required|text',
+            'vendor_name' => 'required|string|max:255',
+            'vendor_address' => 'required|string|max:500', // 👈 FIXED
             'gst_status' => 'required|boolean',
             'gst_no' => 'required|required_with:gst_status|string|max:16',
             'tds_applicable' => 'required|boolean',
@@ -35,14 +36,14 @@ class UpdateVendormasterRequest extends FormRequest
             'city' => 'required|string|max:50',
             'pincode' => 'required|integer',
             'state' => 'required|integer',
-            'master_group_Category' => 'required|tinyInteger',
-            'master_id' => 'required|string',
-            'group_id' => 'required|string',
-            'subgroup_id' => 'required|string|max:100',
+            'categories' => 'required|integer|max:191',
+            'master_id' => 'required_if:categories,3|exists:master_groups,id',
+            'group_id' => 'nullable|required_if:categories,2|exists:master_group_categories,id',
+            'subgroup_id' => 'nullable|required_if:categories,1|exists:sub_group_masters,id',            'opening_amt' => 'nullable|numeric',
             'opening_amt' => 'nullable|numeric',
-            'dr_cr' => 'nullable|required_with:opening_amt|in:0,1',
-            'year_master' => 'nullable|required_with:opening_amt|tinyInteger',
-            'status' => 'required|in:1,2',
+            'dr_cr' => 'nullable|required_with:opening_amt|in:1,2',
+            // 'year_master' => 'nullable|required_with:opening_amt|integer|max:10',
+            // 'year_master' => 'nullable|required_with:opening_amt|integer|max:10',
         ];
     }
 }

@@ -14,7 +14,7 @@ class Vendormaster extends BaseModel
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['vendor_name','vendor_address','gst_status','gst_no','tds_applicable','tds_rate','contact_name','contact_no','alternate_contact_no','email','city','pincode','state',
-        'cccc','master_id','group_id','subgroup_id','opening_amt','dr_cr','year_master','status'];
+        'categories','master_id','group_id','subgroup_id','opening_amt','dr_cr','year_master','status'];
 
 public function MasterGroupCategory()
         {
