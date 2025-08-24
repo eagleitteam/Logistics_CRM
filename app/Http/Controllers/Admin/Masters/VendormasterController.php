@@ -24,7 +24,7 @@ class VendormasterController extends Controller
     {
         $statemasters = Statemaster::latest()->get();
 
-        $yearmasters = Yearmaster::latest()->get();
+        $yearmasters = Yearmaster::get();
 
         $vendormasters = Vendormaster::latest()->get();
 

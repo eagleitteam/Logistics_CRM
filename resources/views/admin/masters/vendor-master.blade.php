@@ -266,7 +266,7 @@
                                 {{-- Category Selection --}}
                                 <div class="col-md-6">
                                     <label for="Master_Category" class="form-label">Category</label>
-                                    <select class="form-select" name="categories" id="categories">
+                                    <select class="form-select" name="categories" id="edit_categories">
                                         <option value="">Select Group</option>
                                         <option value="3">Master Group</option>
                                         <option value="2">Group Group</option>
@@ -276,9 +276,9 @@
                                 </div>
 
                                 {{-- Master Group --}}
-                                <div class="col-md-6 d-none" id="mastergroup_dropdown">
+                                <div class="col-md-6 d-none" id="edit_mastergroup_dropdown">
                                     <label class="form-label">Select Master Group</label>
-                                    <select class="form-select" name="master_id" id="master_id">
+                                    <select class="form-select" name="master_id" id="edit_master_id">
                                         <option value="">Select Master Group</option>
                                         @foreach($masterGroups as $masterGroup)
                                             <option value="{{ $masterGroup->id }}"
@@ -291,9 +291,9 @@
                                 </div>
 
                                 {{-- Group Dropdown --}}
-                                <div class="col-md-6 d-none" id="group_dropdown">
+                                <div class="col-md-6 d-none" id="edit_group_dropdown">
                                     <label class="form-label">Group List</label>
-                                    <select class="form-select" name="group_id" id="group_id">
+                                    <select class="form-select" name="group_id" id="edit_group_id">
                                         <option value="">Select Group</option>
                                         @foreach($MasterGroupCategory as $group)
                                             <option value="{{ $group->id }}"
@@ -306,9 +306,9 @@
                                 </div>
 
                                 {{-- Sub-Group Dropdown --}}
-                                <div class="col-md-6 d-none" id="subgroup_dropdown">
+                                <div class="col-md-6 d-none" id="edit_subgroup_dropdown">
                                     <label class="form-label">Sub-Group List</label>
-                                    <select class="form-select" name="subgroup_id" id="subgroup_id_1">
+                                    <select class="form-select" name="subgroup_id" id="edit_subgroup_id_1">
                                         <option value="">Select Sub-Group</option>
                                         @foreach($SubGroupMaster as $subgroup)
                                         <option value="{{ $subgroup->id }}" data-master="{{ $subgroup->master_group_id }}" data-category="{{ $subgroup->master_group_category_id }}">
@@ -322,7 +322,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name" class="col-form-label">Vendor Company Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="vendor_name" placeholder="Company Name" id="name">
+                                    <input type="text" class="form-control" name="vendor_name" placeholder="Company Name" id="edit_name">
                                     <span class="text-danger invalid name_err"></span>
                                 </div>
                             </div>
@@ -330,17 +330,17 @@
                                 <div class="mb-3">
                                     <label for="name" class="col-form-label">GST Register Status<span class="text-danger">*</span></label>
                                     <div class="form-check form-switch form-switch-lg form-switch-success" dir="ltr">
-                                        <input type="hidden" name="gst_status" id="gst_status" value="0"> <!-- hidden field for value -->
+                                        <input type="hidden" name="gst_status" id="edit_gst_status" value="0"> <!-- hidden field for value -->
                                         <input type="checkbox" class="form-check-input" id="customSwitchsizelg">
                                         <label class="form-check-label" for="customSwitchsizelg">Click If 'Registered'</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4" id="gst_div" style="display: none;">
+                            <div class="col-md-4" id="edit_gst_div" style="display: none;">
                                 <div class="mb-3">
                                     <label for="gstNoInput" class="col-form-label">GST NO <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="gstNoInput">
+                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="edit_gstNoInput">
                                     <span class="text-danger invalid gst_no_err"></span>
                                 </div>
                             </div>
@@ -349,7 +349,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="contactPersonInput" class="form-label">Contact Person Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="contact_name" placeholder="Contact Person Name" id="contactPersonInput" >
+                                    <input type="text" class="form-control" name="contact_name" placeholder="Contact Person Name" id="edit_contactPersonInput" >
                                     
                                     <span class="text-danger invalid contact_name_err"></span>
                                 </div>
@@ -358,7 +358,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="contactNoInput" class="form-label">Contact Number <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" name="contact_no" placeholder="Contact Number" id="contactNoInput" >        
+                                    <input type="tel" class="form-control" name="contact_no" placeholder="Contact Number" id="edit_contactNoInput" >        
                                     <span class="text-danger invalid contact_no_err"></span>
                                 </div>
                             </div>
@@ -366,7 +366,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="altContactInput" class="form-label">Alternate Contact Number</label>
-                                    <input type="tel" class="form-control" name="alternate_contact_no" placeholder="Alternate Contact Number" id="altContactInput" >
+                                    <input type="tel" class="form-control" name="alternate_contact_no" placeholder="Alternate Contact Number" id="edit_altContactInput" >
                                     
                                     <span class="text-danger invalid alternate_contact_no_err"></span>
                                 </div>
@@ -375,7 +375,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="emailInput" class="form-label">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="email" placeholder="example@gmail.com" id="emailInput" >
+                                    <input type="email" class="form-control" name="email" placeholder="example@gmail.com" id="edit_emailInput" >
                                     
                                     <span class="text-danger invalid email_err"></span>
                                 </div>
@@ -385,7 +385,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="addressInput" class="form-label">Full Address <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="vendor_address" placeholder="Full Address" id="addressInput" >
+                                    <input type="text" class="form-control" name="vendor_address" placeholder="Full Address" id="edit_addressInput" >
                                     
                                     <span class="text-danger invalid vendor_address_err"></span>
                                 </div>
@@ -394,7 +394,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="cityInput" class="form-label">City <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="city" placeholder="Enter your city" id="cityInput" >
+                                    <input type="text" class="form-control" name="city" placeholder="Enter your city" id="edit_cityInput" >
                                     
                                     <span class="text-danger invalid city_err"></span>
                                 </div>
@@ -403,7 +403,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="pinCodeInput" class="form-label">PIN Code <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="pincode" placeholder="Pin Code" id="pinCodeInput" >
+                                    <input type="text" class="form-control" name="pincode" placeholder="Pin Code" id="edit_pinCodeInput" >
                                     
                                     <span class="text-danger invalid pincode_err"></span>
                                 </div>
@@ -412,7 +412,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="stateInput" class="form-label">State <span class="text-danger">*</span></label>
-                                    <select id="stateInput" class="form-select" name="state">
+                                    <select id="edit_stateInput" class="form-select" name="state">
                                         <option value="" selected disabled>Choose...</option>
                                         @foreach ($statemasters as $statemaster)
                                             <option value="{{ $statemaster->id }}" data-statecode="{{ $statemaster->stateCode }}">
@@ -424,13 +424,13 @@
                             </div>
                             
                             {{-- hidden field for statecode --}}
-                                <input type="hidden" name="statecode" id="statecode">
+                                <input type="hidden" name="statecode" id="edit_statecode">
 
                             <!-- TDS Information -->
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="tdsApplicableInput" class="form-label">TDS Applicable <span class="text-danger">*</span></label>
-                                    <select id="tdsApplicableInput" class="form-select" name="tds_applicable" >
+                                    <select id="edit_tdsApplicableInput" class="form-select" name="tds_applicable" >
                                         <option value="" selected >Choose...</option>
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
@@ -443,7 +443,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="tdsRateInput" class="form-label">TDS %</label>
-                                    <input type="number" class="form-control" name="tds_rate" placeholder="TDS %" id="tdsRateInput" min="0" max="100" step="0.01">
+                                    <input type="number" class="form-control" name="tds_rate" placeholder="TDS %" id="edit_tdsRateInput" min="0" max="100" step="0.01">
                                     
                                     <span class="text-danger invalid tds_rate_err"></span>
                                 </div>
@@ -453,19 +453,20 @@
                                     <input
                                         type="number"
                                         class="form-control"
-                                        id="openingamt"
+                                        id="edit_openingamt"
                                         name="opening_amt"
                                         placeholder="Enter Opening Amount"
                                     />
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tranDate" class="form-label">DR / CR</label>
-                                    <select class="form-select" name="dr_cr" id="dr_cr">
+                                    <select class="form-select" name="dr_cr" id="edit_dr_cr">
                                             <option value="">Select...</option>
                                             <option value="1">Debit</option>
                                             <option value="2">Credit</option>
                                         </select>
                                 </div>
+                                
                               
                         </div>
 
@@ -642,6 +643,68 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        function resetGroupFields() {
+            // Clear values
+            $('#edit_master_id').val('');
+            $('#edit_group_id').val('');
+            $('#edit_subgroup_id_1').val('');
+
+            // Hide all dropdowns
+            $('#edit_mastergroup_dropdown, #edit_group_dropdown, #edit_subgroup_dropdown').addClass('d-none');
+        }
+
+        // On category change
+        $('#edit_categories').on('change', function () {
+            const selected = $(this).val();
+            resetGroupFields();
+
+            switch (selected) {
+                case '1': // Sub-Group
+                    $('#edit_subgroup_dropdown').removeClass('d-none');
+                    break;
+                case '2': // Group
+                    $('#edit_group_dropdown').removeClass('d-none');
+                    break;
+                case '3': // Master Group
+                    $('#edit_mastergroup_dropdown').removeClass('d-none');
+                    break;
+            }
+        });
+
+        // Set master_id from Group selection (only if category is 2)
+        $('#group_id').on('change', function () {
+            const category = $('#categories').val();
+            if (category === '2') {
+                const masterId = $(this).find(':selected').data('master') || '';
+                $('#master_id').val(masterId);
+            }
+        });
+
+        // Set master_id from Sub-Group selection (only if category is 1)
+        $('#subgroup_id_1').on('change', function () {
+            const category = $('#categories').val();
+            if (category === '1') {
+                const masterId = $(this).find(':selected').data('master') || '';
+                $('#master_id').val(masterId);
+            }
+        });
+
+        // GST toggle logic
+        $('#customSwitchsizelg').on('change', function () {
+            const isChecked = $(this).is(':checked');
+            $('#edit_gst_status').val(isChecked ? 1 : 0);
+            $('#edit_gst_div').toggle(isChecked);
+        });
+
+        // State code set from selected state
+        $('#edit_stateInput').on('change', function () {
+            const stateCode = $(this).find(':selected').data('statecode') || '';
+            $('#edit_statecode').val(stateCode);
+        });
+    });
+</script>
 
 
  <!-- state code -->
@@ -650,6 +713,10 @@
     document.getElementById('stateInput').addEventListener('change', function() {
         let code = this.options[this.selectedIndex].getAttribute('data-statecode');
         document.getElementById('statecode').value = code;
+    });
+    document.getElementById('edit_stateInput').addEventListener('change', function() {
+        let code = this.options[this.selectedIndex].getAttribute('data-statecode');
+        document.getElementById('edit_statecode').value = code;
     });
 
  </script>
@@ -716,26 +783,26 @@
 
                 if (!data.error) {
                     $("#edit_model_id").val(data.vendor_master.id);
-                    $("#name").val(data.vendor_master.vendor_name);
-                    $("#addressInput").val(data.vendor_master.vendor_address);
-                    $("#gst_status").val(data.vendor_master.gst_status);
-                    $("#gstNoInput").val(data.vendor_master.gst_no);
-                    $("#tdsApplicableInput").val(data.vendor_master.tds_applicable);
-                    $("#tdsRateInput").val(data.vendor_master.tds_rate);
-                    $("#contactPersonInput").val(data.vendor_master.contact_name);
-                    $("#contactNoInput").val(data.vendor_master.contact_no);
-                    $("#altContactInput").val(data.vendor_master.alternate_contact_no);  // ✅ Corrected from edit_alternate_contact_no
-                    $("#emailInput").val(data.vendor_master.email);
-                    $("#cityInput").val(data.vendor_master.city);
-                    $("#pinCodeInput").val(data.vendor_master.pincode);
-                    $("#stateInput").val(data.vendor_master.state);
-                    $("#statecode").val(data.vendor_master.statecode); // optional, if available
-                    $("#categories").val(data.vendor_master.categories).trigger("change");
-                    $("#master_id").val(data.vendor_master.master_id);
-                    $("#group_id").val(data.vendor_master.group_id);
-                    $("#subgroup_id_1").val(data.vendor_master.subgroup_id);
-                    $("#openingamt").val(data.vendor_master.opening_amt);
-                    $("#dr_cr").val(data.vendor_master.dr_cr);
+                    $("#edit_name").val(data.vendor_master.vendor_name);
+                    $("#edit_addressInput").val(data.vendor_master.vendor_address);
+                    $("#edit_gst_status").val(data.vendor_master.gst_status);
+                    $("#edit_gstNoInput").val(data.vendor_master.gst_no);
+                    $("#edit_tdsApplicableInput").val(data.vendor_master.tds_applicable);
+                    $("#edit_tdsRateInput").val(data.vendor_master.tds_rate);
+                    $("#edit_contactPersonInput").val(data.vendor_master.contact_name);
+                    $("#edit_contactNoInput").val(data.vendor_master.contact_no);
+                    $("#edit_altContactInput").val(data.vendor_master.alternate_contact_no);  // ✅ Corrected from edit_alternate_contact_no
+                    $("#edit_emailInput").val(data.vendor_master.email);
+                    $("#edit_cityInput").val(data.vendor_master.city);
+                    $("#edit_pinCodeInput").val(data.vendor_master.pincode);
+                    $("#edit_stateInput").val(data.vendor_master.state);
+                    $("#edit_statecode").val(data.vendor_master.statecode); // optional, if available
+                    $("#edit_categories").val(data.vendor_master.categories).trigger("change");
+                    $("#edit_master_id").val(data.vendor_master.master_id);
+                    $("#edit_group_id").val(data.vendor_master.group_id);
+                    $("#edit_subgroup_id_1").val(data.vendor_master.subgroup_id);
+                    $("#edit_openingamt").val(data.vendor_master.opening_amt);
+                    $("#edit_dr_cr").val(data.vendor_master.dr_cr);
 
                 } else {
                     alert(data.error);

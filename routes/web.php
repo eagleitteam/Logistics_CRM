@@ -59,6 +59,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('driver-master', App\Http\Controllers\Admin\Masters\DrivermasterController::class);
     Route::resource('gst-master', App\Http\Controllers\Admin\Masters\GstmasterController::class);
     Route::resource('fuel-master', App\Http\Controllers\Admin\Masters\FuelmasterController::class);
+    Route::resource('trip-movement', App\Http\Controllers\Admin\Masters\TripMovementController::class);
 
 
 
