@@ -113,6 +113,11 @@
                                         <a href="{{ route('driver-master.index') }}" class="nav-link {{ request()->routeIs('driver-master.index') ? 'active' : '' }}" data-key="t-horizontal">Driver Master</a>
                                     </li>
                                 @endcan
+                                @can('gstmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('gst-master.index') }}" class="nav-link {{ request()->routeIs('gst-master.index') ? 'active' : '' }}" data-key="t-horizontal">GST Master</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>

@@ -194,6 +194,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'drivermaster.delete',
                 'group' => 'drivermaster',
             ],
+            [
+                'id' => 37,
+                'name' => 'gstmaster.view',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 38,
+                'name' => 'gstmaster.create',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 39,
+                'name' => 'gstmaster.edit',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 40,
+                'name' => 'gstmaster.delete',
+                'group' => 'gstmaster',
+            ],
 
 
         ];

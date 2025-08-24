@@ -13,6 +13,7 @@ use App\Models\Statemaster;
 use App\Models\MasterGroupCategory;
 use App\Models\SubGroupMaster;
 use App\Models\Clientmaster;
+use App\Models\Gstmaster;
 
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -644,6 +645,49 @@ class MastersSeeder extends Seeder
                     'dr_cr' => $client['dr_cr'],
                     'year_master' => $client['year_master'],
                     'status' => $client['status'],
+                ]
+            );
+        }
+
+        // gst seeder
+        $gstmasters = [
+            [
+                'id' => 1,
+                'code_type' => 1,
+                'gst_code' => 'HSN123',
+                'code_description' => 'HSN Code Description',
+                'igst' => 18,
+                'cgst' => 9,
+                'sgst' => 9,
+                'remark' => 'HSN Remark',
+                'status' => 1,
+            ],
+            [
+                'id' => 2,
+                'code_type' => 2,
+                'gst_code' => 'SAC123',
+                'code_description' => 'SAC Code Description',
+                'igst' => 18,
+                'cgst' => 9,
+                'sgst' => 9,
+                'remark' => 'SAC Remark',
+                'status' => 1,
+            ],
+        ];
+
+        foreach ($gstmasters as $gst) {
+            Gstmaster::updateOrCreate(
+                ['id' => $gst['id']],
+                [
+                    'id' => $gst['id'],
+                    'code_type' => $gst['code_type'],
+                    'gst_code' => $gst['gst_code'],
+                    'code_description' => $gst['code_description'],
+                    'igst' => $gst['igst'],
+                    'cgst' => $gst['cgst'],
+                    'sgst' => $gst['sgst'],
+                    'remark' => $gst['remark'],
+                    'status' => $gst['status'],
                 ]
             );
         }

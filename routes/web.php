@@ -57,6 +57,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('vendor-master', App\Http\Controllers\Admin\Masters\VendorMasterController::class);
     Route::resource('client-master', App\Http\Controllers\Admin\Masters\ClientmasterController::class);
     Route::resource('driver-master', App\Http\Controllers\Admin\Masters\DrivermasterController::class);
+    Route::resource('gst-master', App\Http\Controllers\Admin\Masters\GstmasterController::class);
 
 
 
