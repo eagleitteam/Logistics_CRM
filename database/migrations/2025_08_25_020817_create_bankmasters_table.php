@@ -11,28 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clientmasters', function (Blueprint $table) {
+        Schema::create('bankmasters', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name');
-            $table->text('billing_address');
-            $table->boolean('gst_status');
-            $table->string('gst_no')->nullable();
-            $table->string('contact_name');
-            $table->string('contact_no');
-            $table->string('alternate_contact_no');
-            $table->string('email');
-            $table->string('city');
-            $table->integer('pincode');
-            $table->string('state');
-            $table->tinyInteger('billing_type');
-            $table->date('billing_date');
-            $table->string('categories');
-            $table->string('master_id')->nullable();
-            $table->string('group_id')->nullable();
-            $table->string('subgroup_id')->nullable();
+            $table->tinyInteger('act_type')->comment('1=Current, 2=Saving , 3=Over Draft');
+            $table->string('Bank_Name');
+            $table->string('BankBranch');
+            $table->string('BankAccountNo', 20);
+            $table->string('BankIFSCCode');
             $table->decimal('opening_amt', 10, 2)->nullable();
             $table->tinyInteger('dr_cr')->comment('0=Debit, 1=Credit')->nullable();
             $table->string('year_master')->nullable();
+            $table->text('Remark')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1=Active, 2=Inactive');
 
             $table->foreignId('created_by')->nullable()->constrained('users');
@@ -48,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clientmasters');
+        Schema::dropIfExists('bankmasters');
     }
 };
