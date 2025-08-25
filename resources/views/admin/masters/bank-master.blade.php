@@ -28,17 +28,17 @@
                             <div class="col-md-4">
                                 <label class="col-form-label" for="Bank_Name">Bank Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="Bank_Name" name="Bank_Name" type="text" placeholder="Enter Bank Name">
-                                <span class="text-danger invalid description_err"></span>
+                                <span class="text-danger invalid Bank_Name_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="BankBranch">Bank Branch <span class="text-danger">*</span></label>
                                 <input class="form-control" id="BankBranch" name="BankBranch" type="text" placeholder="Enter Bank Branch">
-                                <span class="text-danger invalid description_err"></span>
+                                <span class="text-danger invalid BankBranch_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="BankAccountNo">Bank Account No: <span class="text-danger">*</span></label>
                                 <input class="form-control" id="BankAccountNo" name="BankAccountNo" type="text  " placeholder="Enter Bank Account No">
-                                <span class="text-danger invalid description_err"></span>
+                                <span class="text-danger invalid BankAccountNo_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="BankIFSCCode">Bank IFSC Code: <span class="text-danger">*</span></label>

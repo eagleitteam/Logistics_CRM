@@ -68,9 +68,9 @@ class UpdateDrivermasterRequest extends FormRequest
 
             'remark' => 'nullable|string|max:500',
             'categories' => 'required|string|max:255',
-            'master_id' => 'nullable|exists:master_group_categories,id',
+            'master_id' => 'nullable|exists:master_groups,id',
             'group_id' => 'nullable|exists:master_group_categories,id',
-            'subgroup_id' => 'nullable|exists:master_group_categories,id',
+            'subgroup_id' => 'nullable|exists:sub_group_masters,id',
             'status' => 'required|in:1,2',
         ];
     }

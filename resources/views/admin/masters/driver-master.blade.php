@@ -174,7 +174,7 @@
                                             </div>
                                             <!--end col-->
                                             <!--end col-->
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label for="ForminputStatus" class="form-label">Status</label>
                                                     <select id="ForminputStatus" class="form-select" name="status">
@@ -184,36 +184,36 @@
                                                     </select>
                                                     <span class="text-danger invalid state_err"></span>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <!--end col-->
 
-
-                                        <!--Wizard col-->
-                                        <div class="col-xl-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title mb-0">Payment Details & Upload Documents Tab</h4>
-                                                </div><!-- end card header -->
-                                                <div class="card-body">
-                                                    {{-- <form action="#" class="form-steps" autocomplete="off"> --}}
-
-                                                        <div class="step-arrow-nav mb-4">
-
-                                                            <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
-                                                                <li class="nav-item" role="presentation">
-                                                                    <button class="nav-link done" id="steparrow-gen-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info" aria-selected="false">Payment Details</button>
-                                                                </li>
-                                                                <li class="nav-item" role="presentation">
-                                                                    <button class="nav-link active" id="steparrow-description-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-description-info" type="button" role="tab" aria-controls="steparrow-description-info" aria-selected="true">Upload Documents</button>
-                                                                </li>
-
-                                                            </ul>
+                                            <!--new - Wizard col-->
+                                                <div class="col-xl-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h4 class="card-title mb-0">Payment Details & Upload Documents Tab</h4>
                                                         </div>
-                                                        <!-- Payments Details tab pane -->
-                                                        <div class="tab-content">
-                                                            <div class="tab-pane fade" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
-                                                                <div>
-                                                                    <div class="row">
+                                                        <!-- end card header -->
+                                                        <div class="card-body">
+
+                                                            {{-- <form action="#" class="form-steps" autocomplete="off"> --}}
+
+                                                            <!-- Nav tabs -->
+                                                            <ul class="nav nav-tabs nav-justified nav-border-top nav-border-top-success mb-3" role="tablist">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" data-bs-toggle="tab" href="#nav-border-justified-home" role="tab" aria-selected="false">
+                                                                        <i class="ri-home-5-line align-middle me-1"></i> Payment Details
+                                                                    </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" data-bs-toggle="tab" href="#nav-border-justified-profile" role="tab" aria-selected="false">
+                                                                        <i class="ri-user-line me-1 align-middle"></i> Upload Documents
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="tab-content text-muted">
+                                                                <div class="tab-pane active" id="nav-border-justified-home" role="tabpanel">
+                                                                        <div class="row">
                                                                         <div class="col-lg-6">
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="steparrow-gen-info-email-input">Bank Name</label>
@@ -276,15 +276,9 @@
                                                                         </div>
                                                                          <!--end col-->
                                                                     </div>
-
                                                                 </div>
-
-                                                            </div>
-                                                            <!-- end tab pane -->
-
-                                                            <!-- Upload Documents tab pane -->
-                                                            <div class="tab-pane fade show active" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
-                                                                <div class="row">
+                                                                <div class="tab-pane" id="nav-border-justified-profile" role="tabpanel">
+                                                                         <div class="row">
 
                                                                  <div class="col-md-4">
                                                                         <div class="mb-3">
@@ -338,19 +332,13 @@
                                                                         </div>
 
                                                                 </div>
-
+                                                                </div>
                                                             </div>
-                                                            <!-- end tab pane -->
-
-                                                        </div>
-                                                        <!-- end tab content -->
-                                                    {{-- </form>x --}}
+                                                            {{-- </form> --}}
+                                                        </div><!-- end card-body -->
+                                                    </div>
                                                 </div>
-                                                <!-- end card body -->
-                                            </div>
-                                            <!-- end card -->
-                                        </div>
-                                        <!-- end col -->
+                                            <!--End - Wizard col-->
                                     </div>
                                             <div class="col-lg-12">
                                                 <div class="text-end">
@@ -991,7 +979,7 @@
             $("#edit_aadhar_card_path").next(".file-preview").remove(); // remove old preview
             $("#edit_aadhar_card_path").after(
             `<div class="file-preview mt-2">
-            <a href="${basePath}${data.DriverMaster.aadhar_card_path}" target="_blank">View Aadhar</a>
+            <a href="${basePath}${data.DriverMaster.aadhar_card_path}" target="_blank">View Last Uploaded Aadhar Card</a>
             </div>`
             );
             }
@@ -1001,7 +989,7 @@
             $("#edit_pan_card_path").next(".file-preview").remove();
             $("#edit_pan_card_path").after(
             `<div class="file-preview mt-2">
-            <a href="${basePath}${data.DriverMaster.pan_card_path}" target="_blank">View PAN</a>
+            <a href="${basePath}${data.DriverMaster.pan_card_path}" target="_blank">View Last Uploaded PAN Card</a>
             </div>`
             );
             }
@@ -1011,7 +999,7 @@
             $("#edit_driving_license_path").next(".file-preview").remove();
             $("#edit_driving_license_path").after(
             `<div class="file-preview mt-2">
-            <a href="${basePath}${data.DriverMaster.driving_license_path}" target="_blank">View Driving License</a>
+            <a href="${basePath}${data.DriverMaster.driving_license_path}" target="_blank">View Last Uploaded Driving License</a>
             </div>`
             );
             }
