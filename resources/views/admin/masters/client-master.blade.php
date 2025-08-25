@@ -323,17 +323,17 @@
                                 <div class="mb-3">
                                     <label for="name" class="col-form-label">GST Register Status<span class="text-danger">*</span></label>
                                     <div class="form-check form-switch form-switch-lg form-switch-success" dir="ltr">
-                                        <input type="hidden" name="gst_status" id="gst_status" value="0"> <!-- hidden field for value -->
-                                        <input type="checkbox" class="form-check-input" id="customSwitchsizelg">
-                                        <label class="form-check-label" for="customSwitchsizelg">Click If 'Registered'</label>
+                                        <input type="hidden" name="gst_status" id="edit_gst_status" value="0"> <!-- hidden field for value -->
+                                        <input type="checkbox" class="form-check-input" id="edit_customSwitchsizelg">
+                                        <label class="form-check-label" for="edit_customSwitchsizelg">Click If 'Registered'</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4" id="gst_div" style="display: none;">
+                            <div class="col-md-4" id="edit_gst_div" style="display: none;">
                                 <div class="mb-3">
-                                    <label for="gstNoInput" class="col-form-label">GST NO <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="gstNoInput">
+                                    <label for="edit_gstNoInput" class="col-form-label">GST NO <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="gst_no" placeholder="15 No GST Code -22AAAAA0000A1Z5" id="edit_gstNoInput">
                                     <span class="text-danger invalid gst_no_err"></span>
                                 </div>
                             </div>
@@ -665,9 +665,9 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const switchEl = document.getElementById("customSwitchsizelg");
-        const gstDiv = document.getElementById("gst_div");
-        const gstStatus = document.getElementById("gst_status");
+        const switchEl = document.getElementById("edit_customSwitchsizelg");
+        const gstDiv = document.getElementById("edit_gst_div");
+        const gstStatus = document.getElementById("edit_gst_status");
 
         // initial check
         if (switchEl.checked) {
@@ -682,7 +682,7 @@
             } else {
                 gstDiv.style.display = "none";
                 gstStatus.value = "0";
-                document.getElementById("gstNoInput").value = ""; // optional: clear GST no when unchecked
+                document.getElementById("edit_gstNoInput").value = ""; // optional: clear GST no when unchecked
             }
         });
     });
@@ -738,32 +738,11 @@
                 $('#master_id').val(masterId);
             }
         });
-
-        // GST toggle logic
-        $('#customSwitchsizelg').on('change', function () {
-            const isChecked = $(this).is(':checked');
-            $('#gst_status').val(isChecked ? 1 : 0);
-            $('#gst_div').toggle(isChecked);
-        });
-
-        // State code set from selected state
-        $('#stateInput').on('change', function () {
-            const stateCode = $(this).find(':selected').data('statecode') || '';
-            $('#statecode').val(stateCode);
-        });
     });
 </script>
 
 
- <!-- Edit state code -->
 
- <script>
-    document.getElementById('stateInput').addEventListener('change', function() {
-        let code = this.options[this.selectedIndex].getAttribute('data-statecode');
-        document.getElementById('statecode').value = code;
-    });
-
- </script>
 
 
 {{-- Add --}}
@@ -821,31 +800,73 @@
                 'model_id': model_id
             },
             success: function(data, textStatus, jqXHR) {
-                console.log(data);
                 editFormBehaviour();
 
                 if (!data.error) {
-                    $("#edit_model_id").val(data.vendor_master.id);
-                    $("#name").val(data.vendor_master.vendor_name);
-                    $("#addressInput").val(data.vendor_master.vendor_address);
-                    $("#gst_status").val(data.vendor_master.gst_status);
-                    $("#gstNoInput").val(data.vendor_master.gst_no);
-                    $("#tdsApplicableInput").val(data.vendor_master.tds_applicable);
-                    $("#tdsRateInput").val(data.vendor_master.tds_rate);
-                    $("#contactPersonInput").val(data.vendor_master.contact_name);
-                    $("#contactNoInput").val(data.vendor_master.contact_no);
-                    $("#altContactInput").val(data.vendor_master.alternate_contact_no);  // ✅ Corrected from edit_alternate_contact_no
-                    $("#emailInput").val(data.vendor_master.email);
-                    $("#cityInput").val(data.vendor_master.city);
-                    $("#pinCodeInput").val(data.vendor_master.pincode);
-                    $("#stateInput").val(data.vendor_master.state);
-                    $("#statecode").val(data.vendor_master.statecode); // optional, if available
-                    $("#categories").val(data.vendor_master.categories).trigger("change");
-                    $("#master_id").val(data.vendor_master.master_id);
-                    $("#group_id").val(data.vendor_master.group_id);
-                    $("#subgroup_id_1").val(data.vendor_master.subgroup_id);
-                    $("#openingamt").val(data.vendor_master.opening_amt);
-                    $("#dr_cr").val(data.vendor_master.dr_cr);
+                    $("#editForm input[name='edit_model_id']").val(data.clientmasters.id);
+                    $("#editForm input[name='client_name']").val(data.clientmasters.client_name);
+                    $("#editForm input[name='billing_address']").val(data.clientmasters.billing_address);
+                    // GST Status set karaycha
+                        $("#editForm input[name='gst_status']").val(data.clientmasters.gst_status);
+
+                        // जर gst_status 1 असेल
+                        if (data.clientmasters.gst_status == 1) {
+                            // hidden field update
+                            $("#edit_gst_status").val(1);
+
+                            // switch checkbox check
+                            $("#edit_customSwitchsizelg").prop('checked', true);
+
+                            // GST div show
+                            $("#edit_gst_div").show();
+
+                            // GST NO value set
+                            $("#editForm input[name='gst_no']").val(data.clientmasters.gst_no);
+                        } else {
+                            // gst_status 0 असेल तर
+                            // $("#edit_gst_status").val(0);
+                            // // $("#edit_customSwitchsizelg").prop('checked', false);
+                            // // $("#edit_gst_div").hide();
+                            // // $("#gstNoInput").val('');
+                        }
+                    // $("#editForm input[name='gst_no']").val(data.clientmasters.gst_no);
+                    $("#editForm input[name='contact_name']").val(data.clientmasters.contact_name);
+                    $("#editForm input[name='contact_no']").val(data.clientmasters.contact_no);
+                    $("#editForm input[name='alternate_contact_no']").val(data.clientmasters.alternate_contact_no);
+                    $("#editForm input[name='email']").val(data.clientmasters.email);
+                    $("#editForm input[name='city']").val(data.clientmasters.city);
+                    $("#editForm input[name='pincode']").val(data.clientmasters.pincode);
+                    $("#editForm select[name='state']").val(data.clientmasters.state);
+                    $("#editForm select[name='billing_type']").val(data.clientmasters.billing_type);
+                    $("#editForm input[name='billing_date']").val(data.clientmasters.billing_date);
+
+                    // Categories set
+                    $("#editForm select[name='categories']").val(data.clientmasters.categories).trigger('change');
+
+                        // Hide सगळे dropdown सुरुवातीला
+                        $("#mastergroup_dropdown, #group_dropdown, #subgroup_dropdown").addClass('d-none');
+
+                        // Categories नुसार कोणता dropdown दिसेल ते control करणे
+                        if (data.clientmasters.categories == 3) { 
+                            // Master Group
+                            $("#mastergroup_dropdown").removeClass('d-none');
+                            $("#editForm select[name='master_id']").val(data.clientmasters.master_id);
+                        } 
+                        else if (data.clientmasters.categories == 2) { 
+                            // Group
+                            $("#group_dropdown").removeClass('d-none');
+                            $("#editForm select[name='group_id']").val(data.clientmasters.group_id);
+                        } 
+                        else if (data.clientmasters.categories == 1) { 
+                            // Sub-Group
+                            $("#subgroup_dropdown").removeClass('d-none');
+                            $("#editForm select[name='subgroup_id']").val(data.clientmasters.subgroup_id);
+                        }
+
+                    $("#editForm input[name='opening_amt']").val(data.clientmasters.opening_amt);
+                    $("#editForm select[name='dr_cr']").val(data.clientmasters.dr_cr);
+                    $("#editForm select[name='year_master']").val(data.clientmasters.year_master);
+                    $("#editForm select[name='status']").val(data.clientmasters.status);
 
                 } else {
                     alert(data.error);

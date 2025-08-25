@@ -76,11 +76,19 @@ class ClientmasterController extends Controller
      */
    public function edit(Clientmaster $clientmaster, Request $request)
 {
-    
-   return response()->json([
-        'result' => 1,
-        'Clientmaster' => $clientmaster,
-    ]);
+
+   $clientmaster = Clientmaster::find($request->model_id);
+    if ($clientmaster) {
+        return response()->json([
+            'result' => 1,
+            'clientmasters' => $clientmaster,
+        ]);
+    } else {
+        return response()->json([
+            'result' => 0,
+            'message' => 'Clientmaster not found',
+        ]);
+    }
 }
 
 
