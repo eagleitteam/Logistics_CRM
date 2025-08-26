@@ -14,6 +14,7 @@ use App\Models\MasterGroupCategory;
 use App\Models\SubGroupMaster;
 use App\Models\Clientmaster;
 use App\Models\Gstmaster;
+use App\Models\Departmentmaster;
 
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -688,6 +689,43 @@ class MastersSeeder extends Seeder
                     'sgst' => $gst['sgst'],
                     'remark' => $gst['remark'],
                     'status' => $gst['status'],
+                ]
+            );
+        }
+
+        // Department Seeder
+        $departmentmasters = [
+            [
+                'id' => 1,
+                'department_code' => 'HR-MUM',
+                'department_name' => 'Human Resources',
+                'head_of_department' => 'Alice Smith',
+                'Remark' => 'Handles employee relations',
+                'branch_locations' => 1,
+                'status' => 1,
+            ],
+            [
+                'id' => 2,
+                'department_code' => 'ACC-MUM',
+                'department_name' => 'Finance',
+                'head_of_department' => 'Bob Johnson',
+                'Remark' => 'Manages company finances',
+                'branch_locations' => 2,
+                'status' => 1,
+            ],
+        ];
+
+        foreach ($departmentmasters as $department) {
+            Departmentmaster::updateOrCreate(
+                ['id' => $department['id']],
+                [
+                    'id' => $department['id'],
+                    'department_code' => $department['department_code'],
+                    'department_name' => $department['department_name'],
+                    'head_of_department' => $department['head_of_department'],
+                    'Remark' => $department['Remark'],
+                    'branch_locations' => $department['branch_locations'],
+                    'status' => $department['status'],
                 ]
             );
         }

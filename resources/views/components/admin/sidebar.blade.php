@@ -133,6 +133,11 @@
                                         <a href="{{ route('bank-master.index') }}" class="nav-link {{ request()->routeIs('bank-master.index') ? 'active' : '' }}" data-key="t-horizontal">Bank Master</a>
                                     </li>
                                 @endcan
+                                @can('departmentmasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('department-master.index') }}" class="nav-link {{ request()->routeIs('department-master.index') ? 'active' : '' }}" data-key="t-horizontal">Department Master</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
