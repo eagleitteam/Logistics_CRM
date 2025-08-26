@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\Admin\Masters\StoreDepartmentmasterRequest;
 use App\Http\Requests\Admin\Masters\UpdateDepartmentmasterRequest;
 use App\Models\Departmentmaster;
+use App\Models\Branchmaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,10 @@ class DepartmentmasterController extends Controller
     public function index()
     {
 
-         $departmentmasters = Departmentmaster::latest()->get();
+        $branchmasters = Branchmaster::latest()->get();
+        $departmentmasters = Departmentmaster::latest()->get();
 
-        return view('admin.masters.department-master')->with(['departmentmasters' => $departmentmasters]);
+        return view('admin.masters.department-master')->with(['departmentmasters' => $departmentmasters, 'branchmasters' => $branchmasters]);
     }
 
     /**

@@ -25,7 +25,7 @@ class StoreDepartmentmasterRequest extends FormRequest
             'department_code' => 'required|unique:departmentmasters,department_code|string|max:255',
             'department_name' => 'required|unique:departmentmasters,department_name|string|max:255',
             'head_of_department' => 'required|string|max:255',
-            'branch_locations' => 'required|string|max:255',
+            'branch_locations' => 'required|integer|exists:branchmasters,id',
             'Remark' => 'nullable|string',
         ];
     }

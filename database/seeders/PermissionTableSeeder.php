@@ -274,6 +274,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'departmentmasters.delete',
                 'group' => 'departmentmasters',
             ],
+            [
+                'id' => 53,
+                'name' => 'branchmaster.view',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 54,
+                'name' => 'branchmaster.create',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 55,
+                'name' => 'branchmaster.edit',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 56,
+                'name' => 'branchmaster.delete',
+                'group' => 'branchmaster',
+            ],
 
 
 

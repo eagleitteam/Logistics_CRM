@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('departmentmasters', function (Blueprint $table) {
+        Schema::create('branchmasters', function (Blueprint $table) {
             $table->id();
-            $table->string('department_code');
-            $table->string('department_name');
-            $table->string('head_of_department');
-            $table->integer('branch_locations');
-            $table->text('Remark')->nullable();
+            $table->string('branch_code');
+            $table->string('branch_location');
+            $table->string('head_of_branch');
+            $table->string('remark')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1=Active, 2=Inactive');
-            
+
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departmentmasters');
+        Schema::dropIfExists('branchmasters');
     }
 };

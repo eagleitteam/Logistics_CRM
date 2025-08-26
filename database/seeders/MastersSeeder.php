@@ -15,6 +15,7 @@ use App\Models\SubGroupMaster;
 use App\Models\Clientmaster;
 use App\Models\Gstmaster;
 use App\Models\Departmentmaster;
+use App\Models\Branchmaster;
 
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -726,6 +727,40 @@ class MastersSeeder extends Seeder
                     'Remark' => $department['Remark'],
                     'branch_locations' => $department['branch_locations'],
                     'status' => $department['status'],
+                ]
+            );
+        }
+
+        // Branch Seeder
+        $branchmasters = [
+            [
+                'id' => 1,
+                'branch_code' => 'BR-MUM',
+                'branch_location' => 'Mumbai',
+                'head_of_branch' => 'John Doe',
+                'remark' => 'Main Branch',
+                'status' => 1,
+            ],
+            [
+                'id' => 2,
+                'branch_code' => 'BR-DEL',
+                'branch_location' => 'Delhi',
+                'head_of_branch' => 'Jane Smith',
+                'remark' => 'Secondary Branch',
+                'status' => 1,
+            ],
+        ];
+
+        foreach ($branchmasters as $branch) {
+            Branchmaster::updateOrCreate(
+                ['id' => $branch['id']],
+                [
+                    'id' => $branch['id'],
+                    'branch_code' => $branch['branch_code'],
+                    'branch_location' => $branch['branch_location'],
+                    'head_of_branch' => $branch['head_of_branch'],
+                    'remark' => $branch['remark'],
+                    'status' => $branch['status'],
                 ]
             );
         }

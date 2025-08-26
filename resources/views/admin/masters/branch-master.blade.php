@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Department Master</x-slot>
-    <x-slot name="heading">Add Department Master</x-slot>
+    <x-slot name="title">Branch Master</x-slot>
+    <x-slot name="heading">Add Branch Master</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -14,38 +14,26 @@
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_code">Department Code <span class="text-danger">*</span></label>
-                                <input class="form-control" id="department_code" name="department_code" type="text" placeholder="Enter Department Code">
-                                <span class="text-danger invalid department_code_err"></span>
+                                <label class="col-form-label" for="branch_code">Branch Code <span class="text-danger">*</span></label>
+                                <input class="form-control" id="branch_code" name="branch_code" type="text" placeholder="Enter Branch Code">
+                                <span class="text-danger invalid branch_code_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_name">Department Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="department_name" name="department_name" type="text" placeholder="Enter Department Name">
-                                <span class="text-danger invalid department_name_err"></span>
+                                <label class="col-form-label" for="branch_location">Branch Location <span class="text-danger">*</span></label>
+                                <input class="form-control" id="branch_location" name="branch_location" type="text" placeholder="Enter Branch Location">
+                                <span class="text-danger invalid branch_location_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="head_of_department">Head of Department: <span class="text-danger">*</span></label>
-                                <input class="form-control" id="head_of_department" name="head_of_department" type="text" placeholder="Enter Head of Department Name">
-                                <span class="text-danger invalid head_of_department_err"></span>
+                                <label class="col-form-label" for="head_of_branch">Head of Branch: <span class="text-danger">*</span></label>
+                                <input class="form-control" id="head_of_branch" name="head_of_branch" type="text" placeholder="Enter Head of Branch Name">
+                                <span class="text-danger invalid head_of_branch_err"></span>
                             </div>
                             
                             <div class="col-md-4">
-                                <label class="col-form-label" for="Remark">Remark</label>
-                                <input class="form-control" id="Remark" name="Remark" type="text" placeholder="Mention Remark If Any">
+                                <label class="col-form-label" for="remark">Remark</label>
+                                <input class="form-control" id="remark" name="remark" type="text" placeholder="Mention Remark If Any">
 
                             </div>
-                            <div class="col-md-4">
-                                <label for="FormSelectBankType" class="col-form-label">Branch Location<span class="text-danger">*</span></label>
-                                                    <select id="FormSelectBankType" name="branch_locations" class="form-select" data-choices data-choices-sorting="true">
-                                                        <option value="">Choose...</option>
-                                                        @foreach ($branchmasters as $branchmaster)
-                                                            <option value="{{ optional($branchmaster)->id }}">{{ optional($branchmaster)->branch_location }} --> ({{ optional($branchmaster)->branch_code }})</option>
-                                                        @endforeach
-                                                    </select>
-                                <span class="text-danger invalid branch_locations_err"></span>
-                            </div>
-                            
-
                         </div>
 
                     </div>
@@ -76,35 +64,27 @@
                         <div class="mb-3 row">
                                 <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_code">Department Code <span class="text-danger">*</span></label>
-                                <input class="form-control" id="department_code" name="department_code" type="text" placeholder="Enter Department Code">
-                                <span class="text-danger invalid department_code_err"></span>
+                                <label class="col-form-label" for="branch_code">Branch Code <span class="text-danger">*</span></label>
+                                <input class="form-control" id="branch_code" name="branch_code" type="text" placeholder="Enter Branch Code">
+                                <span class="text-danger invalid branch_code_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_name">Department Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="department_name" name="department_name" type="text" placeholder="Enter Department Name">
-                                <span class="text-danger invalid department_name_err"></span>
+                                <label class="col-form-label" for="branch_location">Branch Location <span class="text-danger">*</span></label>
+                                <input class="form-control" id="branch_location" name="branch_location" type="text" placeholder="Enter Branch Location">
+                                <span class="text-danger invalid branch_location_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="head_of_department">Head of Department: <span class="text-danger">*</span></label>
-                                <input class="form-control" id="head_of_department" name="head_of_department" type="text" placeholder="Enter Head of Department Name">
-                                <span class="text-danger invalid head_of_department_err"></span>
+                                <label class="col-form-label" for="head_of_branch">Head of Branch: <span class="text-danger">*</span></label>
+                                <input class="form-control" id="head_of_branch" name="head_of_branch" type="text" placeholder="Enter Head of Branch Name">
+                                <span class="text-danger invalid head_of_branch_err"></span>
                             </div>
                             
                             <div class="col-md-4">
-                                <label class="col-form-label" for="Remark">Remark</label>
-                                <input class="form-control" id="Remark" name="Remark" type="text" placeholder="Mention Remark If Any">
+                                <label class="col-form-label" for="remark">Remark</label>
+                                <input class="form-control" id="remark" name="remark" type="text" placeholder="Mention Remark If Any">
 
                             </div>
-                            <div class="col-md-4">
-                                <label for="FormSelectBankType" class="col-form-label">Branch Location<span class="text-danger">*</span></label>
-                                                    <select id="FormSelectBankType" name="branch_locations" class="form-select" data-choices data-choices-sorting="true">
-                                                        <option value="1" selected>Head Office</option>
-                                                        <option value="3" >Delhi Branch</option>
-                                                        <option value="2" >Gujrat Branch</option>
-                                                    </select>
-                                <span class="text-danger invalid branch_locations_err"></span>
-                            </div>
+                            
                             <div class="col-md-4">  
                                 <label class="col-form-label" for="status" > Active / Inactive</label>
                                 <select id="ForminputState" class="form-select" name="status">
@@ -131,7 +111,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('departmentmasters.create')
+                @can('branchmaster.create')
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
@@ -159,25 +139,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($departmentmasters as $departmentmasters)
+                                @foreach ($branchmasters as $branchmasters)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $departmentmasters->department_code }}</td>
-                                        <td>{{ $departmentmasters->department_name }}</td>
-                                        <td>{{ $departmentmasters->head_of_department }}</td>
-                                        <td>{{ optional($departmentmasters->branchmaster)->branch_location }}
-                                            ({{ optional($departmentmasters->branchmaster)->branch_code }})
-                                        </td>
-                                        <td>{{ $departmentmasters->Remark }}</td>
+                                        <td>{{ $branchmasters->branch_code }}</td>
+                                        <td>{{ $branchmasters->branch_location }}</td>
+                                        <td>{{ $branchmasters->head_of_branch }}</td>
+                                        <td>{{ $branchmasters->remark }}</td>
                                         <td>
-                                            {{ $departmentmasters->status == 1 ? 'Active' : ($departmentmasters->status == 2 ? 'Inactive' : '')}}
+                                            {{ $branchmasters->status == 1 ? 'Active' : ($branchmasters->status == 2 ? 'Inactive' : '')}}
                                         </td>
                                         <td>
-                                            @can('departmentmasters.edit')
-                                                <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Vehicle" data-id="{{ $departmentmasters->id }}"><i data-feather="edit"></i></button>
+                                            @can('branchmaster.edit')
+                                                <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Vehicle" data-id="{{ $branchmasters->id }}"><i data-feather="edit"></i></button>
                                             @endcan
-                                            @can('departmentmasters.delete')
-                                                <button class="btn btn-danger rem-element px-2 py-1" title="Delete Vehicle" data-id="{{ $departmentmasters->id }}"><i data-feather="trash-2"></i> </button>
+                                            @can('branchmaster.delete')
+                                                <button class="btn btn-danger rem-element px-2 py-1" title="Delete Vehicle" data-id="{{ $branchmasters->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
                                         </td>
                                     </tr>
@@ -202,7 +179,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('department-master.store') }}',
+            url: '{{ route('branch-master.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -212,7 +189,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
-                        window.location.href = '{{ route('department-master.index') }}';
+                        window.location.href = '{{ route('branch-master.index') }}';
                     });
                 else
                     swal("Error!", data.error2, "error");
@@ -239,7 +216,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('department-master.edit', ':model_id') }}";
+        var url = "{{ route('branch-master.edit', ':model_id') }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -251,13 +228,12 @@
             success: function(data, textStatus, jqXHR) {
                 editFormBehaviour();
                 if (!data.error) {
-                    $("#editForm input[name='edit_model_id']").val(data.departmentmaster.id);
-                    $("#editForm input[name='department_code']").val(data.departmentmaster.department_code);
-                    $("#editForm input[name='department_name']").val(data.departmentmaster.department_name);
-                    $("#editForm input[name='head_of_department']").val(data.departmentmaster.head_of_department);
-                    $("#editForm input[name='branch_locations']").val(data.departmentmaster.branch_locations);
-                    $("#editForm input[name='Remark']").val(data.departmentmaster.Remark);
-                    $("#editForm select[name='status']").val(data.departmentmaster.status);
+                    $("#editForm input[name='edit_model_id']").val(data.branchmaster.id);
+                    $("#editForm input[name='branch_code']").val(data.branchmaster.branch_code);
+                    $("#editForm input[name='branch_location']").val(data.branchmaster.branch_location);
+                    $("#editForm input[name='head_of_branch']").val(data.branchmaster.head_of_branch);
+                    $("#editForm input[name='remark']").val(data.branchmaster.remark);
+                    $("#editForm select[name='status']").val(data.branchmaster.status);
                 } else {
                     alert(data.error);
                 }
@@ -279,7 +255,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('department-master.update', ':model_id') }}";
+            var url = "{{ route('branch-master.update', ':model_id') }}";
 
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -292,7 +268,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('department-master.index') }}';
+                            window.location.href = '{{ route('branch-master.index') }}';
                         });
                     else
                         swal("Error!", data.error2, "error");
@@ -319,7 +295,7 @@
     $("#buttons-datatables").on("click", ".rem-element", function(e) {
         e.preventDefault();
         swal({
-                title: "Are you sure to delete this Department Master?",
+                title: "Are you sure to delete this Branch Master?",
                 icon: "warning",
                 buttons: ["Cancel", "Confirm"],
                 dangerMode: true,
@@ -327,7 +303,7 @@
             .then((willDelete) => {
                 if (willDelete) {
                     var model_id = $(this).attr("data-id");
-                    var url = "{{ route('department-master.destroy', ':model_id') }}";
+                    var url = "{{ route('branch-master.destroy', ':model_id') }}";
 
                     $.ajax({
                         url: url.replace(':model_id', model_id),

@@ -138,6 +138,11 @@
                                         <a href="{{ route('department-master.index') }}" class="nav-link {{ request()->routeIs('department-master.index') ? 'active' : '' }}" data-key="t-horizontal">Department Master</a>
                                     </li>
                                 @endcan
+                                @can('branchmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('branch-master.index') }}" class="nav-link {{ request()->routeIs('branch-master.index') ? 'active' : '' }}" data-key="t-horizontal">Branch Master</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>

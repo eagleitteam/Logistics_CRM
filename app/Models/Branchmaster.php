@@ -6,16 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class Departmentmaster extends BaseModel
+class Branchmaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['department_code','department_name', 'head_of_department','branch_locations','Remark','status'];
+    protected $fillable = ['branch_code', 'branch_location','head_of_branch','remark','status'];
 
-    public function Branchmaster()
-    {
-        return $this->belongsTo(Branchmaster::class, 'branch_locations', 'id');
-    }
 
     public static function booted()
     {

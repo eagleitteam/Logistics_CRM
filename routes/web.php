@@ -62,6 +62,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('trip-movement', App\Http\Controllers\Admin\Masters\TripMovementController::class);
     Route::resource('bank-master', App\Http\Controllers\Admin\Masters\BankmasterController::class);
     Route::resource('department-master', App\Http\Controllers\Admin\Masters\DepartmentmasterController::class);
+    Route::resource('branch-master', App\Http\Controllers\Admin\Masters\BranchmasterController::class);
+
 
 
 
