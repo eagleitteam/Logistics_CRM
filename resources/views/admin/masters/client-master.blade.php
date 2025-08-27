@@ -259,7 +259,7 @@
                                 {{-- Category Selection --}}
                                 <div class="col-md-6">
                                     <label for="Master_Category" class="form-label">Select Groups Category</label>
-                                    <select class="form-select" name="categories" id="categories">
+                                    <select class="form-select" name="edit_categories" id="edit_categories">
                                         <option value="">Select Group</option>
                                         <option value="3">Master Group</option>
                                         <option value="2">Group Group</option>
@@ -269,9 +269,9 @@
                                 </div>
 
                                 {{-- Master Group --}}
-                                <div class="col-md-6 d-none" id="mastergroup_dropdown">
+                                <div class="col-md-6 d-none" id="edit_mastergroup_dropdown">
                                     <label class="form-label">Select Master Group</label>
-                                    <select class="form-select" name="master_id" id="master_id">
+                                    <select class="form-select" name="edit_master_id" id="edit_master_id">
                                         <option value="">Select Master Group</option>
                                         @foreach($masterGroups as $masterGroup)
                                             <option value="{{ $masterGroup->id }}"
@@ -284,9 +284,9 @@
                                 </div>
 
                                 {{-- Group Dropdown --}}
-                                <div class="col-md-6 d-none" id="group_dropdown">
+                                <div class="col-md-6 d-none" id="edit_group_dropdown">
                                     <label class="form-label">Group List</label>
-                                    <select class="form-select" name="group_id" id="group_id">
+                                    <select class="form-select" name="edit_group_id" id="edit_group_id">
                                         <option value="">Select Group</option>
                                         @foreach($MasterGroupCategory as $group)
                                             <option value="{{ $group->id }}"
@@ -299,9 +299,9 @@
                                 </div>
 
                                 {{-- Sub-Group Dropdown --}}
-                                <div class="col-md-6 d-none" id="subgroup_dropdown">
+                                <div class="col-md-6 d-none" id="edit_subgroup_dropdown">
                                     <label class="form-label">Sub-Group List</label>
-                                    <select class="form-select" name="subgroup_id" id="subgroup_id_1">
+                                    <select class="form-select" name="edit_subgroup_id" id="edit_subgroup_id_1">
                                         <option value="">Select Sub-Group</option>
                                         @foreach($SubGroupMaster as $subgroup)
                                         <option value="{{ $subgroup->id }}" data-master="{{ $subgroup->master_group_id }}" data-category="{{ $subgroup->master_group_category_id }}">
@@ -695,47 +695,47 @@
     $(document).ready(function () {
         function resetGroupFields() {
             // Clear values
-            $('#master_id').val('');
-            $('#group_id').val('');
-            $('#subgroup_id_1').val('');
+            $('#edit_master_id').val('');
+            $('#edit_group_id').val('');
+            $('#edit_subgroup_id_1').val('');
 
             // Hide all dropdowns
-            $('#mastergroup_dropdown, #group_dropdown, #subgroup_dropdown').addClass('d-none');
+            $('#edit_mastergroup_dropdown, #edit_group_dropdown, #edit_subgroup_dropdown').addClass('d-none');
         }
 
         // On category change
-        $('#categories').on('change', function () {
+        $('#edit_categories').on('change', function () {
             const selected = $(this).val();
             resetGroupFields();
 
             switch (selected) {
                 case '1': // Sub-Group
-                    $('#subgroup_dropdown').removeClass('d-none');
+                    $('#edit_subgroup_dropdown').removeClass('d-none');
                     break;
                 case '2': // Group
-                    $('#group_dropdown').removeClass('d-none');
+                    $('#edit_group_dropdown').removeClass('d-none');
                     break;
                 case '3': // Master Group
-                    $('#mastergroup_dropdown').removeClass('d-none');
+                    $('#edit_mastergroup_dropdown').removeClass('d-none');
                     break;
             }
         });
 
         // Set master_id from Group selection (only if category is 2)
-        $('#group_id').on('change', function () {
-            const category = $('#categories').val();
+        $('#edit_group_id').on('change', function () {
+            const category = $('#edit_categories').val();
             if (category === '2') {
                 const masterId = $(this).find(':selected').data('master') || '';
-                $('#master_id').val(masterId);
+                $('#edit_master_id').val(masterId);
             }
         });
 
         // Set master_id from Sub-Group selection (only if category is 1)
-        $('#subgroup_id_1').on('change', function () {
-            const category = $('#categories').val();
+        $('#edit_subgroup_id_1').on('change', function () {
+            const category = $('#edit_categories').val();
             if (category === '1') {
                 const masterId = $(this).find(':selected').data('master') || '';
-                $('#master_id').val(masterId);
+                $('#edit_master_id').val(masterId);
             }
         });
     });
@@ -841,26 +841,26 @@
                     $("#editForm input[name='billing_date']").val(data.clientmasters.billing_date);
 
                     // Categories set
-                    $("#editForm select[name='categories']").val(data.clientmasters.categories).trigger('change');
+                    $("#editForm select[name='edit_categories']").val(data.clientmasters.categories).trigger('change');
 
                         // Hide सगळे dropdown सुरुवातीला
-                        $("#mastergroup_dropdown, #group_dropdown, #subgroup_dropdown").addClass('d-none');
+                        $("#edit_mastergroup_dropdown, #edit_group_dropdown, #edit_subgroup_dropdown").addClass('d-none');
 
                         // Categories नुसार कोणता dropdown दिसेल ते control करणे
                         if (data.clientmasters.categories == 3) { 
                             // Master Group
-                            $("#mastergroup_dropdown").removeClass('d-none');
-                            $("#editForm select[name='master_id']").val(data.clientmasters.master_id);
+                            $("#edit_mastergroup_dropdown").removeClass('d-none');
+                            $("#editForm select[name='edit_master_id']").val(data.clientmasters.master_id);
                         } 
                         else if (data.clientmasters.categories == 2) { 
                             // Group
-                            $("#group_dropdown").removeClass('d-none');
-                            $("#editForm select[name='group_id']").val(data.clientmasters.group_id);
+                            $("#edit_group_dropdown").removeClass('d-none');
+                            $("#editForm select[name='edit_group_id']").val(data.clientmasters.group_id);
                         } 
                         else if (data.clientmasters.categories == 1) { 
                             // Sub-Group
-                            $("#subgroup_dropdown").removeClass('d-none');
-                            $("#editForm select[name='subgroup_id']").val(data.clientmasters.subgroup_id);
+                            $("#edit_subgroup_dropdown").removeClass('d-none');
+                            $("#editForm select[name='edit_subgroup_id']").val(data.clientmasters.subgroup_id);
                         }
 
                     $("#editForm input[name='opening_amt']").val(data.clientmasters.opening_amt);
