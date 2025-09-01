@@ -128,6 +128,11 @@
                                         <a href="{{ route('trip-movement.index') }}" class="nav-link {{ request()->routeIs('trip-movement.index') ? 'active' : '' }}" data-key="t-horizontal">Trip Movement</a>
                                     </li>
                                 @endcan
+                                @can('Podtripmovement.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('trip-movement-curier-list.index') }}" class="nav-link {{ request()->routeIs('trip-movement-curier-list.index') ? 'active' : '' }}" data-key="t-horizontal">Trip Movement Curier</a>
+                                    </li>
+                                @endcan
                                 @can('bankmaster.view')
                                     <li class="nav-item">
                                         <a href="{{ route('bank-master.index') }}" class="nav-link {{ request()->routeIs('bank-master.index') ? 'active' : '' }}" data-key="t-horizontal">Bank Master</a>
@@ -143,6 +148,7 @@
                                         <a href="{{ route('branch-master.index') }}" class="nav-link {{ request()->routeIs('branch-master.index') ? 'active' : '' }}" data-key="t-horizontal">Branch Master</a>
                                     </li>
                                 @endcan
+                                
                             </ul>
                         </div>
                     </li>
