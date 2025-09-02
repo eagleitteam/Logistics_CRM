@@ -16,14 +16,15 @@ class StoreTripMovementRequest extends FormRequest
         return [
             'trip_date' => 'required|date',
             'vehicle_no' => 'required',
+            'vendor_id' => 'nullable',
+            'unique_no' => 'nullable',
+            'vehicle_type_category' => 'nullable',
             'origin' => 'required',
             'destination' => 'required',
-            'vehicle_id' => 'required',
+            'vehicle_type_id' => 'required',
             'client_id' => 'required',
             'driver_id' => 'required',
-            'per_day_allow' => 'required',
             'rate' => 'required',
-            'remark' => 'required',
         ];
     }
 
@@ -36,11 +37,10 @@ class StoreTripMovementRequest extends FormRequest
             'origin.required' => 'Origin is required',
             'destination.required' => 'Destination is required',
 
-            'vehicle_id.required' => 'Vehicle Type is required,',
+            'vehicle_type_id.required' => 'Vehicle Type is required,',
             'client_id.required' => 'Client is required,',
             'driver_id.required' => 'Driver is required,',
             'rate.required' => 'Rate is required,',
-            'per_day_allow.required' => 'Per Day Allowance is required,',
         ];
     }
 }

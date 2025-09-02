@@ -38,8 +38,13 @@
                             <div class="col-md-4">
                                 <label class="col-form-label" for="vendor_name">Vendor Name <span
                                         class="text-danger">*</span></label>
-                                <input class="form-control" id="vendor_name" name="vendor_name" type="text"
-                                    placeholder="Enter Vehicle Number">
+                                <select id="vendor_name"  name="vendor_name" class="form-select" data-choices
+                                    data-choices-sorting="true">
+                                    <option>Select Vebdor</option>
+                                    @foreach ($Vendormaster as $vendor)
+                                        <option value="{{ $vendor->id }}">{{ $vendor->vendor_name }}</option>
+                                    @endforeach
+                                </select>
                                 <span class="text-danger invalid vendor_name_err"></span>
                             </div>
 
@@ -277,12 +282,19 @@
                                             $fuelType = 'CNG';
                                         elseif($selfVehical->fule_type == 3)
                                             $fuelType = 'Electric';
+
+                                        $typeselect = '';
+                                        if($selfVehical->type == 1)
+                                            $typeselect = 'Self';
+                                        elseif($selfVehical->type == 2)
+                                            $typeselect = 'Vendor';
+                                    
                                     @endphp
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <!-- <td>{{ $selfVehical?->vehicle_number }}</td> -->
                                     <td>{{ $selfVehical->vehicle_number }}</td>
-                                    <td>{{ $selfVehical->type }}</td>
+                                    <td>{{ $typeselect }}</td>
                                     <td>
                                          
                                         <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Vehicle Entry"

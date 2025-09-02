@@ -294,6 +294,46 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'branchmaster.delete',
                 'group' => 'branchmaster',
             ],
+            [
+                'id' => 57,
+                'name' => 'tripmovement.create',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 58,
+                'name' => 'tripmovement.edit',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 59,
+                'name' => 'tripmovement.delete',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 60,
+                'name' => 'tripmovement.view',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 61,
+                'name' => 'Podtripmovement.view',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 62,
+                'name' => 'Podtripmovement.create',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 63,
+                'name' => 'Podtripmovement.edit',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 64,
+                'name' => 'Podtripmovement.delete',
+                'group' => 'Podtripmovement',
+            ],
 
 
 

@@ -51,7 +51,6 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('group-master-category', App\Http\Controllers\Admin\Masters\MasterGroupCategoryController::class);
     Route::resource('sub-group-master', App\Http\Controllers\Admin\Masters\SubGroupMasterController::class);
     Route::get('/get-master-group-categories', [App\Http\Controllers\Admin\Masters\SubGroupMasterController::class, 'getMasterGroupCategories'])->name('get.master.group.categories');
-
     Route::resource('year-master', App\Http\Controllers\Admin\Masters\YearmasterController::class);
     Route::resource('state-master', App\Http\Controllers\Admin\Masters\StatemasterController::class);
     Route::resource('vendor-master', App\Http\Controllers\Admin\Masters\VendorMasterController::class);
@@ -64,6 +63,18 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('department-master', App\Http\Controllers\Admin\Masters\DepartmentmasterController::class);
     Route::resource('branch-master', App\Http\Controllers\Admin\Masters\BranchmasterController::class);
 
+    // Bulk edit (optional if you want to open modal with multiple records)
+    Route::post('courier-trip-movement/bulk-add', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'bulkEdit'])->name('add-courier-trip-movement.bulkEdit');
+    Route::post('courier-trip-movement/update-bulk', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'updateBulk'])->name('add-courier-trip-movement.updateBulk');
+    Route::get('add-courier-trip-movement', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'index'])->name('add-courier-trip-movement.index');
+
+    Route::post('trip-movement-courier/bulk-edit', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'courier_bulkEdit'])->name('trip-movement-courier.bulkEdit');
+    Route::post('trip-movement-courier/update-bulk', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'courier_updateBulk'])->name('trip-movement-courier.updateBulk');
+    Route::post('trip-movement-courier/bulk-delete', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'courier_deleteBulk'])->name('trip-movement-courier.deleteBulk');
+
+    Route::get('trip-movement-curier-list', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class,'courier_tripmovement_list'])->name('trip-movement-curier-list.index');;
+
+    Route::resource('trip-movement-pod', App\Http\Controllers\Admin\Masters\PODTripMomentController::class);
 
 
 

@@ -15,7 +15,7 @@ class TripMovement extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['trip_date','vendor_id','vehicle_no','origin','destination','vehicle_id','client_id','driver_id','per_day_allow','remark','rate'];
+    protected $fillable = ['trip_date','vendor_id','vehicle_type_category','vehicle_no','origin','destination','vehicle_type_id','client_id','driver_id','remark','rate','unique_no','pod_no', 'pod_document', 'pod_date', 'courier','courier_date', 'courier_tracking_number','pod_status','courier_status'];
 
             public function vendor()
             {
@@ -24,7 +24,7 @@ class TripMovement extends BaseModel
 
             public function vehicle()
             {
-                return $this->belongsTo(VehicleTypeMaster::class, 'vehicle_id');
+                return $this->belongsTo(VehicleTypeMaster::class, 'vehicle_type_id');
             }
             
             public function client()
