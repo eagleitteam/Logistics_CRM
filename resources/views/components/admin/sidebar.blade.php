@@ -153,6 +153,11 @@
                                         <a href="{{ route('company-billing-master.index') }}" class="nav-link {{ request()->routeIs('company-billing-master.index') ? 'active' : '' }}" data-key="t-horizontal">Company Billing Data Master</a>
                                     </li>
                                 @endcan
+                                @can('numberingprefix.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('numbering-prefix-master.index') }}" class="nav-link {{ request()->routeIs('numbering-prefix-master.index') ? 'active' : '' }}" data-key="t-horizontal">Numbering Prefix Master</a>
+                                    </li>
+                                @endcan
 
                             </ul>
                         </div>

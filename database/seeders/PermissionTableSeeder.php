@@ -354,6 +354,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'companybillingmaster.delete',
                 'group' => 'companybillingmaster',
             ],
+            [
+                'id' => 69,
+                'name' => 'numberingprefix.view',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 70,
+                'name' => 'numberingprefix.create',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 71,
+                'name' => 'numberingprefix.edit',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 72,
+                'name' => 'numberingprefix.delete',
+                'group' => 'numberingprefix',
+            ],
 
 
 
