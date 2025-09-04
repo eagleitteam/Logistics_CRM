@@ -148,7 +148,12 @@
                                         <a href="{{ route('branch-master.index') }}" class="nav-link {{ request()->routeIs('branch-master.index') ? 'active' : '' }}" data-key="t-horizontal">Branch Master</a>
                                     </li>
                                 @endcan
-                                
+                                @can('companybillingmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('company-billing-master.index') }}" class="nav-link {{ request()->routeIs('company-billing-master.index') ? 'active' : '' }}" data-key="t-horizontal">Company Billing Data Master</a>
+                                    </li>
+                                @endcan
+
                             </ul>
                         </div>
                     </li>

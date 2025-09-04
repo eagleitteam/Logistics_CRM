@@ -334,6 +334,27 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Podtripmovement.delete',
                 'group' => 'Podtripmovement',
             ],
+            [
+                'id' => 65,
+                'name' => 'companybillingmaster.view',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 66,
+                'name' => 'companybillingmaster.create',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 67,
+                'name' => 'companybillingmaster.edit',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 68,
+                'name' => 'companybillingmaster.delete',
+                'group' => 'companybillingmaster',
+            ],
+
 
 
 
