@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +20,20 @@ Route::get('/', function () {
 })->name('/');
 
 
+Route::get('/storage/{path}', function ($path) {
+    if (!auth()->check()) {
+        abort(404); // ❌ not logged in
+    }
 
+    $file = storage_path('app/public/' . $path);
+
+    if (!file_exists($file)) {
+        abort(404); // ❌ file missing
+    }
+
+    // return file inline (for images/PDFs) or force download
+    return response()->file($file);
+})->where('path', '.*')->middleware('auth');
 
 // Guest Users
 Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
@@ -75,6 +88,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('trip-movement-curier-list', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class,'courier_tripmovement_list'])->name('trip-movement-curier-list.index');;
 
     Route::resource('trip-movement-pod', App\Http\Controllers\Admin\Masters\PODTripMomentController::class);
+    Route::resource('trip-exp-detail', App\Http\Controllers\Admin\Masters\TripExpDetailController::class);
 
 
 

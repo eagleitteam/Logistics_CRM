@@ -10,6 +10,7 @@ use App\Models\Clientmaster;
 use App\Models\VehicleTypeMaster;
 use App\Models\SelfVehicle;
 use App\Models\Vendormaster;
+use App\Models\TripExpDetail;
 
 class TripMovement extends BaseModel
 {
@@ -39,6 +40,10 @@ class TripMovement extends BaseModel
             public function VehicalNumber()
             {
                 return $this->belongsTo(SelfVehicle::class, 'vehicle_no');
+            }
+            public function expDetails()
+            {
+                return $this->hasMany(TripExpDetail::class, 'trip_id', 'id');
             }
 
     public static function booted()

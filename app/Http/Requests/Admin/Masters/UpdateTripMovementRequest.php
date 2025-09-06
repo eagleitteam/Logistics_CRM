@@ -11,22 +11,36 @@ class UpdateTripMovementRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
-    {
-        return [
-            'trip_date' => 'required|date',
-            'vehicle_no' => 'required',
-            'vendor_id' => 'nullable',
-            'unique_no' => 'nullable',
-            'vehicle_type_category' => 'nullable',
-            'origin' => 'required',
-            'destination' => 'required',
-            'vehicle_type_id' => 'required',
-            'client_id' => 'required',
-            'driver_id' => 'required',
-            'rate' => 'required',
-        ];
-    }
+   public function rules(): array
+{
+    return [
+        'trip_date' => 'required|date',
+        'vehicle_no' => 'required',
+        'vendor_id' => 'nullable',
+        'unique_no' => 'nullable',
+        'vehicle_type_category' => 'nullable',
+        'origin' => 'required|string',
+        'destination' => 'required|string',
+        'vehicle_type_id' => 'required',
+        'client_id' => 'required',
+        'driver_id' => 'required',
+        'rate' => 'required|numeric',
+
+        // ✅ POD fields
+        'pod_no' => 'nullable|string',
+        'pod_document' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
+
+        // ✅ Expense fields
+        'toll_charges' => 'nullable|numeric',
+        'loading_unloading_charges' => 'nullable|numeric',
+        'handing_charges' => 'nullable|numeric',
+        'holding_charges' => 'nullable|numeric',
+        'holding_days' => 'nullable|integer',
+        'other_exp' => 'nullable|numeric',
+        'total_exp' => 'nullable|numeric',
+    ];
+}
+
 
     public function messages(): array
     {
