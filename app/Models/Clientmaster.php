@@ -11,6 +11,8 @@ class Clientmaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+
+
         protected $fillable = [
         'client_name','gst_status','gst_no','contact_name','contact_no','alternate_contact_no','email','billing_address','city','pincode','state','billing_type',
         'billing_date','categories','master_id','group_id','subgroup_id','opening_amt','dr_cr','year_master','status',

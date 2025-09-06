@@ -334,6 +334,67 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Podtripmovement.delete',
                 'group' => 'Podtripmovement',
             ],
+            [
+                'id' => 65,
+                'name' => 'companybillingmaster.view',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 66,
+                'name' => 'companybillingmaster.create',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 67,
+                'name' => 'companybillingmaster.edit',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 68,
+                'name' => 'companybillingmaster.delete',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 69,
+                'name' => 'numberingprefix.view',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 70,
+                'name' => 'numberingprefix.create',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 71,
+                'name' => 'numberingprefix.edit',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 72,
+                'name' => 'numberingprefix.delete',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 73,
+                'name' => 'invoicemaster.view',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 74,
+                'name' => 'invoicemaster.create',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 75,
+                'name' => 'invoicemaster.edit',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 76,
+                'name' => 'invoicemaster.delete',
+                'group' => 'invoicemaster',
+            ],
+
 
 
 

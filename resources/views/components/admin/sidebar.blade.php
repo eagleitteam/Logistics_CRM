@@ -148,7 +148,22 @@
                                         <a href="{{ route('branch-master.index') }}" class="nav-link {{ request()->routeIs('branch-master.index') ? 'active' : '' }}" data-key="t-horizontal">Branch Master</a>
                                     </li>
                                 @endcan
-                                
+                                @can('companybillingmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('company-billing-master.index') }}" class="nav-link {{ request()->routeIs('company-billing-master.index') ? 'active' : '' }}" data-key="t-horizontal">Company Billing Data Master</a>
+                                    </li>
+                                @endcan
+                                @can('numberingprefix.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('numbering-prefix-master.index') }}" class="nav-link {{ request()->routeIs('numbering-prefix-master.index') ? 'active' : '' }}" data-key="t-horizontal">Numbering Prefix Master</a>
+                                    </li>
+                                @endcan
+                                @can('invoicemaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
+                                    </li>
+                                @endcan
+
                             </ul>
                         </div>
                     </li>
