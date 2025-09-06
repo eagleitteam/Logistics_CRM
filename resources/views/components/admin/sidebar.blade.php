@@ -158,6 +158,11 @@
                                         <a href="{{ route('numbering-prefix-master.index') }}" class="nav-link {{ request()->routeIs('numbering-prefix-master.index') ? 'active' : '' }}" data-key="t-horizontal">Numbering Prefix Master</a>
                                     </li>
                                 @endcan
+                                @can('invoicemaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
+                                    </li>
+                                @endcan
 
                             </ul>
                         </div>

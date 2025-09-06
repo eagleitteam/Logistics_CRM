@@ -374,6 +374,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'numberingprefix.delete',
                 'group' => 'numberingprefix',
             ],
+            [
+                'id' => 73,
+                'name' => 'invoicemaster.view',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 74,
+                'name' => 'invoicemaster.create',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 75,
+                'name' => 'invoicemaster.edit',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 76,
+                'name' => 'invoicemaster.delete',
+                'group' => 'invoicemaster',
+            ],
 
 
 

@@ -64,6 +64,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('branch-master', App\Http\Controllers\Admin\Masters\BranchmasterController::class);
     Route::resource('company-billing-master', App\Http\Controllers\Admin\Masters\CompanybillingmasterrController::class);
     Route::resource('numbering-prefix-master', App\Http\Controllers\Admin\Masters\NumberingprefixController::class);
+    Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
 
     // Bulk edit (optional if you want to open modal with multiple records)
     Route::post('courier-trip-movement/bulk-add', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'bulkEdit'])->name('add-courier-trip-movement.bulkEdit');
