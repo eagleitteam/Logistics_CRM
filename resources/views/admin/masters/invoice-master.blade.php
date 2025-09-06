@@ -18,9 +18,7 @@
                 <label for="filter_month" class="form-label">Select Month</label>
                 <select id="filter_month" class="form-control">
                     <option value="">All Months</option>
-                    @foreach($months as $month)
-                        <option value="{{ $month }}">{{ $month }}</option>
-                    @endforeach
+                    
                 </select>
             </div>
             <div class="col-md-8 text-end">
