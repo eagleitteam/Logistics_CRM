@@ -5,7 +5,8 @@
     <title>Tax Invoice</title>
     <style>
         body {
-            font-family: 'DejaVu Sans', sans-serif;
+            /* font-family: 'DejaVu Sans', sans-serif; */
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
             font-size: 12px;
             margin: 0;
             padding: 0;
@@ -19,10 +20,22 @@
             position: relative;
             min-height: 100vh;
         }
+
+        h1, h2, h3, .fw-bold {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-weight: bold;
+        }
+
         h2, h3 {
             margin: 0;
             padding: 0;
         }
+
+        .invoice-numbers, .bank-details table td:nth-child(2) {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+
         /* Header */
         .header {
             display: flex;
@@ -86,40 +99,40 @@
             background: #fafafa;
             font-weight: bold;
         }
-        /* Terms & Payment */
-.section-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;  /* row madhe barobar suruvat karayla */
-    margin-top: 15px;
-    gap: 5px;
-}
-.terms {
-    flex: 0 0 50%;   /* 50% width */
-    font-size: 12px;
-}
-.terms .fw-bold {
-    margin-bottom: 5px;
-    display: block;
-}
-.bank-details {
-    flex: 0 0 30%;   /* 30% width */
-    text-align: right;
-    font-size: 12px;
-}
-.bank-details .fw-bold {
-    margin-bottom: 5px;
-    display: block;
-}
-.bank-details table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.bank-details table td {
-    padding: 1px 2px;
-    text-align: right;
-    border: none;
-}
+                /* Terms & Payment */
+        .section-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;  /* row madhe barobar suruvat karayla */
+            margin-top: 15px;
+            gap: 5px;
+        }
+        .terms {
+            flex: 0 0 50%;   /* 50% width */
+            font-size: 12px;
+        }
+        .terms .fw-bold {
+            margin-bottom: 5px;
+            display: block;
+        }
+        .bank-details {
+            flex: 0 0 30%;   /* 30% width */
+            text-align: right;
+            font-size: 12px;
+        }
+        .bank-details .fw-bold {
+            margin-bottom: 5px;
+            display: block;
+        }
+        .bank-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .bank-details table td {
+            padding: 1px 2px;
+            text-align: right;
+            border: none;
+        }
 
         /* Signature */
         .signature-section {
@@ -144,17 +157,21 @@
 </head>
 <body>
 
-<div class="invoice-container">
-    <!-- Header -->
-    <div class="header">
-        <div class="logo">
-            <img src="../../public/uploads/company_documents/logo.png" alt="Company Logo">
-        </div>
-        <div class="title">
-            <h3>TAX INVOICE</h3>
-            <h2>ADINATH LOGISTICS</h2>
-        </div>
-    </div>
+<table width="100%" style="border: none; margin-bottom:10px; border-collapse:collapse;">
+    <tr>
+        <!-- Logo -->
+        <td width="10%" style="padding:2px; vertical-align:middle;">
+            <img src="admin/images/inv_image/login-logo.png" alt="Company Logo" style="height:60px;">
+        </td>
+
+        <!-- Title -->
+        <td width="90%" style="text-align:center; padding:5px; vertical-align:middle;">
+            <h3 style="font-size:14px; margin:0; letter-spacing:1px; color:#555;">TAX INVOICE</h3>
+            <h2 style="font-size:20px; margin:5px 0 0 0; font-weight:bold; color:#000;">ADINATH LOGISTICS</h2>
+        </td>
+    </tr>
+</table>
+
 
     <!-- Invoice Details -->
     <table>
@@ -181,6 +198,12 @@
             <td>996511</td>
             <td class="fw-bold text-left">Invoice Period:</td>
             <td>Aug 2025</td>
+        </tr>
+        <tr>
+            <td class="fw-bold text-left">Reguler/Adhoc:</td>
+            <td>Adhoc</td>
+            <td class="fw-bold text-left">Reverse Charge Apply:</td>
+            <td>Yes</td>
         </tr>
     </table>
 
@@ -222,8 +245,8 @@
     <table>
         <thead>
             <tr>
-                <th>SR NO</th>
-                <th>DATE</th>
+                <th>Sr No</th>
+                <th>Date</th>
                 <th>Vehicle No.</th>
                 <th>Origin</th>
                 <th>Destination</th>
@@ -306,54 +329,69 @@
         </tr>
     </table>
 
-    <!-- Terms & Bank Details in one row -->
-<div class="section-flex">
-    <div class="terms">
-        <div class="fw-bold">Terms & Conditions:</div>
-        <ol>
-            <li>Payment to be made within the credit period.</li>
-            <li>Interest @18% p.a. applicable on late payments.</li>
-            <li>Goods once sold/services rendered will not be refunded.</li>
-            <li>All disputes subject to Mumbai jurisdiction.</li>
-            <li>E.&O.E (Errors & Omissions Excepted).</li>
-        </ol>
-    </div>
-    <div class="bank-details">
-        <div class="fw-bold">Payment Details:</div>
-        <table>
-            <tr>
-                <td class="fw-bold">A/c Holder:</td>
-                <td>Logistics Company</td>
-            </tr>
-            <tr>
-                <td class="fw-bold">A/c No:</td>
-                <td>2056102000009546</td>
-            </tr>
-            <tr>
-                <td class="fw-bold">IFSC:</td>
-                <td>IBKL0002056</td>
-            </tr>
-            <tr>
-                <td class="fw-bold">Bank:</td>
-                <td>IDBI BANK</td>
-            </tr>
-            <tr>
-                <td class="fw-bold">Branch:</td>
-                <td>BHIWANDI , ANJURFATA</td>
-            </tr>
-        </table>
-    </div>
+<table style="border: none; width:100%;">
+    <tr>
+        <!-- Terms -->
+        <td width="50%" valign="top">
+            <div class="fw-bold text-left">Terms & Conditions:</div>
+            <ol class="text-left">
+                <li style="margin-bottom: 8px;">Payment to be made within the credit period.</li>
+                <li style="margin-bottom: 8px;">Interest @18% p.a. applicable on late payments.</li>
+                <li style="margin-bottom: 8px;">Goods once sold/services rendered will not be refunded.</li>
+                <li style="margin-bottom: 8px;">All disputes subject to Mumbai jurisdiction.</li>
+                <li style="margin-bottom: 8px;">E.&O.E (Errors & Omissions Excepted).</li>
+            </ol>
+        </td>
+
+        <!-- Bank Details -->
+        <td width="40%" valign="top">
+            <div class="fw-bold">Bank Details:</div>
+            <table style="width:100%; border:none;">
+                <tr>
+                    <td class="fw-bold">A/c Holder:</td>
+                    <td class="text-left">Logistics Company</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">A/c No:</td>
+                    <td class="text-left">2056102000009546</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">IFSC:</td>
+                    <td class="text-left">IBKL0002056</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Bank:</td>
+                    <td class="text-left">IDBI BANK</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Branch:</td>
+                    <td class="text-left">BHIWANDI , ANJURFATA</td>
+                </tr>
+            </table>
+        </td>
+
+        
+    </tr>
+</table>
+
+<table style="border: none; width:30%; margin-left:auto; margin-right:0;">
+    <tr >
+        <!-- Signature -->
+        <td width="30%" valign="top" style="text-align:right; border: none;">
+            <img src="{{ public_path($finalSignature) }}" 
+                 alt="Authorized Signatory" 
+                 style="width:260px; height:auto;">
+            <div style="margin-top: 5px; font-size: 12px; text-align:center">Authorized Signatory</div>
+            <div style="font-size: 12px; text-align:center">Praful Chavan <br> (Proprietor)</div>
+        </td>
+    </tr>
+</table>
+
+<!-- Disclaimer -->
+<div style="font-size:10px; text-align:center; margin-top:20px;">
+    **This is a computer-generated invoice and does not require a physical signature.
 </div>
 
-    <!-- Signature -->
-    <div class="signature-section">
-        <div class="signature-box">
-            <img src="../../public/uploads/company_documents/signature.png" alt="Authorized Signatory">
-            <div>Authorized Signatory</div>
-            <div>Praful Chavan (Proprietor)</div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
