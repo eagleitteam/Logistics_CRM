@@ -22,7 +22,20 @@ Route::get('/', function () {
 })->name('/');
 
 
+Route::get('/storage/{path}', function ($path) {
+    if (!auth()->check()) {
+        abort(404); // ❌ not logged in
+    }
 
+    $file = storage_path('app/public/' . $path);
+
+    if (!file_exists($file)) {
+        abort(404); // ❌ file missing
+    }
+
+    // return file inline (for images/PDFs) or force download
+    return response()->file($file);
+})->where('path', '.*')->middleware('auth');
 
 // Guest Users
 Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
@@ -67,6 +80,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('company-billing-master', App\Http\Controllers\Admin\Masters\CompanybillingmasterrController::class);
     Route::resource('numbering-prefix-master', App\Http\Controllers\Admin\Masters\NumberingprefixController::class);
     Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
+    Route::get('get-trips', [App\Http\Controllers\Admin\Masters\InvoicemasterController::class, 'getTrips'])->name('get.trips');
+    Route::get('get-filtered-trips', [App\Http\Controllers\Admin\Masters\InvoicemasterController::class, 'getFilteredTrips'])->name('get.filtered.trips');
 
     // Bulk edit (optional if you want to open modal with multiple records)
     Route::post('courier-trip-movement/bulk-add', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class, 'bulkEdit'])->name('add-courier-trip-movement.bulkEdit');
@@ -80,6 +95,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('trip-movement-curier-list', [App\Http\Controllers\Admin\Masters\PODTripMomentController::class,'courier_tripmovement_list'])->name('trip-movement-curier-list.index');;
 
     Route::resource('trip-movement-pod', App\Http\Controllers\Admin\Masters\PODTripMomentController::class);
+    Route::resource('trip-exp-detail', App\Http\Controllers\Admin\Masters\TripExpDetailController::class);
 
 
 

@@ -38,6 +38,8 @@ return new class extends Migration
             $table->text('courier_tracking_number')->nullable();
             $table->text('pod_status')->nullable();
             $table->text('courier_status')->nullable();
+            $table->text('invocie_no')->nullable();
+            $table->text('invoice_status')->nullable();
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');

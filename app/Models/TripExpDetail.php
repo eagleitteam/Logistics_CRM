@@ -7,17 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class Invoicemaster extends BaseModel
+class TripExpDetail extends Model
 {
-    use HasFactory, SoftDeletes;
+     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['inv_no', 'inv_date','client_id','year_id','template_id','net_amount','gst_id','gst_amount','index_id','total_amount','bank_id','terms_conditions'];
+    protected $fillable = ['trip_id','unique_no','toll_charges','loading_unloading_charges','handing_charges','holding_charges','holding_days','other_exp','total_exp'];
 
-public function trips()
-{
-    return $this->belongsToMany(\App\Models\TripMovement::class, 'invoice_trip', 'invoice_id', 'trip_id')
-                ->withTimestamps();
-}
 
     public static function booted()
     {

@@ -11,6 +11,7 @@ use App\Models\Drivermaster;
 use App\Models\Clientmaster;
 use App\Models\VehicleTypeMaster;
 use App\Models\SelfVehicle;
+use App\Models\TripExpDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -110,10 +111,12 @@ class TripMovementController extends Controller
      */
    public function edit(TripMovement $trip_movement, Request $request)
 {
+    $expDetail = \App\Models\TripExpDetail::where('trip_id', $trip_movement->id)->first();
 
         return response()->json([
             'result' => 1,
             'trip_movement' => $trip_movement,
+            'exp_detail' => $expDetail
         ]);
     
 }
@@ -125,30 +128,67 @@ class TripMovementController extends Controller
 {
     try {
         DB::beginTransaction();
+
         $input = $request->validated();
 
-        // Check if vehicle exists in SelfVehicle
-        $Selfvehicle = SelfVehicle::find($input['vehicle_no']); // use vehicle_no not vehicle_number
-
-        if ($Selfvehicle) {
-            // If found in self-vehicles, mark as self
-            $input['vehicle_type_category'] = 1;
+        // ✅ Vehicle check → self or vendor
+        $selfVehicle = SelfVehicle::find($input['vehicle_no']);
+        if ($selfVehicle) {
+            $input['vehicle_type_category'] = 1; // self-owned
             $input['vendor_id'] = null;
         } else {
-            $input['vehicle_type_category'] = 2;
-            $input['vendor_id'] = $Selfvehicle?->vendor_name; // safe operator (avoid error if null)
+            $input['vehicle_type_category'] = 2; // vendor
+            $input['vendor_id'] = $selfVehicle?->vendor_name;
         }
 
-        // Update directly on the bound model
-        $trip_movement->update(Arr::only($input, TripMovement::getFillables()));
+        // ✅ Handle POD No
+        $input['pod_no'] = $request->pod_no ?? $trip_movement->pod_no;
+
+        // ✅ Handle POD Document Upload
+        if ($request->hasFile('pod_document')) {
+            if ($trip_movement->pod_document && Storage::disk('public')->exists($trip_movement->pod_document)) {
+                Storage::disk('public')->delete($trip_movement->pod_document);
+            }
+
+            $file = $request->file('pod_document');
+            $filename = $trip_movement->unique_no . "_" . date('Ymd') . '_' . Str::random(6) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('PodDocument', $filename, 'public');
+
+            $input['pod_document'] = $path;
+            $input['pod_status']   = 1;
+        }
+
+        // ✅ Update TripMovement
+        $trip_movement->update(Arr::only($input, (new TripMovement())->getFillable()));
+
+        // ✅ Update Trip Expense ONLY if record already exists
+        if ($request->hasAny([
+            'toll_charges',
+            'loading_unloading_charges',
+            'handing_charges',
+            'holding_charges',
+            'holding_days',
+            'other_exp',
+            'total_exp'
+        ])) {
+            $expDetail = TripExpDetail::where('trip_id', $trip_movement->id)->first();
+
+            if ($expDetail) {
+                $expDetail->update(
+                    Arr::only($input, (new TripExpDetail())->getFillable())
+                );
+            }
+            // else → do nothing (don’t create new record)
+        }
 
         DB::commit();
-        return response()->json(['success' => 'Trip Movement updated successfully!']);
+        return response()->json(['success' => 'Trip Movement, POD & Expense details updated successfully!']);
     } catch (\Exception $e) {
         DB::rollBack();
-        return $this->respondWithAjax($e, 'updating', 'Vehicle');
+        return $this->respondWithAjax($e, 'updating', 'Trip Movement');
     }
 }
+
 
 
     /**
