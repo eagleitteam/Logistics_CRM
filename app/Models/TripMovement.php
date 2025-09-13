@@ -11,12 +11,19 @@ use App\Models\VehicleTypeMaster;
 use App\Models\SelfVehicle;
 use App\Models\Vendormaster;
 use App\Models\TripExpDetail;
+use App\Models\Invoicemaster;
 
 class TripMovement extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['trip_date','vendor_id','vehicle_type_category','vehicle_no','origin','destination','vehicle_type_id','client_id','driver_id','remark','rate','unique_no','pod_no', 'pod_document', 'pod_date', 'courier','courier_date', 'courier_tracking_number','pod_status','courier_status'];
+
+    public function invoices()
+{
+    return $this->belongsToMany(Invoicemaster::class, 'invoice_trip', 'trip_id', 'invoice_id')
+                ->withTimestamps();
+}
 
             public function vendor()
             {

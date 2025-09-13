@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('invoicemasters', function (Blueprint $table) {
             $table->id();
             $table->string('inv_no')->unique();
-            $table->date('inv_date');
-            $table->string('client_id');
-            $table->string('year_id');
-            $table->string('template_id');
-            $table->decimal('net_amount', 15, 2);
-            $table->string('gst_id');
-            $table->decimal('gst_amount', 15, 2);
-            $table->string('index_id');
-            $table->decimal('total_amount', 15, 2);
-            $table->string('bank_id');
+            $table->date('inv_date')->nullable();
+            $table->string('client_id')->nullable();
+            $table->string('year_id')->nullable();
+            $table->string('template_id')->nullable();
+            $table->decimal('net_amount', 15, 2)->nullable();
+            $table->string('gst_id')->nullable();
+            $table->decimal('gst_amount', 15, 2)->nullable();
+            $table->string('index_id')->nullable();
+            $table->decimal('total_amount', 15, 2)->nullable();
+            $table->string('bank_id')->nullable();
             $table->text('terms_conditions')->nullable();
             
             $table->foreignId('created_by')->nullable()->constrained('users');

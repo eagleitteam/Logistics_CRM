@@ -1,32 +1,40 @@
 <x-admin.layout>
     <x-slot name="title">Invoice Master</x-slot>
     <x-slot name="heading">Invoice Master</x-slot>
-    {{-- <x-slot name="subheading">Test</x-slot> --}}
-
 
     <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="filter_client" class="form-label">Select Client</label>
-                <select id="filter_client" class="form-control">
-                    <option value="">All Clients</option>
-                    @foreach($clientmasters as $client)
-                        <option value="{{ $client->id }}">{{ $client->client_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="filter_month" class="form-label">Select Month</label>
-                <select id="filter_month" class="form-control">
-                    <option value="">All Months</option>
-                    @foreach($months as $month)
-                        <option value="{{ $month }}">{{ $month }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-8 text-end">
-                <button id="editBtn" class="btn btn-primary" disabled>ADD</button>
-                <button id="editBtnRoute" class="btn btn-primary" disabled>Edit</button>
-            </div>
+        <div class="col-md-4">
+            <label for="filter_client" class="form-label">Select Client</label>
+            <select id="filter_client" class="form-control">
+                <option value="">All Clients</option>
+                @foreach($clientmasters as $client)
+                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="filter_month" class="form-label">Select Month</label>
+            <select id="filter_month" class="form-control">
+                <option value="">All Months</option>
+                @foreach (range(1, 12) as $m)
+                    @php
+                        $monthValue = str_pad($m, 2, '0', STR_PAD_LEFT);
+                        $monthName = date('F', mktime(0, 0, 0, $m, 1));
+                    @endphp
+                    <option value="{{ $monthValue }}">{{ $monthName }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="filter_trips" class="form-label">Select Trips</label>
+            <select id="filter_trips" class="form-control" name="trips" multiple></select>
+        </div>
+    </div>
+
+    <div class="col-md-8 text-end mb-3">
+        <button id="addBtn" class="btn btn-primary" disabled>ADD</button>
     </div>
 
     <div class="row">
@@ -34,22 +42,20 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="buttons-datatables" class="table table-bordered nowrap align-middle"
-                            style="width:100%">
-                           <thead>
-                            <tr>
-                            <th></th>
-                            <th>Sr No.</th>
-                            <th>Unique Number</th>
-                            <th>Vehical Number</th>
-                            <th>POD Number</th>
-                            <th>Courier</th>
-                            <th>Courier Tracking Number</th>
-                            <th>Courier Status</th>
-                            <th>POD Status</th>
-                            </tr>
+                        <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Unique Number</th>
+                                    <th>Vehical Number</th>
+                                    <th>POD Number</th>
+                                    <th>Courier</th>
+                                    <th>Courier Tracking Number</th>
+                                    <th>Courier Status</th>
+                                    <th>POD Status</th>
+                                </tr>
                             </thead>
-                             <tbody></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -57,246 +63,218 @@
         </div>
     </div>
 
-<div class="modal fade" id="podModal" tabindex="-1" aria-labelledby="podModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="editForm">
-        @csrf
-    <input type="hidden" id="edit_model_ids" name="ids"> <!-- store multiple IDs -->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add POD Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-
-            <div class="mb-3">
-                <label for="courier" class="form-label">Courier </label>
-                <input type="text" class="form-control" id="edit_courier" name="courier">
-                <span class="text-danger invalid courier_err"></span>
-
+    {{-- Hidden Invoice Section (will show after ADD) --}}
+    <div id="invoiceSection" style="display:none;">
+        <div class="row mb-3 border-bottom pb-3">
+            <div class="col-md-6">
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Select Invoice Type:</div>
+                    <div class="col-8">
+                        <select id="invoiceType" class="form-control">
+                            <option value="">Select Invoice type</option>
+                            <option value="adhoc_invoice">adhoc invoice</option>
+                            <option value="fix_vehicle_invoice">fix vehicle invoice</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Tax Invoice No:</div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" name="inv_no" id="invoiceNo" value="AL/NGB/ADH/036">
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Invoice Date:</div>
+                    <div class="col-8">
+                        <input type="date" class="form-control form-control-sm" id="invoiceDate" name="invoiceDate" >
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">RO/PO Number:</div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="poNumber" name="poNumber">
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-4 fw-bold">SAC NO:</div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="sacNo" name="sacNo">
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="courier_tracking_number" class="form-label">Courier Tracking Number</label>
-                <input type="text" class="form-control" id="edit_courier_tracking_number" name="courier_tracking_number">
-                <span class="text-danger invalid courier_tracking_number_err"></span>
-
+            <div class="col-md-6">
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Credit Terms:</div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="creditTerms" name="termdays" value="15 Days">
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Transaction:</div>
+                    <div class="col-8">
+                        <select class="form-select form-select-sm" id="transactionNature">
+                            <option value="Intra State" selected>Intra State</option>
+                            <option value="Inter State">Inter State</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4 fw-bold">Supply Nature:</div>
+                    <div class="col-8">
+                        <select class="form-select form-select-sm" id="supplyNature" name="supplyNature">
+                            <option value="Services" selected>Services</option>
+                            <option value="Goods">Goods</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-4 fw-bold">Invoice Period:</div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="invoicePeriod" name="invoicePeriod">
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="courier_date" class="form-label">Courier Date</label>
-                <input type="date" class="form-control" id="edit_courier_date" name="courier_date">
-                <span class="text-danger invalid courier_date_err"></span>
-            </div>
-            
-
-          </div>
-          <div class="modal-footer">
-            <button type="submit" id="podSubmit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
         </div>
-    </form>
-  </div>
-</div>
 
-
+        <div class="row mb-3 border-bottom pb-3">
+            <div class="col-md-6">
+                <label class="fw-bold">Billed From:</label>
+                <input type="text" class="form-control form-control-sm mb-2" id="billedFrom" value="ADINATH LOGISTICS" name="billedFrom">
+                <textarea class="form-control form-control-sm" id="billedFromAddress" rows="2" name="billedFromAddress">
+GROUND FLOOR,1035,ANANDNAGAR,CHARNIPADA ROAD,RAHNAL,RAHNAL,BHIWANDI,THANE,MAHARASHTRA 421302
+                </textarea>
+            </div>
+        </div>
+        <div class="text-end mt-3">
+        <button id="submitInvoiceBtn" class="btn btn-success">Submit Invoice</button>
+    </div>
+    </div>
 </x-admin.layout>
 
+{{-- Select2 --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
 <script>
-            $('#editBtnRoute').on('click', function (e) {
-            e.preventDefault(); // stop default button action
-            window.location.href = "{{ route('trip-movement-curier-list.index') }}"; 
-        });
+    $('#filter_trips').select2({
+        placeholder: "Select Trips",
+        allowClear: true
+    });
 
-        $(document).ready(function () {
-                $("#editBtnRoute").prop('disabled', false);
+    $(document).ready(function(){
+        // Load trips when client or month changes
+        function loadTrips() {
+            let clientId = $('#filter_client').val();
+            let month = $('#filter_month').val();
 
-            let selectedIds = [];
+            if(clientId && month){
+                $.ajax({
+                    url: "{{ route('get.trips') }}",
+                    method: "GET",
+                    data: { client_id: clientId, month: month },
+                    success: function(res) {
+                        let options = '';
+                        res.forEach(function(trip) {
+                            options += `<option value="${trip.id}">${trip.text}</option>`;
+                        });
+                        $('#filter_trips').html(options).trigger('change');
+                    }
+                });
+            }
+        }
 
-            var table = $('#buttons-datatables').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            searching: false,
-            ajax: function(data, callback, settings) {
-                // initially return empty data
-                callback({ data: [], recordsTotal: 0, recordsFiltered: 0 });
-            },
-            columns: [
-                {
-                    data: 'id',
-                    name: 'id',
-                    render: function (data, type, row) {
-                        if (row.courier_status == 1) {
-                    return '<input type="checkbox" class="rowCheckbox" value="' + data + '" checked disabled>';
-                } else {
-                    return '<input type="checkbox" class="rowCheckbox" value="' + data + '">';
-                }
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'unique_no', name: 'unique_no'},
-                {data: 'VehicalNumber.vehicle_number', name: 'VehicalNumber.vehicle_number'},
-                {data: 'pod_no', name: 'pod_no'},
-                {data: 'courier', name: 'courier'},
-                {data: 'courier_tracking_number', name: 'courier_tracking_number'},
-                {data: 'courier_status', name: 'courier_status'},
-                {data: 'pod_status', name: 'pod_status'}
-            ]
-        });
+        $('#filter_client, #filter_month').on('change', loadTrips);
 
-
-
-        $('#filter_client').on('change', function () {
-            let clientId = $(this).val();
-
-            if (clientId) {
-                table.ajax.url("{{ route('add-courier-trip-movement.index') }}?client_id=" + clientId).load();
+        // Enable ADD button if trips are selected
+        $('#filter_trips').on('change', function(){
+            if($(this).val().length > 0){
+                $('#addBtn').prop('disabled', false);
             } else {
-                // clear table if "All Clients" is chosen
-                table.clear().draw();
+                $('#addBtn').prop('disabled', true);
             }
         });
 
+        // On ADD button click → load table + show invoice section
+        $('#addBtn').on('click', function(){
+            let clientId = $('#filter_client').val();
+            let month = $('#filter_month').val();
+            let trips = $('#filter_trips').val();
 
-            // ✅ Select all
-            $('#selectAll').on('change', function () {
-                $('.rowCheckbox').prop('checked', $(this).prop('checked')).trigger('change');
-            });
-
-            // ✅ Track selected IDs
-
-            // ✅ Edit button click → open modal with first selected ID
-        $('#editBtn').on('click', function () {
-            if (selectedIds.length === 0) return;
-
-            // save selected ids into hidden input
-            $("#edit_model_ids").val(selectedIds.join(",")); 
-
-            // fetch first record only to prefill the form
             $.ajax({
-                url: "{{ route('add-courier-trip-movement.bulkEdit') }}",
-                type: 'POST',
-                data: {
-                    ids: selectedIds,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function (data) {
-                    if (data.result && data.records.length > 0) {
-                        let record = data.records[0]; // just show first record for preview
+                url: "{{ route('get.filtered.trips') }}",
+                method: "GET",
+                data: { client_id: clientId, month: month, trips: trips },
+                success: function(res) {
+                    let tbody = '';
+                    res.forEach(function(trip, index) {
+                        tbody += `
+                            <tr>
+                                <td>${index+1}</td>
+                                <td>${trip.unique_no ?? ''}</td>
+                                <td>${trip.vehical_number?.vehicle_number ?? ''}</td>
+                                <td>${trip.pod_number ?? ''}</td>
+                                <td>${trip.courier ?? ''}</td>
+                                <td>${trip.courier_tracking_number ?? ''}</td>
+                                <td>${trip.courier_status ?? ''}</td>
+                                <td>${trip.pod_status == 1 ? '<span class="badge bg-success">POD Added</span>' : '<span class="badge bg-warning">Pending</span>'}</td>
+                            </tr>
+                        `;
+                    });
+                    $('#buttons-datatables tbody').html(tbody);
 
-                        $("#editForm")[0].reset();
-                        $("#edit_pod_no").val(record.pod_no);
-                        $("#edit_courier").val(record.courier);
-                        $("#edit_courier_tracking_number").val(record.courier_tracking_number);
-                        $("#edit_courier_date").val(record.courier_date);
-
-                        if (record.pod_document) {
-                            $("#edit_pod_document_view").attr("href", "/storage/" + record.pod_document).show();
-                        } else {
-                            $("#edit_pod_document_view").hide();
-                        }
-
-                        $("#podModal").modal('show');
-                    } else {
-                        swal("Error!", "No record found for editing", "error");
+                    if(res.length > 0){
+                        $('#invoiceSection').show(); // show invoice fields
                     }
                 }
             });
         });
-
-        $('#editForm').on('submit', function (e) {
-            e.preventDefault();
-
-            let formData = new FormData(this);
-            formData.append("_token", "{{ csrf_token() }}");
-
-            $.ajax({
-                url: "{{ route('add-courier-trip-movement.updateBulk') }}", // 👈 new route
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    swal("Success!", response.success, "success").then(() => {
-                        $("#podModal").modal("hide");
-                        $('#buttons-datatables').DataTable().ajax.reload(null, false);
-                        selectedIds = [];
-                        $("#editBtn, #deleteBtn").prop('disabled', true);
-                    });
-                },
-                error: function (xhr) {
-                    swal("Error!", "Something went wrong", "error");
-                }
-            });
-        });
-
-
-
-            $('#buttons-datatables').on('change', '.rowCheckbox', function () {
-            let id = $(this).val();
-
-            if ($(this).prop('checked')) {
-                if (!selectedIds.includes(id)) selectedIds.push(id);
-            } else {
-                selectedIds = selectedIds.filter(x => x !== id);
-            }
-
-            $("#editBtn, #deleteBtn").prop('disabled', selectedIds.length === 0);
-        });
-
-            // ✅ Edit button click → open modal with first selected ID
-            // ✅ Edit button click → open modal with first selected ID
-        // ✅ Bulk Delete button click → delete all selected
-
-
-
-
-            
-        });
-</script>
-
-{{-- Add --}}
-<script>
-    $("#addForm").submit(function(e) {
-        e.preventDefault();
-        $("#addSubmit").prop('disabled', true);
-
-        var formdata = new FormData(this);
-        $.ajax({
-            url: '{{ route('invoicemaster.store') }}',
-            type: 'POST',
-            data: formdata,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                $("#addSubmit").prop('disabled', false);
-                if (!data.error2)
-                    swal("Successful!", data.success, "success")
-                    .then((action) => {
-                        window.location.href = '{{ route('invoicemaster.index') }}';
-                    });
-                else
-                    swal("Error!", data.error2, "error");
-            },
-            statusCode: {
-                422: function(responseObject, textStatus, jqXHR) {
-                    $("#addSubmit").prop('disabled', false);
-                    resetErrors();
-                    printErrMsg(responseObject.responseJSON.errors);
-                },
-                500: function(responseObject, textStatus, errorThrown) {
-                    $("#addSubmit").prop('disabled', false);
-                    swal("Error occured!", "Something went wrong please try again", "error");
-                }
-            }
-        });
-
     });
+
+
+    $('#submitInvoiceBtn').on('click', function(e){
+    e.preventDefault();
+
+    let data = {
+        inv_no: $('#invoiceNo').val(),
+        inv_date: $('#invoiceDate').val(),
+        poNumber: $('#poNumber').val(),
+        sacNo: $('#sacNo').val(),
+        termdays: $('#creditTerms').val(),
+        transactionNature: $('#transactionNature').val(),
+        supplyNature: $('#supplyNature').val(),
+        invoicePeriod: $('#invoicePeriod').val(),
+        billedFrom: $('#billedFrom').val(),
+        billedFromAddress: $('#billedFromAddress').val(),
+
+        client_id: $('#filter_client').val(),
+        month: $('#filter_month').val(),
+        trip_ids: $('#filter_trips').val()
+    };
+
+    $.ajax({
+        url: "{{ route('invoicemaster.store') }}", // ✅ use your store route
+        type: "POST",
+        data: data,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        success: function(res){
+            alert(res.success);
+            location.reload(); // refresh after success
+        },
+        error: function(xhr){
+            if(xhr.responseJSON && xhr.responseJSON.errors){
+                let errors = xhr.responseJSON.errors;
+                let errorMessage = '';
+                Object.keys(errors).forEach(function(key){
+                    errorMessage += errors[key][0] + '\n';
+                });
+                alert("Validation Errors:\n" + errorMessage);
+            } else {
+                alert("Something went wrong while submitting.");
+            }
+        }
+    });
+});
+
 </script>
-
-
