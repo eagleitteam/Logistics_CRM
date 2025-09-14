@@ -131,6 +131,30 @@
                                                 <input type="url" class="form-control" id="website" name="website" placeholder="Enter Website URL">
                                             </div>
                                         </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label for="Bank_id" class="form-label">Select Bank</label>
+                                                <select class="form-select" id="Bank_id" name="Bank_id">
+                                                    <option value="" selected disabled>Choose...</option>
+                                                    @foreach ($bankmasters as $bankmaster)
+                                                        <option value="{{ optional($bankmaster)->id }}">
+                                                            {{ optional($bankmaster)->Bank_Name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="gst" class="form-label">Select Applied GST Code</label>
+                                                <select class="form-select" id="gst_code_id" name="gst_code_id">
+                                                    <option value="" selected disabled>Choose...</option>
+                                                    @foreach ($gstmasters as $gstmaster)
+                                                        <option value="{{ optional($gstmaster)->id }}">
+                                                            {{ optional($gstmaster)->gst_code }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

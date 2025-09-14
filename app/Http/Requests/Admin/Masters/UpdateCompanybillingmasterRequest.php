@@ -37,6 +37,8 @@ class UpdateCompanybillingmasterRequest extends FormRequest
             'contact_number' => 'required|string|max:10',
             'email' => 'nullable|email|max:255',
             'website' => 'nullable|url|max:255',
+            'Bank_id' => 'required|exists:bankmasters,id',
+            'gst_code_id' => 'required|exists:gstmasters,id',
             'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'company_seal' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'authorised_signature' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

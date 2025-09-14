@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('contact_number');
             $table->string('email');
             $table->string('website')->nullable();
+            $table->string('Bank_id');
+            $table->string('gst_code_id');
             $table->string('company_logo')->nullable();
             $table->string('company_seal')->nullable();
             $table->string('authorised_signature')->nullable();

@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Masters\StoreCompanybillingmasterRequest;
 use App\Http\Requests\Admin\Masters\UpdateCompanybillingmasterRequest;
 use App\Models\Companybillingmaster;
 use App\Models\Statemaster;
+use App\Models\Bankmaster;
+use App\Models\Gstmaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -19,10 +21,12 @@ class CompanybillingmasterrController extends Controller
     public function index()
     {
         $statemasters = Statemaster::latest()->get();
+        $bankmasters = Bankmaster::latest()->get();
+        $gstmasters = Gstmaster::latest()->get();
 
         $companybillingmasters = Companybillingmaster::latest()->get();
 
-        return view('admin.masters.company-billing-master')->with(['companybillingmasters' => $companybillingmasters, 'statemasters' => $statemasters]);
+        return view('admin.masters.company-billing-master')->with(['companybillingmasters' => $companybillingmasters, 'statemasters' => $statemasters, 'bankmasters' => $bankmasters, 'gstmasters' => $gstmasters]);
     }
 
     /**
