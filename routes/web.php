@@ -35,6 +35,9 @@ Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
 Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     // Auth Routes
+
+
+    
     Route::get('home', fn () => redirect()->route('dashboard'))->name('home');
     // Route::middleware('role:Employee,true')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
