@@ -12,20 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fixed_vehicles', function (Blueprint $table) {
+        Schema::create('fixvehicleclients', function (Blueprint $table) {
             $table->id();
-            
             $table->foreignIdFor(Clientmaster::class)->nullable()->constrained();
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('vehicle_number');
-            $table->string('fixed_km');
-            $table->string('fixed_price');
-            $table->string('extra_km_rate');
-            $table->string('vehicle_type');
-            
-            
-            
+
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
@@ -39,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fixed_vehicles');
+        Schema::dropIfExists('fixvehicleclients');
     }
 };

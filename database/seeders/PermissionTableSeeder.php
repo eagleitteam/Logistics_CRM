@@ -394,6 +394,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'invoicemaster.delete',
                 'group' => 'invoicemaster',
             ],
+            [
+                'id' => 77,
+                'name' => 'invoicefixmaster.view',
+                'group' => 'invoicefixmaster',
+            ],
+            [
+                'id' => 78,
+                'name' => 'invoicefixmaster.create',
+                'group' => 'invoicefixmaster',
+            ],
+            [
+                'id' => 79,
+                'name' => 'invoicefixmaster.edit',
+                'group' => 'invoicefixmaster',
+            ],
+            [
+                'id' => 80,
+                'name' => 'invoicefixmaster.delete',
+                'group' => 'invoicefixmaster',
+            ],
 
 
 

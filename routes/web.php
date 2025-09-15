@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PdfTestController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +78,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('company-billing-master', App\Http\Controllers\Admin\Masters\CompanybillingmasterrController::class);
     Route::resource('numbering-prefix-master', App\Http\Controllers\Admin\Masters\NumberingprefixController::class);
     Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
+    Route::resource('invoicefixmaster', App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class);
+
     Route::get('get-trips', [App\Http\Controllers\Admin\Masters\InvoicemasterController::class, 'getTrips'])->name('get.trips');
     Route::get('get-filtered-trips', [App\Http\Controllers\Admin\Masters\InvoicemasterController::class, 'getFilteredTrips'])->name('get.filtered.trips');
 
