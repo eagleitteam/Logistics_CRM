@@ -3,34 +3,28 @@
     <x-slot name="heading">Invoice Master</x-slot>
 
     <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="filter_client" class="form-label">Select Client</label>
-            <select id="filter_client" class="form-control">
-                <option value="">All Clients</option>
-                @foreach($clientmasters as $client)
-                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-4">
-            <label for="filter_month" class="form-label">Select Month</label>
-            <select id="filter_month" class="form-control">
-                <option value="">All Months</option>
-                @foreach (range(1, 12) as $m)
-                    @php
-                        $monthValue = str_pad($m, 2, '0', STR_PAD_LEFT);
-                        $monthName = date('F', mktime(0, 0, 0, $m, 1));
-                    @endphp
-                    <option value="{{ $monthValue }}">{{ $monthName }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-4">
-            <label for="filter_trips" class="form-label">Select Trips</label>
-            <select id="filter_trips" class="form-control" name="trips" multiple></select>
-        </div>
+            <div class="col-md-4">
+                <label for="filter_client" class="form-label">Select Client</label>
+                <select id="filter_client" class="form-control">
+                    <option value="">All Clients</option>
+                    @foreach($clientmasters as $client)
+                        <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="filter_month" class="form-label">Select Month</label>
+                <select id="filter_month" class="form-control">
+                    <option value="">All Months</option>
+                    @foreach($months as $month)
+                        <option value="{{ $month }}">{{ $month }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-8 text-end">
+                <button id="editBtn" class="btn btn-primary" disabled>ADD</button>
+                <button id="editBtnRoute" class="btn btn-primary" disabled>Edit</button>
+            </div>
     </div>
 
     <div class="col-md-8 text-end mb-3">
