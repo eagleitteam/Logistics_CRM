@@ -22,23 +22,24 @@ class InvoicefixmasterController extends Controller
      */
     public function index()
     {
-        $VehicleNo = SelfVehicle::where('deleted_at','=',null)->get();
 
-        $VehicleTypeMaster = VehicleTypeMaster::where('deleted_at','=',null)->get();
+        $fixvehicleclients = fixvehicleclients::with('client')->withCount('fixvehicles')->latest()->get();
 
-        $clientmasters = Clientmaster::latest()->get();
-
-        $fixvehicleclients = fixvehicleclients::with('fixvehicles')->withCount('fixvehicles')->latest()->get();
-
-        return view('admin.masters.invoice-fix-master')->with(['fixvehicleclients' => $fixvehicleclients, 'clientmasters' => $clientmasters, 'VehicleNo'=>$VehicleNo, 'VehicleTypeMaster' => $VehicleTypeMaster]);
+        return view('admin.masters.fixed-vehicle-list')->with(['fixvehicleclients' => $fixvehicleclients]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+    
+        $VehicleNo = SelfVehicle::where('deleted_at','=',null)->get();
+
+        $VehicleTypeMaster = VehicleTypeMaster::where('deleted_at','=',null)->get();
+
+        $clientmasters = Clientmaster::latest()->get();
+        return view('admin.masters.fixed-vehicle-create')->with(['clientmasters' => $clientmasters, 'VehicleNo'=>$VehicleNo, 'VehicleTypeMaster' => $VehicleTypeMaster, 'readonly' => false]);
+        
     }
 
     /**
@@ -93,10 +94,25 @@ class InvoicefixmasterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $fixvehicleclient = fixvehicleclients::with('fixvehicles')->where('id',$id)->first(); 
+
+        if ($fixvehicleclient) {
+            $VehicleNo = SelfVehicle::whereNull('deleted_at')->get();
+            $VehicleTypeMaster = VehicleTypeMaster::whereNull('deleted_at')->get();
+            $clientmasters = Clientmaster::latest()->get();
+            //  dd($fixvehicleclient->toArray());
+            return view('admin.masters.fixed-vehicle-create')->with([
+                'clientmasters'      => $clientmasters,
+                'VehicleNo'          => $VehicleNo,
+                'VehicleTypeMaster'  => $VehicleTypeMaster,
+                'fixvehicleclient'  => $fixvehicleclient,
+                'readonly' => true,
+            ]);
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -106,7 +122,7 @@ class InvoicefixmasterController extends Controller
      // FixVehicleClient मुख्य record
     $fixClient = fixvehicleclients::with('fixvehicles')->latest()->get();
 
-    $fixvehicleclients = fixvehicleclients::find($request->model_id);
+    $fixvehicleclients = fixvehicleclients::with('fixvehicles')->find($request->model_id);
     if ($fixvehicleclients) {
         return response()->json([
             'result' => 1,

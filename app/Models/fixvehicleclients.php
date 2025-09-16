@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\fixvehicles;
+use App\Models\Clientmaster;
+
 
 
 class fixvehicleclients extends BaseModel
@@ -19,6 +21,11 @@ class fixvehicleclients extends BaseModel
     public function fixvehicles()
     {
         return $this->hasMany(fixvehicles::class, 'fixvehicleclients_id', 'id');
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Clientmaster::class, 'id', 'clientmaster_id');
     }
 
     public static function booted()
