@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-use App\Models\fixvehicles;
+use App\Models\Fixvehicles;
 use App\Models\Clientmaster;
 
 
 
-class fixvehicleclients extends BaseModel
+class Fixvehicleclients extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['clientmaster_id','start_date','end_date'];
+    protected $fillable = ['clientmaster_id','start_date','end_date','contract_title'];
 
     // एक client ला अनेक vehicles असतात
-    public function fixvehicles()
+    public function Fixvehicles()
     {
-        return $this->hasMany(fixvehicles::class, 'fixvehicleclients_id', 'id');
+        return $this->hasMany(Fixvehicles::class, 'fixvehicleclients_id', 'id');
     }
 
     public function client()

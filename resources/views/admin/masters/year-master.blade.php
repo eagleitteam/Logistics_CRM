@@ -20,12 +20,12 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="start_date" class="form-label">Start Date</label>
-                                <input type="date" class="form-control" name="start_date" id="start_date" required>
+                                <input type="date" class="form-control" name="start_date" id="start_date" >
                                 <span class="text-danger invalid start_date_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label for="end_date" class="form-label">End Date</label>
-                                <input type="date" class="form-control" name="end_date" id="end_date" required>
+                                <input type="date" class="form-control" name="end_date" id="end_date" >
                                 <span class="text-danger invalid end_date_err"></span>
                             </div>
                             
@@ -64,12 +64,12 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="start_date" class="form-label">Start Date</label>
-                                <input type="date" class="form-control" name="start_date" id="start_date" required>
+                                <input type="date" class="form-control" name="start_date" id="start_date" >
                                 <span class="text-danger invalid start_date_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label for="end_date" class="form-label">End Date</label>
-                                <input type="date" class="form-control" name="end_date" id="end_date" required>
+                                <input type="date" class="form-control" name="end_date" id="end_date" >
                                 <span class="text-danger invalid end_date_err"></span>
                             </div>
                             

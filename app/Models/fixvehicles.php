@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-use App\Models\fixvehicleclients;
+use App\Models\Fixvehicleclients;
 
-class fixvehicles extends Model
+class Fixvehicles extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['fixvehicleclients_id','clientmaster_id','self_vehicle_id','vehical_type','fixed_km','fixed_price','extra_km_rate'];
 
     // प्रत्येक vehicle एका client contract शी belong करतं
-    public function fixvehicleclient()
+    public function Fixvehicleclient()
     {
-        return $this->belongsTo(FixVehicleClient::class, 'fixvehicleclients_id', 'id');
+        return $this->belongsTo(Fixvehicleclients::class, 'fixvehicleclients_id', 'id');
     }
 
 

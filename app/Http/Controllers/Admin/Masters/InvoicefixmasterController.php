@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Masters;
 use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\Admin\Masters\StoreInvoicefixmasterRequest;
 use App\Http\Requests\Admin\Masters\UpdateInvoicefixmasterRequest;
-use App\Models\fixvehicleclients;
-use App\Models\fixvehicles;
+use App\Models\Fixvehicleclients;
+use App\Models\Fixvehicles;
 use App\Models\Clientmaster;
 use App\Models\VehicleTypeMaster;
 use App\Models\SelfVehicle;
@@ -23,7 +23,7 @@ class InvoicefixmasterController extends Controller
     public function index()
     {
 
-        $fixvehicleclients = fixvehicleclients::with('client')->withCount('fixvehicles')->latest()->get();
+        $fixvehicleclients = Fixvehicleclients::with('client')->withCount('Fixvehicles')->latest()->get();
 
         return view('admin.masters.fixed-vehicle-list')->with(['fixvehicleclients' => $fixvehicleclients]);
     }
@@ -53,10 +53,11 @@ class InvoicefixmasterController extends Controller
             $input = $request->validated();
 
             // Step 1: Create fixvehicleclients entry
-            $fixClient = fixvehicleclients::create([
+            $fixClient = Fixvehicleclients::create([
                 'clientmaster_id'  => $input['clientmaster_id'],
                 'start_date' => $input['start_date'],
                 'end_date'   => $input['end_date'],
+                'contract_title' => $input['contract_title'],
             ]);
 
             // Step 2: Get parallel arrays
@@ -68,7 +69,7 @@ class InvoicefixmasterController extends Controller
 
             // Step 3: Loop through arrays and insert row by row
             for ($i = 0; $i < count($self_vehicle_id); $i++) {
-                fixvehicles::create([
+                Fixvehicles::create([
                     'fixvehicleclients_id' => $fixClient->id,
                     'clientmaster_id'      => $fixClient->clientmaster_id,
                     'self_vehicle_id'      => $self_vehicle_id[$i],
@@ -96,7 +97,7 @@ class InvoicefixmasterController extends Controller
      */
     public function show($id)
     {
-        $fixvehicleclient = fixvehicleclients::with('fixvehicles')->where('id',$id)->first(); 
+        $fixvehicleclient = Fixvehicleclients::with('Fixvehicles')->where('id',$id)->first();
 
         if ($fixvehicleclient) {
             $VehicleNo = SelfVehicle::whereNull('deleted_at')->get();
@@ -117,54 +118,24 @@ class InvoicefixmasterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-   public function edit(fixvehicleclients $fixvehicleclients, Request $request)
-{
-     // FixVehicleClient मुख्य record
-    $fixClient = fixvehicleclients::with('fixvehicles')->latest()->get();
-
-    $fixvehicleclients = fixvehicleclients::with('fixvehicles')->find($request->model_id);
-    if ($fixvehicleclients) {
-        return response()->json([
-            'result' => 1,
-            'fixvehicleclients' => $fixvehicleclients,
-        ]);
-    } else {
-        return response()->json([
-            'result' => 0,
-            'message' => 'Invoice Fix Master not found',
-        ]);
-    }
-
-}
-
-    /**
-     * Update the specified resource in storage.
-     */
-public function update(UpdateInvoicefixmasterRequest $request, Invoicefixmaster $invoicefixmaster)
-    {
-        try {
-            DB::beginTransaction();
-            $input = $request->validated();
-            $invoicefixmaster = Invoicefixmaster::find($request->edit_model_id);
-            $invoicefixmaster->update(Arr::only($input, $invoicefixmaster->getFillable()));
-            DB::commit();
-
-            return response()->json(['success' => 'Invoice Fix Master updated successfully!']);
-        } catch (\Exception $e) {
-            return $this->respondWithAjax($e, 'updating', 'Invoice Fix Master');
-        }
-    }
+   
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoicefixmaster $invoicefixmaster, Request $request)
+    public function destroy(Fixvehicleclients $fixvehicleclients, Request $request)
     {
-         $invoicefixmaster = Invoicefixmaster::find($request->model_id);
+         $fixvehicleclients = Fixvehicleclients::find($request->model_id);
 
         try {
             DB::beginTransaction();
-            $invoicefixmaster->delete();
+
+            // Step 1: Delete related fixvehicles
+            Fixvehicles::where('fixvehicleclients_id', $fixvehicleclients->id)->delete();
+
+            // Step 2: Delete parent record
+            $fixvehicleclients->delete();
+            
             DB::commit();
             return response()->json(['success' => 'Invoice Fix Master deleted successfully!']);
         } catch (\Exception $e) {

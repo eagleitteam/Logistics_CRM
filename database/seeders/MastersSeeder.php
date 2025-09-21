@@ -16,6 +16,7 @@ use App\Models\Clientmaster;
 use App\Models\Gstmaster;
 use App\Models\Departmentmaster;
 use App\Models\Branchmaster;
+use App\Models\SelfVehicle;
 
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -764,6 +765,109 @@ class MastersSeeder extends Seeder
                 ]
             );
         }
+
+
+
+        // Vehicle number Seeder
+        $self_vehicles = [
+            [
+                'id' => 1,
+                'vehicle_type_master_id' => 1,
+                'fule_type' => 1, // Diesel
+                'register_date' => '2025-09-16',
+                'type' => 1,
+                'vehicle_number' => 'MH 04 GS 0065',
+                'chassis_num' => '1256464',
+                'eng_num' => '8888888',
+                'model_num' => '9833144892',
+                'toll_stm' => 'TEST',
+                'remark' => 'First Vehicle',
+                'vendor_name' => '',
+                'status' => 1,
+            ],
+            [
+                'id' => 2,
+                'vehicle_type_master_id' => 2,
+                'fule_type' => 2, // CNG
+                'register_date' => '2025-09-16',
+                'type' => 1,
+                'vehicle_number' => 'GJ 05 CD 1122',
+                'chassis_num' => 'CH12345',
+                'eng_num' => 'EN67890',
+                'model_num' => 'MDL2025',
+                'toll_stm' => 'FASTag-1122',
+                'remark' => 'CNG Vehicle',
+                'vendor_name' => '',
+                'status' => 1,
+            ],
+            [
+                'id' => 3,
+                'vehicle_type_master_id' => 1,
+                'fule_type' => 3, // Electrical
+                'register_date' => '2025-09-16',
+                'type' => 1,
+                'vehicle_number' => 'MH 12 XY 4567',
+                'chassis_num' => 'CH56789',
+                'eng_num' => 'EN54321',
+                'model_num' => 'EV2025',
+                'toll_stm' => 'FASTag-4567',
+                'remark' => 'Electric Vehicle',
+                'vendor_name' => '',
+                'status' => 1,
+            ],
+            [
+                'id' => 4,
+                'vehicle_type_master_id' => 3,
+                'fule_type' => 1, // Diesel
+                'register_date' => '2025-09-16',
+                'type' => 1,
+                'vehicle_number' => 'MH 14 AB 9988',
+                'chassis_num' => 'CH99887',
+                'eng_num' => 'EN88776',
+                'model_num' => 'MDL9988',
+                'toll_stm' => 'FASTag-9988',
+                'remark' => 'Long Route Truck',
+                'vendor_name' => '',
+                'status' => 1,
+            ],
+            [
+                'id' => 5,
+                'vehicle_type_master_id' => 4,
+                'fule_type' => 2, // CNG
+                'register_date' => '2025-09-16',
+                'type' => 1,
+                'vehicle_number' => 'GJ 01 EF 3344',
+                'chassis_num' => 'CH33445',
+                'eng_num' => 'EN22334',
+                'model_num' => 'MDL3344',
+                'toll_stm' => 'FASTag-3344',
+                'remark' => 'Mini Truck',
+                'vendor_name' => '',
+                'status' => 1,
+            ],
+        ];
+
+        foreach ($self_vehicles as $self_vehicles) {
+            SelfVehicle::updateOrCreate(
+                ['id' => $self_vehicles['id']],
+                [
+                    'id' => $self_vehicles['id'],
+                    'vehicle_type_master_id' => $self_vehicles['vehicle_type_master_id'],
+                    'fule_type' => $self_vehicles['fule_type'],
+                    'register_date' => $self_vehicles['register_date'],
+                    'type' => $self_vehicles['type'],
+                    'vehicle_number' => $self_vehicles['vehicle_number'],
+                    'chassis_num' => $self_vehicles['chassis_num'],
+                    'eng_num' => $self_vehicles['eng_num'],
+                    'model_num' => $self_vehicles['model_num'],
+                    'toll_stm' => $self_vehicles['toll_stm'],
+                    'remark' => $self_vehicles['remark'],
+                    'vendor_name' => $self_vehicles['vendor_name'],
+                    'status' => $self_vehicles['status'],
+                ]
+            );
+        }
+
 
 
     }

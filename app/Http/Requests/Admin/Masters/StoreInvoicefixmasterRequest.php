@@ -25,6 +25,7 @@ class StoreInvoicefixmasterRequest extends FormRequest
             'clientmaster_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'contract_title' => 'required',
             'self_vehicle_id' => 'required',
             'vehical_type' => 'required',
             'fixed_km' => 'required',

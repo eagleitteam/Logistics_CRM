@@ -10,7 +10,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="mb-3 row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="filter_client" class="form-label">Select Client</label>
                                 <select id="filter_client" name="clientmaster_id" class="form-control" {{ $readonly ? 'disabled' : '' }}>
                                     <option value="">All Clients</option>
@@ -22,25 +22,38 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <label for="start_date" class="form-label">Start Date</label>
+                            <div class="col-md-3">
+                                <label for="start_date" class="form-label">Start Date<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" name="start_date" id="start_date" 
                                        value="{{ isset($fixvehicleclient) ? $fixvehicleclient->start_date : '' }}"
                                        {{ $readonly ? 'readonly' : '' }}>
                                 <span class="text-danger invalid start_date_err"></span>
                             </div>
-                            <div class="col-md-4">
-                                <label for="end_date" class="form-label">End Date</label>
+                            <div class="col-md-3">
+                                <label for="end_date" class="form-label">End Date<span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" name="end_date" id="end_date" 
                                        value="{{ isset($fixvehicleclient) ? $fixvehicleclient->end_date : '' }}"
                                        {{ $readonly ? 'readonly' : '' }}>
                                 <span class="text-danger invalid end_date_err"></span>
                             </div>
+                            <div class="col-md-3">
+                                <label for="contract_title" class="form-label">Contract Title<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="contract_title" id="contract_title" 
+                                       value="{{ isset($fixvehicleclient) ? $fixvehicleclient->contract_title : '' }}"
+                                       {{ $readonly ? 'readonly' : '' }}>
+                                <span class="text-danger invalid contract_title_err"></span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <h4 class="card-title">Invoice Add Vehicle Details</h4>
+                        @if($readonly)
+                            <h4 class="card-title">Vehicle's As Per Contract</h4>
+                        @endif
+
+                        @if(!$readonly)
+                            <h4 class="card-title">Add Vehicle As Per Contract</h4>
+                        @endif
 
                         @if(!$readonly)
                             <button type="button" class="btn btn-primary" id="addVehicleBtn">Add Vehicle</button>
@@ -173,8 +186,8 @@
         // Add remove button फक्त new rows मध्ये
         if (!newRow.querySelector('.removeRow')) {
             let removeCol = document.createElement('div');
-            removeCol.className = "col-md-1 d-flex align-items-end";
-            removeCol.innerHTML = `<button type="button" class="btn btn-danger btn-sm removeRow">X</button>`;
+            removeCol.className = "col-md-3 d-flex align-items-end pt-2";
+            removeCol.innerHTML = `<button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>`;
             newRow.appendChild(removeCol);
         }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Clientmaster;
-use App\Models\fixvehicleclients;
+use App\Models\Fixvehicleclients;
 use App\Models\SelfVehicle;
 
 return new class extends Migration
@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('fixvehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(fixvehicleclients::class)->nullable()->constrained();
+            $table->foreignIdFor(Fixvehicleclients::class)->nullable()->constrained();
             $table->foreignIdFor(Clientmaster::class)->nullable()->constrained();
             $table->foreignIdFor(SelfVehicle::class)->nullable()->constrained();
             $table->string('vehical_type');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fixvehicles');
+        Schema::dropIfExists('Fixvehicles');
     }
 };

@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>Sr No.</th>
                                     <th>Client Name</th>
+                                    <th>Title Name</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Vehicle Count</th>
@@ -36,6 +37,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $fixvehicleclients?->client?->client_name}}</td>
+                                        <td>{{ $fixvehicleclients->contract_title}}</td>
                                         <td>{{ $fixvehicleclients->start_date}}</td>
                                         <td>{{ $fixvehicleclients->end_date}}</td>
                                         <td>{{ $fixvehicleclients->fixvehicles_count}}</td>
@@ -43,7 +45,7 @@
                                         <td>
                                             @can('invoicefixmaster.edit')
                                                <a href="{{ route('invoicefixmaster.show', $fixvehicleclients->id) }}">
-                                                <button class="edit-element btn btn-secondary " title="View Invoice Fix Master" data-id="{{ $fixvehicleclients->id }}"><i data-feather="eye"></i></button>
+                                                <button class="edit-element btn btn-secondary px-2 py-1" title="View Invoice Fix Master" data-id="{{ $fixvehicleclients->id }}"><i data-feather="eye"></i></button>
                                                 </a>
                                             @endcan
                                             @can('invoicefixmaster.delete')
