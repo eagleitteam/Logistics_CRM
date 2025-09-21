@@ -356,15 +356,15 @@
                 <i data-feather="edit"></i>
             </button>
 
-            <button class="btn btn-danger rem-element px-2 py-1" 
-                    title="Delete trip" 
-                    data-id="{{ $movement->id }}">
-                <i data-feather="trash-2"></i>
-            </button>
-        </td>
-    </tr>
-    @endforeach
-</tbody>
+                <button class="btn btn-danger rem-element px-2 py-1" 
+                        title="Delete trip" 
+                        data-id="{{ $movement->id }}">
+                    <i data-feather="trash-2"></i>
+                </button>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 
                         </table>
                     </div>

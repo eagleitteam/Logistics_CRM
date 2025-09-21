@@ -19,7 +19,7 @@
         <button id="editBtnRoute" class="btn btn-primary" disabled>Edit</button>
     </div>
 </div>
-
+tri
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -242,11 +242,6 @@ $('#editForm').on('submit', function (e) {
 
     // ✅ Edit button click → open modal with first selected ID
     // ✅ Edit button click → open modal with first selected ID
-// ✅ Bulk Delete button click → delete all selected
-
-
-
-
-    
+// ✅ Bulk Delete button click → delete all selected   
 });
 </script>
