@@ -29,33 +29,95 @@ class InvoicemasterController extends Controller
 
         $invoicemasters = Invoicemaster::latest()->get();
 
-        return view('admin.masters.invoice-master')->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters]);
+        $tripMovements = TripMovement::latest()->get();
+
+        return view('admin.masters.invoice-master')
+        ->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 
+        'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters,
+        'tripMovements'=> $tripMovements]);
     }
 
-    public function getTrips(Request $request)
+    // public function filterTrips(Request $request)
+    // {
+    // $clientId = $request->client_id;
+    // $month = $request->month;
+
+    // $trips = TripMovement::where('client_id', $clientId)
+    //     ->whereMonth('trip_date', $month)
+    //     ->get();
+
+    // return response()->json($trips);
+    // } 
+
+//     public function getTrips(Request $request)
+//     {
+//     $clientId = $request->client_id;
+//     $month = $request->month; // e.g. 08
+
+//     $trips = TripMovement::query()
+//         ->when($clientId, function ($q) use ($clientId) {
+//             $q->where('client_id', $clientId);
+//         })
+//         ->when($month, function ($q) use ($month) {
+//             $q->whereMonth('trip_date', $month);
+//         })
+//         ->whereNull('invoice_status')
+//         ->get();
+
+//     $options = $trips->map(function ($trip) {
+//         return [
+//             'id' => $trip->id,
+//             'text' => $trip->origin . ' - ' . $trip->destination . ' (' . $trip->trip_date . ')',
+//         ];
+//     });
+
+//     return response()->json($options);
+// }
+
+public function getTrips(Request $request)
 {
+    $request->validate([
+        'client_id' => 'required|integer|exists:clientmasters,id',
+        'month' => 'required|integer|min:1|max:12'
+    ]);
+
     $clientId = $request->client_id;
-    $month = $request->month; // e.g. 08
+    $month = $request->month;
 
-    $trips = TripMovement::query()
-        ->when($clientId, function ($q) use ($clientId) {
-            $q->where('client_id', $clientId);
-        })
-        ->when($month, function ($q) use ($month) {
-            $q->whereMonth('trip_date', $month);
-        })
-        ->whereNull('invoice_status')
-        ->get();
+   $trips = \App\Models\TripMovement::query()
+    ->where('client_id', $clientId)
+    ->whereMonth('trip_date', $month)
+    ->whereNull('invoice_status')   // ✅ only NULL values allowed
+    ->get([
+        'id','trip_date','unique_no','vehicle_no','pod_no',
+        'courier','courier_tracking_number','courier_status','pod_status'
+    ]);
 
-    $options = $trips->map(function ($trip) {
+
+
+
+    $data = $trips->map(function($t,$i){
         return [
-            'id' => $trip->id,
-            'text' => $trip->origin . ' - ' . $trip->destination . ' (' . $trip->trip_date . ')',
+            'sr_no' => $i+1,
+            'id' => $t->id,
+            'unique_no' => $t->unique_no,
+            'vehicle_no' => $t->vehicle_no,
+            'pod_no' => $t->pod_no,
+            'courier' => $t->courier,
+            'courier_tracking_number' => $t->courier_tracking_number,
+            'courier_status' => $t->courier_status,
+            'pod_status' => $t->pod_status,
+            'trip_date' => $t->trip_date
         ];
     });
 
-    return response()->json($options);
+    return response()->json([
+        'status' => 'success',
+        'data' => $data
+    ]);
 }
+
+
 
 public function getFilteredTrips(Request $request)
 {

@@ -3,59 +3,117 @@
     <x-slot name="heading">Invoice Master</x-slot>
 
     <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="filter_client" class="form-label">Select Client</label>
-                <select id="filter_client" class="form-control">
-                    <option value="">All Clients</option>
-                    @foreach($clientmasters as $client)
-                        <option value="{{ $client->id }}">{{ $client->client_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="filter_month" class="form-label">Select Month</label>
-                <select id="filter_month" class="form-control">
-                    <option value="">All Months</option>
-                    @foreach($months as $month)
-                        <option value="{{ $month }}">{{ $month }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-8 text-end">
-                <button id="editBtn" class="btn btn-primary" disabled>ADD</button>
-                <button id="editBtnRoute" class="btn btn-primary" disabled>Edit</button>
-            </div>
+        <div class="col-md-4">
+            <label for="filter_client" class="form-label">Select Client</label>
+            <select id="filter_client" class="form-control">
+                <option value="">All Clients</option>
+                @foreach($clientmasters as $client)
+                    <option value="{{ $client->id }}">{{ $client->client_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="filter_month" class="form-label">Select Month</label>
+            <select id="filter_month" class="form-control">
+                <option value="">All Months</option>
+                @foreach (range(1, 12) as $m)
+                    @php
+                        $monthValue = str_pad($m, 2, '0', STR_PAD_LEFT);
+                        $monthName = date('F', mktime(0, 0, 0, $m, 1));
+                    @endphp
+                    <option value="{{ $monthValue }}">{{ $monthName }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- <div class="col-md-4">
+            <label for="filter_trips" class="form-label">Select Trips</label>
+            <select id="filter_trips" class="form-control" name="trips" multiple></select>
+        </div> -->
+        
+     <div class="col-md-4 text-end">
+        <button id="addBtn" class="btn btn-primary">ADD</button>
     </div>
 
-    <div class="col-md-8 text-end mb-3">
-        <button id="addBtn" class="btn btn-primary" disabled>ADD</button>
-    </div>
+           
 
-    <div class="row">
+            <div class="row">
         <div class="col-lg-12">
+            <h5>Please select Trip For add</h5>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Unique Number</th>
-                                    <th>Vehical Number</th>
-                                    <th>POD Number</th>
-                                    <th>Courier</th>
-                                    <th>Courier Tracking Number</th>
-                                    <th>Courier Status</th>
-                                    <th>POD Status</th>
-                                </tr>
+                          <table id="buttons-datatables" class="table table-bordered nowrap align-middle"
+                            style="width:100%">
+                           <thead>
+                            <tr>
+                           <th></th>
+                            <th>Sr No.</th>
+                            <th>Unique Number</th>
+                            <th>Vehical Number</th>
+                            <th>POD Number</th>
+                            <th>Courier</th>
+                            <th>Courier Tracking Number</th>
+                            <th>Courier Status</th>
+                            <th>POD Status</th>
+                            </tr>
                             </thead>
-                            <tbody></tbody>
+                             <!-- <tbody>
+                                @foreach ($tripMovements as  $trip)
+                                    <th>{{$loop->iteration}}</th>
+                                    <th>{{$trip->unique_no}}</th>
+                                    <th>{{$trip->vehicle_no}}</th>
+                                    <th>{{$trip->pod_no}}</th>
+                                    <th>{{$trip->courier}}</th>
+                                    <th>{{$trip->courier_tracking_number}}</th>
+                                    <th>{{$trip->courier_status}}</th>
+                                    <th>{{$trip->pod_status}}</th>
+                                @endforeach
+                             </tbody> -->
+                        </table>
+                    </div>
+                     <button id="AddToInvoice" class="btn btn-primary">ADD To Invoice</button>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+
+<!-- 
+    <div class="col-md-8 text-end mb-3">
+        <button id="addBtn" class="btn btn-primary" disabled>ADD</button>
+    </div> -->
+
+    <!-- <div class="row">
+        <div class="col-lg-12">
+            <h5>Selected Data</h5>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                          <table id="buttons-datatables" class="table table-bordered nowrap align-middle"
+                            style="width:100%">
+                           <thead>
+                            <tr>
+                            <th></th>
+                            <th>Sr No.</th>
+                            <th>Unique Number</th>
+                            <th>Vehical Number</th>
+                            <th>POD Number</th>
+                            <th>Courier</th>
+                            <th>Courier Tracking Number</th>
+                            <th>Courier Status</th>
+                            <th>POD Status</th>
+                            </tr>
+                            </thead>
+                             <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     {{-- Hidden Invoice Section (will show after ADD) --}}
     <div id="invoiceSection" style="display:none;">
@@ -203,6 +261,9 @@ GROUND FLOOR,1035,ANANDNAGAR,CHARNIPADA ROAD,RAHNAL,RAHNAL,BHIWANDI,THANE,MAHARA
                     res.forEach(function(trip, index) {
                         tbody += `
                             <tr>
+                                <td>
+                                <input type="checkbox" class="rowCheckbox" value="{{ $trip->id }}">
+                                </td>
                                 <td>${index+1}</td>
                                 <td>${trip.unique_no ?? ''}</td>
                                 <td>${trip.vehical_number?.vehicle_number ?? ''}</td>
@@ -272,3 +333,55 @@ GROUND FLOOR,1035,ANANDNAGAR,CHARNIPADA ROAD,RAHNAL,RAHNAL,BHIWANDI,THANE,MAHARA
 });
 
 </script>
+<script>
+const clientSelect = document.getElementById('client_id');
+const monthSelect = document.getElementById('month');
+const addBtn = document.getElementById('addBtn');
+const tbody = document.getElementById('tripsTableBody');
+
+// Enable ADD button only if both selected
+function toggleAddButton() {
+    addBtn.disabled = !(clientSelect.value && monthSelect.value);
+}
+clientSelect.addEventListener('change', toggleAddButton);
+monthSelect.addEventListener('change', toggleAddButton);
+
+// On ADD click
+addBtn.addEventListener('click', function () {
+    fetch("{{ route('admin.invoice.getTrips') }}", {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            client_id: clientSelect.value,
+            month: monthSelect.value
+        })
+    })
+    .then(res => res.json())
+    .then(res => {
+        tbody.innerHTML = '';
+        if (res.status === 'success' && res.data.length > 0) {
+            res.data.forEach(trip => {
+                const row = `
+                <tr>
+                    <td>${trip.sr_no}</td>
+                    <td>${trip.unique_no}</td>
+                    <td>${trip.vehicle_no ?? ''}</td>
+                    <td>${trip.pod_no ?? ''}</td>
+                    <td>${trip.courier ?? ''}</td>
+                    <td>${trip.courier_tracking_number ?? ''}</td>
+                    <td>${trip.courier_status ?? ''}</td>
+                    <td>${trip.pod_status ?? ''}</td>
+                </tr>`;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        } else {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center">No trips found</td></tr>`;
+        }
+    })
+    .catch(err => console.error(err));
+});
+</script>
+
