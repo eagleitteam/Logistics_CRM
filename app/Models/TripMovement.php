@@ -17,7 +17,7 @@ class TripMovement extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['trip_date','vendor_id','vehicle_type_category','vehicle_no','origin','destination','vehicle_type_id','client_id','driver_id','remark','rate','unique_no','pod_no', 'pod_document', 'pod_date', 'courier','courier_date', 'courier_tracking_number','pod_status','courier_status'];
+    protected $fillable = ['trip_date','vendor_id','vehicle_type_category','vehicle_no','origin','destination','vehicle_type_id','client_id','driver_id','remark','rate','unique_no','pod_no', 'pod_document', 'pod_date', 'courier','courier_date', 'courier_tracking_number','pod_status','courier_status','invoice_no','invoice_status'];
 
     public function invoices()
 {

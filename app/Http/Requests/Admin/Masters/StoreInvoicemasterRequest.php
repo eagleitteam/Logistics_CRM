@@ -14,21 +14,29 @@ class StoreInvoicemasterRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'inv_no' => 'required|string|max:255|unique:invoicemasters,inv_no',
-            'inv_date' => 'nullable|date',
-            'client_id' => 'required|exists:clientmasters,id',
-            'trip_ids' => 'required|array|min:1',
+            return [
+            // Required fields
+            'inv_no'        => 'required|string|max:255',
+            'inv_date'      => 'required|date',
+            'client_id'     => 'required|integer|exists:clientmasters,id',
+            'year_id'       => 'required|integer|exists:yearmasters,id',
+            'month'         => 'nullable|string|max:2',   // 01–12 format
+            'invoiceType'   => 'required|string|in:adhoc_invoice,regular_invoice', // example types
+            'TripsList'     => 'required|array|min:1',
+            'TripsList.*'   => 'required|string',
 
-            // optional fields
-            'po_number' => 'nullable|string|max:255',
-            'sac_no' => 'nullable|string|max:255',
-            'termdays' => 'nullable',
+            // Optional fields
+            'poNumber'           => 'nullable|string|max:255',
+            'sac_no'             => 'nullable|string|max:255',
+            'termdays'           => 'nullable|string|max:50',
             'transaction_nature' => 'nullable|string|max:255',
-            'supply_nature' => 'nullable|string|max:255',
-            'invoice_period' => 'nullable|string|max:255',
-            'billed_from' => 'nullable|string|max:255',
-            'billed_from_address' => 'nullable|string|max:255',
+            'supply_nature'      => 'nullable|string|max:255',
+            'invoicePeriod'      => 'nullable|string|max:255',
+            'billedTo'           => 'nullable|string|max:255',
+            'billedToAddress'    => 'nullable|string|max:500',
+            'gstno'              => 'nullable|string|max:50',
+            'billed_from'        => 'nullable|string|max:255',
+            'billed_from_address'=> 'nullable|string|max:500',
         ];
     }
 }

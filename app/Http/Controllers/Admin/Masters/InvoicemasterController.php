@@ -9,6 +9,7 @@ use App\Models\Yearmaster;
 use App\Models\Clientmaster;
 use App\Models\Gstmaster;
 use App\Models\Invoicemaster;
+use App\Models\Invoiceadhoctripdata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -29,95 +30,44 @@ class InvoicemasterController extends Controller
 
         $invoicemasters = Invoicemaster::latest()->get();
 
-        $tripMovements = TripMovement::latest()->get();
+        // 01 ते 12 format मध्ये months बनवतो
+        $months = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $months[] = str_pad($m, 2, '0', STR_PAD_LEFT);
+        }
 
-        return view('admin.masters.invoice-master')
-        ->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 
-        'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters,
-        'tripMovements'=> $tripMovements]);
+        return view('admin.masters.invoice-master')->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters, 'months' => $months]);
     }
 
-    // public function filterTrips(Request $request)
-    // {
-    // $clientId = $request->client_id;
-    // $month = $request->month;
-
-    // $trips = TripMovement::where('client_id', $clientId)
-    //     ->whereMonth('trip_date', $month)
-    //     ->get();
-
-    // return response()->json($trips);
-    // } 
-
-//     public function getTrips(Request $request)
-//     {
-//     $clientId = $request->client_id;
-//     $month = $request->month; // e.g. 08
-
-//     $trips = TripMovement::query()
-//         ->when($clientId, function ($q) use ($clientId) {
-//             $q->where('client_id', $clientId);
-//         })
-//         ->when($month, function ($q) use ($month) {
-//             $q->whereMonth('trip_date', $month);
-//         })
-//         ->whereNull('invoice_status')
-//         ->get();
-
-//     $options = $trips->map(function ($trip) {
-//         return [
-//             'id' => $trip->id,
-//             'text' => $trip->origin . ' - ' . $trip->destination . ' (' . $trip->trip_date . ')',
-//         ];
-//     });
-
-//     return response()->json($options);
-// }
-
-public function getTrips(Request $request)
+    public function getTrips(Request $request)
 {
-    $request->validate([
-        'client_id' => 'required|integer|exists:clientmasters,id',
-        'month' => 'required|integer|min:1|max:12'
-    ]);
-
     $clientId = $request->client_id;
-    $month = $request->month;
+    $month = $request->month; // e.g. 08
 
-   $trips = \App\Models\TripMovement::query()
-    ->where('client_id', $clientId)
-    ->whereMonth('trip_date', $month)
-    ->whereNull('invoice_status')   // ✅ only NULL values allowed
-    ->get([
-        'id','trip_date','unique_no','vehicle_no','pod_no',
-        'courier','courier_tracking_number','courier_status','pod_status'
-    ]);
+    $trips = TripMovement::query()
+        ->when($clientId, function ($q) use ($clientId) {
+            $q->where('client_id', $clientId);
+        })
+        ->when($month, function ($q) use ($month) {
+            $q->whereMonth('trip_date', $month);
+        })
+        ->whereNull('invoice_status')
+        ->get();
 
-
-
-
-    $data = $trips->map(function($t,$i){
+    $options = $trips->map(function ($trip) {
         return [
-            'sr_no' => $i+1,
-            'id' => $t->id,
-            'unique_no' => $t->unique_no,
-            'vehicle_no' => $t->vehicle_no,
-            'pod_no' => $t->pod_no,
-            'courier' => $t->courier,
-            'courier_tracking_number' => $t->courier_tracking_number,
-            'courier_status' => $t->courier_status,
-            'pod_status' => $t->pod_status,
-            'trip_date' => $t->trip_date
+            'id' => $trip->id,
+            'text' => '(' . $trip->trip_date . ') '. $trip->origin . ' - '. $trip->destination ,
+            'unique_no' => $trip->unique_no,
+            'vehical_number' => $trip->VehicalNumber ? $trip->VehicalNumber->vehicle_number : '',
+            'pod_number' => $trip->pod_number,
+            'pod_status' => $trip->pod_status,
+            'rate' => $trip->rate ?? 0,
         ];
     });
 
-    return response()->json([
-        'status' => 'success',
-        'data' => $data
-    ]);
+    return response()->json($options);
 }
-
-
 
 public function getFilteredTrips(Request $request)
 {
@@ -154,31 +104,76 @@ public function getFilteredTrips(Request $request)
 
     /**
      * Store a newly created resource in storage.
+     * 
      */
-     public function store(StoreInvoicemasterRequest $request)
-    {
-        DB::beginTransaction();
-        try {
-            $invoice = Invoicemaster::create($request->only([
-                'inv_no', 'inv_date', 'client_id', 'year_id', 'template_id',
-                'net_amount', 'gst_id', 'gst_amount', 'index_id', 'total_amount',
-                'bank_id', 'terms_conditions',
-                'po_number', 'sac_no', 'termdays', 'transaction_nature',
-                'supply_nature', 'invoice_period', 'billed_from', 'billed_from_address'
-            ]));
+            public function store(StoreInvoicemasterRequest $request)
+        {
+            try {
+                DB::beginTransaction();
 
-            // attach trips if you have pivot table
-            if ($request->has('trip_ids')) {
-                // Example: $invoice->trips()->sync($request->trip_ids);
+                $input = $request->validated();
+
+                // Step 1: Create Invoicemaster entry (array मधला TripsList वगळून)
+                $invoiceMaster = Invoicemaster::create([
+                    'inv_no'          => $input['inv_no'],
+                    'inv_date'        => $input['inv_date'],
+                    'client_id'       => $input['client_id'],
+                    'year_id'         => $input['year_id'],
+                    'month'           => $input['month'] ?? null,
+                    'termdays'        => $input['termdays'] ?? null,
+                    'invoicePeriod'   => $input['invoicePeriod'] ?? null,
+                    'billedTo'        => $input['billedTo'] ?? null,
+                    'billedToAddress' => $input['billedToAddress'] ?? null,
+                    'gstno'           => $input['gstno'] ?? null,
+                    'invoiceType'     => $input['invoiceType'] ?? null,
+                    'poNumber'        => $input['poNumber'] ?? null,
+                ]);
+
+                // Step 2 + Step 3: Loop through TripsList and handle both tables
+                    if (!empty($input['TripsList'])) {
+                        foreach ($input['TripsList'] as $tripData) {
+                            [$tripId, $uniqueNo] = explode('|', $tripData);
+
+                            // Insert in Invoiceadhoctripdata
+                            Invoiceadhoctripdata::create([
+                                'invoice_master_id' => $invoiceMaster->id,
+                                'clientmaster_id'   => $input['client_id'],
+                                'trip_movement_id'  => $tripId,
+                                'unique_no'         => $uniqueNo,
+                            ]);
+
+                            // Update TripMovement
+                            TripMovement::where('id', $tripId)->update([
+                                'invocie_no'     => $input['inv_no'],   // spelling fix
+                                'invoice_status' => 1,
+                            ]);
+                        }
+                    }
+
+                // dd([
+                //     'invoice_master_id' => $invoiceMaster->id,
+                //     'clientmaster_id'   => $invoiceMaster->client_id,
+                //     'trip_movement_id'  => $tripId,
+                //     'unique_no'         => $uniqueNo,
+                // ]);
+
+
+
+                DB::commit();
+
+                return response()->json(['success' => 'Invoice created successfully!']);
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return response()->json([
+                    'error' => 'Error creating Invoice: ' . $e->getMessage()
+                ], 500);
             }
-
-            DB::commit();
-            return response()->json(['success' => true, 'message' => 'Invoice saved successfully']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
-    }
+
+
+
+
 
     /**
      * Display the specified resource.
