@@ -302,7 +302,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('invoicemaster.store') }}',
+            url: '{{ route('invoiceadhoc.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,

@@ -78,6 +78,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('company-billing-master', App\Http\Controllers\Admin\Masters\CompanybillingmasterrController::class);
     Route::resource('numbering-prefix-master', App\Http\Controllers\Admin\Masters\NumberingprefixController::class);
     Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
+    Route::resource('invoiceadhoc', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
     Route::resource('invoicefixmaster', App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class);
 
     Route::get('/filter-trips', [App\Http\Controllers\Admin\Masters\InvoiceMasterController::class, 'filterTrips'])->name('filter.trips');

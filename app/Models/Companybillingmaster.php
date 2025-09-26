@@ -12,6 +12,11 @@ class Companybillingmaster extends BaseModel
 
     protected $fillable = ['company_name', 'company_type','pan_number','proprietor_name','gststatus','gstno','revscharge','address_line1','address_line2','city','state','pin_code','contact_number','email','website','Bank_id','gst_code_id','company_logo','company_seal','authorised_signature'];
 
+            public function bank()
+            {
+                return $this->belongsTo(\App\Models\Bankmaster::class, 'Bank_id');
+            }
+
 
     public static function booted()
     {

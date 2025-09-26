@@ -13,6 +13,10 @@ class Bankmaster extends Model
 
     protected $fillable = ['act_type','Bank_Name', 'BankBranch', 'BankAccountNo', 'BankIFSCCode','opening_amt','dr_cr','year_master','Remark','status'];
 
+        public function companyBillingMasters()
+    {
+        return $this->hasMany(\App\Models\Companybillingmaster::class, 'Bank_id');
+    }
 
     public static function booted()
     {

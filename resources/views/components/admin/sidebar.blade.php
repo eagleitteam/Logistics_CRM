@@ -160,7 +160,7 @@
                                 @endcan
                                 @can('invoicemaster.view')
                                     <li class="nav-item">
-                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
+                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master List</a>
                                     </li>
                                 @endcan
                                 @can('invoicefixmaster.view')

@@ -13,6 +13,10 @@ class Invoiceadhoctripdata extends BaseModel
 
     protected $fillable = ['invoice_master_id','clientmaster_id','trip_movement_id','unique_no'];
 
+    public function invoice()
+        {
+            return $this->belongsTo(Invoicemaster::class, 'invoice_master_id', 'id');
+        }
 
     public static function booted()
     {

@@ -203,7 +203,7 @@
             <td class="fw-bold text-left">Reguler/Adhoc:</td>
             <td>{{ $invoice->invoiceType ?? 'Adhoc' }}</td>
             <td class="fw-bold text-left">Reverse Charge Apply:</td>
-            <td>{{ $invoice->reverse_charge ?? 'Yes' }}</td>
+            <td>{{ $companybillingmasters->revscharge == 1 ? 'Yes' : 'No' }}</td>
         </tr>
     </table>
 
@@ -212,9 +212,9 @@
         <tr>
             <td width="50%">
                 <div class="fw-bold text-left">Billed From:</div>
-                <div class="fw-bold text-left">ADINATH LOGISTICS</div>
-                <div class="text-left">GROUND FLOOR,1035,ANANDNAGAR, BHIWANDI</div>
-                <div class="text-left">ANANDNAGAR, BHIWANDI-12345</div>
+                <div class="fw-bold text-left">{{ $companybillingmasters->company_name ?? '' }}</div>
+                <div class="text-left">{{ $companybillingmasters->address_line1 ?? '' }}</div>
+                <div class="text-left">{{ $companybillingmasters->address_line2 ?? '' }}</div>
             </td>
             <td width="50%">
                 <div class="fw-bold text-left">Billed To:</div>
@@ -229,15 +229,15 @@
     <table>
         <tr>
             <td class="fw-bold text-left">From GSTIN:</td>
-            <td>27CYFPK8134G1ZA</td>
+            <td>{{ $companybillingmasters->gstno ?? '' }}</td>
             <td class="fw-bold text-left">To GSTIN:</td>
-            <td>27AAGCK9452K1ZZ</td>
+            <td>{{ $invoice->client->gstno ?? '' }}</td>
         </tr>
         <tr>
             <td class="fw-bold text-left">From PAN:</td>
-            <td>CYFPK8134G</td>
+            <td>{{ $companybillingmasters->pan_number ?? '' }}</td>
             <td class="fw-bold text-left">To PAN:</td>
-            <td>CYFPK8544G</td>
+            <td>{{ $invoice->client->pan_number ?? '' }}</td>
         </tr>
     </table>
 
@@ -377,13 +377,7 @@
 <table style="border: none; width:30%; margin-left:auto; margin-right:0;">
     <tr >
         <!-- Signature -->
-        <td width="30%" valign="top" style="text-align:right; border: none;">
-            <img src="{{ public_path($finalSignature) }}" 
-                 alt="Authorized Signatory" 
-                 style="width:260px; height:auto;">
-            <div style="margin-top: 5px; font-size: 12px; text-align:center">Authorized Signatory</div>
-            <div style="font-size: 12px; text-align:center">Praful Chavan <br> (Proprietor)</div>
-        </td>
+        
     </tr>
 </table>
 
