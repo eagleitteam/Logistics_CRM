@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use App\Models\TripMovement;
 use App\Models\Companybillingmaster;
+use App\Models\Numberingprefix;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoicemasterController extends Controller
@@ -121,9 +122,32 @@ public function getFilteredTrips(Request $request)
 
                 $input = $request->validated();
 
+                //generate invoice number
+                // Get last invoice
+                $lastInvoiceData = Invoicemaster::latest()->first(); 
+
+                // Get numbering prefix config
+                $prefixData = Numberingprefix::where('type', 1)->latest()->first();
+
+                $prefix   = $prefixData->prefix ?? '';
+                $digits   = $prefixData->digits ?? 3;
+                $postfix  = $prefixData->postfix ?? '';
+
+                // If no previous invoice, start at 1
+                if (empty($lastInvoiceData)) {
+                    $nextNumber = 1;
+                } else {
+                    preg_match('/(\d+)/', $lastInvoiceData->invoice_number, $matches);
+                    $lastNumber = isset($matches[0]) ? (int)$matches[0] : 0;
+                    $nextNumber = $lastNumber + 1;
+                }
+                $numberPadded = str_pad($nextNumber, $digits, '0', STR_PAD_LEFT);               
+                $invoiceNumber = $prefix . '/' . $numberPadded . '/' . $postfix;
+
+            
                 // Step 1: Create Invoicemaster entry (array मधला TripsList वगळून)
                 $invoiceMaster = Invoicemaster::create([
-                    'inv_no'          => $input['inv_no'],
+                    'inv_no'          => $invoiceNumber,
                     'inv_date'        => $input['inv_date'],
                     'client_id'       => $input['client_id'],
                     'year_id'         => $input['year_id'],
@@ -152,7 +176,7 @@ public function getFilteredTrips(Request $request)
 
                             // Update TripMovement
                             TripMovement::where('id', $tripId)->update([
-                                'invocie_no'     => $input['inv_no'],   // spelling fix
+                                'invocie_no'     => $invoiceNumber,   // spelling fix
                                 'invoice_status' => 1,
                             ]);
                         }

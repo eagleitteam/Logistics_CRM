@@ -107,7 +107,7 @@
                 <div class="row g-2 mb-3 align-items-center">
                     <div class="col-4 fw-bold">Tax Invoice No:</div>
                     <div class="col-8">
-                        <input type="text" class="form-control form-control-sm" name="inv_no" id="invoiceNo" value="AL/NGB/ADH/036">
+                        <input type="text" class="form-control form-control-sm" name="inv_no" id="invoiceNo">
                     </div>
                 </div>
 

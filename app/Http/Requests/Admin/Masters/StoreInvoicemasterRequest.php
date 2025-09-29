@@ -16,7 +16,7 @@ class StoreInvoicemasterRequest extends FormRequest
     {
             return [
             // Required fields
-            'inv_no'        => 'required|string|max:255',
+            // 'inv_no'        => 'required|string|max:255',
             'inv_date'      => 'required|date',
             'client_id'     => 'required|integer|exists:clientmasters,id',
             'year_id'       => 'required|integer|exists:yearmasters,id',
