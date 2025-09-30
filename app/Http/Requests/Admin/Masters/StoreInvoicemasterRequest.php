@@ -19,7 +19,6 @@ class StoreInvoicemasterRequest extends FormRequest
             // 'inv_no'        => 'required|string|max:255',
             'inv_date'      => 'required|date',
             'client_id'     => 'required|integer|exists:clientmasters,id',
-            'year_id'       => 'required|integer|exists:yearmasters,id',
             'month'         => 'nullable|string|max:2',   // 01–12 format
             'invoiceType'   => 'required|string|in:adhoc_invoice,regular_invoice', // example types
             'TripsList'     => 'required|array|min:1',

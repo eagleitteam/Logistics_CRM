@@ -14,6 +14,7 @@
                                     <a href="{{ route('invoicemaster.create') }}" class="btn btn-primary">
                                         Add <i class="fa fa-plus"></i>
                                     </a>
+
                                 </div>
                             </div>
                         </div>

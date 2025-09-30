@@ -72,8 +72,20 @@
                                 <input type="date" class="form-control" name="end_date" id="end_date" >
                                 <span class="text-danger invalid end_date_err"></span>
                             </div>
-                            
-                        </div>
+                            <div class="col-md-4">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" name="status" id="status">                            
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="freeze_status" class="form-label">Freeze Status</label>
+                                <select class="form-select" name="freeze_status" id="freeze_status">
+                                    <option value="1">Freeze</option>
+                                    <option value="0">Unfreeze</option>
+                                </select>
+                            </div>
 
                     </div>
                     <div class="card-footer">
@@ -122,7 +134,7 @@
                                         <td>{{ $yearmasters->title }}</td>
                                         <td>{{ $yearmasters->start_date}}</td>
                                         <td>{{ $yearmasters->end_date}}</td>
-                                        <td> </td>
+                                        <td>{{ $yearmasters->status }}</td>
                                         <td>{{ $yearmasters->freeze_status }}</td>
                                         <td>
                                             @can('yearmasters.edit')

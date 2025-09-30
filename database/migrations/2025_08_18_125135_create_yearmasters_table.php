@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->date('start_date');
             $table->date('end_date');
+            $table->boolean('status')->default(0); // 1=active, 0=inactive
+            $table->boolean('freeze_status')->default(1); // 1=freeze, 0=unfreeze
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');

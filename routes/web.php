@@ -101,6 +101,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('trip-movement-pod', App\Http\Controllers\Admin\Masters\PODTripMomentController::class);
     Route::resource('trip-exp-detail', App\Http\Controllers\Admin\Masters\TripExpDetailController::class);
 
+   
+
 
 
     // Masters

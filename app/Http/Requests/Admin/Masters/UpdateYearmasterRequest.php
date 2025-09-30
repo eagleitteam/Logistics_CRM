@@ -25,6 +25,8 @@ class UpdateYearmasterRequest extends FormRequest
             'title' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'status' => 'required|in:0,1',
+            'freeze_status' => 'required|in:0,1',
         ];
     }
 }

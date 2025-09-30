@@ -10,7 +10,7 @@ class Yearmaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'start_date','end_date'];
+    protected $fillable = ['title', 'start_date','end_date','status','freeze_status'];
 
 
     public static function booted()

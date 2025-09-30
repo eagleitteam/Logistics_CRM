@@ -83,9 +83,9 @@
         @csrf
         
         <!-- Hidden Fields -->
-        <input type="hidden" name="client_id" id="hiddenClientId" value="">client_id
+        <input type="hidden" name="client_id" id="hiddenClientId" value="">
         <input type="hidden" name="month" id="hiddenMonth" value="">
-        <input type="hidden" name="year_id" id="hiddenYear" value="1">
+
         <input type="hidden" name="TripsList[]" id="hiddenTripsList" value="">
 
 
@@ -101,13 +101,6 @@
                             <option value="adhoc_invoice">adhoc invoice</option>
                             <option value="fix_vehicle_invoice">fix vehicle invoice</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="row g-2 mb-3 align-items-center">
-                    <div class="col-4 fw-bold">Tax Invoice No:</div>
-                    <div class="col-8">
-                        <input type="text" class="form-control form-control-sm" name="inv_no" id="invoiceNo">
                     </div>
                 </div>
 
@@ -308,7 +301,7 @@
             contentType: false,
             processData: false,
             success: function(data) {
-                $("#addSubmit").prop('disabled', false);
+                $("#submitInvoiceBtn").prop('disabled', false);
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
@@ -319,12 +312,12 @@
             },
             statusCode: {
                 422: function(responseObject, textStatus, jqXHR) {
-                    $("#addSubmit").prop('disabled', false);
+                    $("#submitInvoiceBtn").prop('disabled', false);
                     resetErrors();
                     printErrMsg(responseObject.responseJSON.errors);
                 },
                 500: function(responseObject, textStatus, errorThrown) {
-                    $("#addSubmit").prop('disabled', false);
+                    $("#submitInvoiceBtn").prop('disabled', false);
                     swal("Error occured!", "Something went wrong please try again", "error");
                 }
             }

@@ -145,18 +145,24 @@ class MastersSeeder extends Seeder
                 'title' => 'F.Y.2025-26',
                 'start_date' => '2025-04-01',
                 'end_date' => '2026-03-31',
+                'status' => 0,
+                'freeze_status' => 1,
             ],
             [
                 'id' => 2,
                 'title' => 'F.Y.2024-25',
                 'start_date' => '2024-04-01',
                 'end_date' => '2025-03-31',
+                'status' => 0,
+                'freeze_status' => 1,
             ],
             [
                 'id' => 3,
                 'title' => 'F.Y.2022-23',
                 'start_date' => '2022-04-01',
                 'end_date' => '2023-03-31',
+                'status' => 0,
+                'freeze_status' => 1,
             ],
         ];
 
@@ -168,6 +174,8 @@ class MastersSeeder extends Seeder
                 'title' => $year['title'],
                 'start_date' => $year['start_date'],
                 'end_date' => $year['end_date'],
+                'status' => $year['status'],
+                'freeze_status' => $year['freeze_status'],
             ]);
         }
 

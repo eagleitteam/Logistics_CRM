@@ -124,25 +124,63 @@ public function getFilteredTrips(Request $request)
 
                 //generate invoice number
                 // Get last invoice
-                $lastInvoiceData = Invoicemaster::latest()->first(); 
+                // $lastInvoiceData = Invoicemaster::latest()->first(); 
 
                 // Get numbering prefix config
-                $prefixData = Numberingprefix::where('type', 1)->latest()->first();
+                // $prefixData = Numberingprefix::where('type', 1)->latest()->first();
 
-                $prefix   = $prefixData->prefix ?? '';
-                $digits   = $prefixData->digits ?? 3;
-                $postfix  = $prefixData->postfix ?? '';
+                // $prefix   = $prefixData->prefix ?? '';
+                // $digits   = $prefixData->digits ?? 3;
+                // $postfix  = $prefixData->postfix ?? '';
 
                 // If no previous invoice, start at 1
+                // if (empty($lastInvoiceData)) {
+                //     $nextNumber = 1;
+                // } else {
+                //     preg_match('/(\d+)/', $lastInvoiceData->invoice_number, $matches);
+                //     $lastNumber = isset($matches[0]) ? (int)$matches[0] : 0;
+                //     $nextNumber = $lastNumber + 1;
+                // }
+                // $numberPadded = str_pad($nextNumber, $digits, '0', STR_PAD_LEFT);               
+                // $invoiceNumber = $prefix . '/' . $numberPadded . '/' . $postfix;
+
+                // New logic: Use current year and month in invoice number
+                // Get numbering prefix config
+                $prefixData = Numberingprefix::where('type', 1)
+                                            ->latest()
+                                            ->first();
+
+                $prefix   = $prefixData->prefix;       // 'INV'
+                $digits   = $prefixData->digits;       // 3
+                $postfix  = $prefixData->postfix;      // '2025-26'
+
+                // Get last invoice from Invoicemaster
+                $lastInvoiceData = Invoicemaster::latest('id')
+                                                ->first();
+
                 if (empty($lastInvoiceData)) {
+                    // पहिला invoice → numberingprefix मधून सुरू करा
                     $nextNumber = 1;
                 } else {
-                    preg_match('/(\d+)/', $lastInvoiceData->invoice_number, $matches);
-                    $lastNumber = isset($matches[0]) ? (int)$matches[0] : 0;
+                    // उदा: INV/010/2025-26
+                    $parts = explode('/', $lastInvoiceData->inv_no);
+
+                    // Middle number घ्या (010)
+                    $lastNumber = isset($parts[1]) ? (int)$parts[1] : 0;
+
+                    // +1 करा
                     $nextNumber = $lastNumber + 1;
                 }
-                $numberPadded = str_pad($nextNumber, $digits, '0', STR_PAD_LEFT);               
+
+                // Pad with digits (उदा: 010)
+                $numberPadded = str_pad($nextNumber, $digits, '0', STR_PAD_LEFT);
+
+                // Final invoice number तयार करा
                 $invoiceNumber = $prefix . '/' . $numberPadded . '/' . $postfix;
+
+
+                // active year
+                $year_id = Yearmaster::where('status', 1)->where('freeze_status', 0)->first();
 
             
                 // Step 1: Create Invoicemaster entry (array मधला TripsList वगळून)
@@ -150,7 +188,7 @@ public function getFilteredTrips(Request $request)
                     'inv_no'          => $invoiceNumber,
                     'inv_date'        => $input['inv_date'],
                     'client_id'       => $input['client_id'],
-                    'year_id'         => $input['year_id'],
+                    'year_id'         => $year_id->id ?? null,
                     'month'           => $input['month'] ?? null,
                     'termdays'        => $input['termdays'] ?? null,
                     'invoicePeriod'   => $input['invoicePeriod'] ?? null,
@@ -202,7 +240,6 @@ public function getFilteredTrips(Request $request)
                 ], 500);
             }
         }
-
 
 
 
