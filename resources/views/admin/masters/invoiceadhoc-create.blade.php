@@ -85,9 +85,86 @@
         <!-- Hidden Fields -->
         <input type="hidden" name="client_id" id="hiddenClientId" value="">
         <input type="hidden" name="month" id="hiddenMonth" value="">
-
         <input type="hidden" name="TripsList[]" id="hiddenTripsList" value="">
 
+        <!-- GST Section -->
+            <div class="row mb-3 border-bottom pb-3">
+                <div class="col-12">
+                    <label class="fw-bold mb-2">GST Details:</label>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered text-center mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>IGST %</th>
+                                    <th>IGST Value</th>
+                                    <th>CGST %</th>
+                                    <th>CGST Value</th>
+                                    <th>SGST %</th>
+                                    <th>SGST Value</th>
+                                    <th>Total GST</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="igst_percent" id="igstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="igst_value" id="igstValue" readonly></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="cgst_percent" id="cgstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="cgst_value" id="cgstValue" readonly></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="sgst_percent" id="sgstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="sgst_value" id="sgstValue" readonly></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="total_gst" id="totalGst" readonly></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Charges Section -->
+<div class="row mb-3 border-bottom pb-3">
+    <div class="col-12">
+        <label class="fw-bold mb-2">Other Charges:</label>
+        <div id="otherChargesWrapper">
+            <!-- Existing row template -->
+            <div class="row g-2 mb-2 other-charge-row">
+                <div class="col-6">
+                    <input type="text" class="form-control form-control-sm" name="otherChargeName[]" placeholder="Description">
+                </div>
+                <div class="col-4">
+                    <input type="number" step="0.01" class="form-control form-control-sm otherChargeAmt" name="otherChargeAmt[]" placeholder="Amount">
+                </div>
+                <div class="col-2 text-center">
+                    <button type="button" class="btn btn-danger btn-sm removeOtherCharge">&times;</button>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="addOtherChargeBtn" class="btn btn-primary btn-sm mt-2">Add More</button>
+    </div>
+</div>
+
+<!-- Totals Section -->
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="row g-2 mb-2">
+            <div class="col-6 fw-bold">Trip Total Amount:</div>
+            <div class="col-6">
+                <input type="number" step="0.01" class="form-control form-control-sm" name="tripTotal" id="tripTotal" readonly>
+            </div>
+        </div>
+        <div class="row g-2 mb-2">
+            <div class="col-6 fw-bold">Other Charges Total:</div>
+            <div class="col-6">
+                <input type="number" step="0.01" class="form-control form-control-sm" name="otherTotal" id="otherTotal" readonly>
+            </div>
+        </div>
+        <div class="row g-2 mb-2 border-top pt-2">
+            <div class="col-6 fw-bold">Net Amount:</div>
+            <div class="col-6">
+                <input type="number" step="0.01" class="form-control form-control-sm" name="netAmount" id="netAmount" readonly>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Invoice Header Section -->
         <div class="row mb-3 border-bottom pb-3">
@@ -114,6 +191,18 @@
 
             <!-- Right Column -->
             <div class="col-md-6">
+                <div class="row g-2 mb-3 align-items-center">
+                    <div class="col-4 fw-bold">Select Invoice Template:</div>
+                    <div class="col-8">
+                        <select id="invoiceTemplate" name="invoiceTemplate" class="form-select form-select-sm">
+                            <option value="">Select Invoice template</option>
+                            <option value="1">Template(with Holding)</option>
+                            <option value="2">Template(without Holding)</option>
+                            <option value="3">Template(without Holding)</option>
+                            <option value="4">Template(without Holding)</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row g-2 mb-3 align-items-center">
                     <div class="col-4 fw-bold">Credit Terms:</div>
                     <div class="col-8">
@@ -282,6 +371,73 @@
         });
 </script>
 
+// Other Charges & Totals Calculation
+<script>
+    // Add more other charges
+document.getElementById('addOtherChargeBtn').addEventListener('click', function() {
+    let wrapper = document.getElementById('otherChargesWrapper');
+    let row = document.createElement('div');
+    row.classList.add('row', 'g-2', 'mb-2', 'other-charge-row');
+    row.innerHTML = `
+        <div class="col-6">
+            <input type="text" class="form-control form-control-sm" name="otherChargeName[]" placeholder="Description">
+        </div>
+        <div class="col-4">
+            <input type="number" step="0.01" class="form-control form-control-sm otherChargeAmt" name="otherChargeAmt[]" placeholder="Amount">
+        </div>
+        <div class="col-2 text-center">
+            <button type="button" class="btn btn-danger btn-sm removeOtherCharge">&times;</button>
+        </div>
+    `;
+    wrapper.appendChild(row);
+});
+
+// Remove row
+document.addEventListener('click', function(e) {
+    if(e.target && e.target.classList.contains('removeOtherCharge')){
+        e.target.closest('.other-charge-row').remove();
+        calculateTotals();
+    }
+});
+
+// Calculate totals dynamically
+document.addEventListener('input', function(e){
+    if(e.target.classList.contains('otherChargeAmt') || e.target.id === 'tripTotal'){
+        calculateTotals();
+    }
+});
+
+function calculateTotals(){
+    let tripTotal = parseFloat(document.getElementById('tripTotal').value) || 0;
+    let otherTotal = 0;
+    document.querySelectorAll('.otherChargeAmt').forEach(input => {
+        otherTotal += parseFloat(input.value) || 0;
+    });
+    document.getElementById('otherTotal').value = otherTotal.toFixed(2);
+    let netAmount = tripTotal + otherTotal;
+    document.getElementById('netAmount').value = netAmount.toFixed(2);
+
+    // Update GST calculation (optional)
+    updateGST(netAmount);
+}
+
+// Example GST calculation function
+function updateGST(netAmount){
+    let igstPercent = parseFloat(document.getElementById('igstPercent').value) || 0;
+    let cgstPercent = parseFloat(document.getElementById('cgstPercent').value) || 0;
+    let sgstPercent = parseFloat(document.getElementById('sgstPercent').value) || 0;
+
+    let igstValue = netAmount * igstPercent / 100;
+    let cgstValue = netAmount * cgstPercent / 100;
+    let sgstValue = netAmount * sgstPercent / 100;
+    let totalGST = igstValue + cgstValue + sgstValue;
+
+    document.getElementById('igstValue').value = igstValue.toFixed(2);
+    document.getElementById('cgstValue').value = cgstValue.toFixed(2);
+    document.getElementById('sgstValue').value = sgstValue.toFixed(2);
+    document.getElementById('totalGst').value = totalGST.toFixed(2);
+}
+</script>
 
 {{-- Add --}}
 <script>

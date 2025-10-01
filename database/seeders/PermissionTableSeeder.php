@@ -414,6 +414,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'invoicefixmaster.delete',
                 'group' => 'invoicefixmaster',
             ],
+            [
+                'id' => 81,
+                'name' => 'termsconditionmaster.view',
+                'group' => 'termsconditionmaster',
+            ],
+            [
+                'id' => 82,
+                'name' => 'termsconditionmaster.create',
+                'group' => 'termsconditionmaster',
+            ],
+            [
+                'id' => 83,
+                'name' => 'termsconditionmaster.edit',
+                'group' => 'termsconditionmaster',
+            ],
+            [
+                'id' => 84,
+                'name' => 'termsconditionmaster.delete',
+                'group' => 'termsconditionmaster',
+            ],
 
 
 

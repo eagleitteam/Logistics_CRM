@@ -168,6 +168,11 @@
                                         <a href="{{ route('invoicefixmaster.index') }}" class="nav-link {{ request()->routeIs('invoicefixmaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Fix Master</a>
                                     </li>
                                 @endcan
+                                @can('termsconditionmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('termsconditionmaster.index') }}" class="nav-link {{ request()->routeIs('termsconditionmaster.index') ? 'active' : '' }}" data-key="t-horizontal">Terms & Conditions Master</a>
+                                    </li>
+                                @endcan
 
                             </ul>
                         </div>

@@ -80,6 +80,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
     Route::resource('invoiceadhoc', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
     Route::resource('invoicefixmaster', App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class);
+    Route::resource('termsconditionmaster', App\Http\Controllers\Admin\Masters\TermsconditionmasterController::class);
 
     Route::get('/filter-trips', [App\Http\Controllers\Admin\Masters\InvoiceMasterController::class, 'filterTrips'])->name('filter.trips');
     Route::post('/admin/masters/invoice/get-trips', [\App\Http\Controllers\Admin\Masters\InvoicemasterController::class, 'getTrips'])
