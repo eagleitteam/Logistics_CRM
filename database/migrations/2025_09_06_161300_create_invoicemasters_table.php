@@ -18,13 +18,18 @@ return new class extends Migration
             $table->string('client_id')->nullable();
             $table->string('year_id')->nullable();
             $table->string('template_id')->nullable();
-            $table->decimal('net_amount', 15, 2)->nullable();
-            $table->string('gst_id')->nullable();
+            $table->decimal('net_total', 15, 2)->nullable();
+            $table->string('gstMaster_id')->nullable();
+            $table->string('igst_percent')->nullable();
+            $table->string('igst_amt')->nullable();
+            $table->string('cgst_percent')->nullable();
+            $table->string('cgst_amt')->nullable();
+            $table->string('sgst_percent')->nullable();
+            $table->string('sgst_amt')->nullable();
             $table->decimal('gst_amount', 15, 2)->nullable();
-            $table->string('index_id')->nullable();
             $table->decimal('total_amount', 15, 2)->nullable();
             $table->string('bank_id')->nullable();
-            $table->text('terms_conditions')->nullable();
+            $table->string('termsconditionmaster_id')->nullable();
             
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');

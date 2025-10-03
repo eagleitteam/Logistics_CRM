@@ -13,6 +13,11 @@ class Gstmaster extends BaseModel
 
     protected $fillable = ['code_type','gst_code','code_description','igst','cgst','sgst','status','remark'];
 
+        public function gstmaster()
+    {
+        return $this->belongsTo(Gstmaster::class, 'gstmaster_id', 'id');
+    }
+
     public static function booted()
     {
         static::created(function (self $user)

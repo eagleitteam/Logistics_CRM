@@ -106,11 +106,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="igst_percent" id="igstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="igst_percent" id="igstPercent" value="{{ $companybillingmasters[0]->gstmaster->igst ?? 0 }}" readonly></td>
                                     <td><input type="number" step="0.01" class="form-control form-control-sm" name="igst_value" id="igstValue" readonly></td>
-                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="cgst_percent" id="cgstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="cgst_percent" id="cgstPercent" value="{{ $companybillingmasters[0]->gstmaster->cgst ?? 0 }}" readonly></td>
                                     <td><input type="number" step="0.01" class="form-control form-control-sm" name="cgst_value" id="cgstValue" readonly></td>
-                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="sgst_percent" id="sgstPercent"></td>
+                                    <td><input type="number" step="0.01" class="form-control form-control-sm" name="sgst_percent" id="sgstPercent" value="{{ $companybillingmasters[0]->gstmaster->sgst ?? 0 }}" readonly></td>
                                     <td><input type="number" step="0.01" class="form-control form-control-sm" name="sgst_value" id="sgstValue" readonly></td>
                                     <td><input type="number" step="0.01" class="form-control form-control-sm" name="total_gst" id="totalGst" readonly></td>
                                 </tr>
@@ -134,7 +134,7 @@
                     <input type="number" step="0.01" class="form-control form-control-sm otherChargeAmt" name="otherChargeAmt[]" placeholder="Amount">
                 </div>
                 <div class="col-2 text-center">
-                    <button type="button" class="btn btn-danger btn-sm removeOtherCharge">&times;</button>
+                    <button type="button" class="btn btn-danger btn-sm removeOtherCharge">Remove</button>
                 </div>
             </div>
         </div>
@@ -161,6 +161,18 @@
             <div class="col-6 fw-bold">Net Amount:</div>
             <div class="col-6">
                 <input type="number" step="0.01" class="form-control form-control-sm" name="netAmount" id="netAmount" readonly>
+            </div>
+        </div>
+        <div class="row g-2 mb-2 border-top pt-2">
+            <div class="col-6 fw-bold">GST Amount:</div>
+            <div class="col-6">
+                <input type="number" step="0.01" class="form-control form-control-sm" name="totalGST" id="totalGST" readonly>
+            </div>
+        </div>
+        <div class="row g-2 mb-2 border-top pt-2">
+            <div class="col-6 fw-bold">Gross Amount:</div>
+            <div class="col-6">
+                <input type="number" step="0.01" class="form-control form-control-sm" name="grossTotal" id="grossTotal" readonly>
             </div>
         </div>
     </div>
@@ -232,11 +244,11 @@
         <div class="row mb-3 border-bottom pb-3">
             <div class="col-md-6">
                 <label for="billedTo" class="fw-bold mb-2">Billed To:</label>
-                <input type="text" class="form-control form-control-sm mb-3" id="billedTo" value="ADINATH LOGISTICS" name="billedTo">
+                <input type="text" class="form-control form-control-sm mb-3" id="billedTo"  name="billedTo" readonly>
 
-                <textarea class="form-control form-control-sm mb-3" id="billedToAddress" rows="2" name="billedToAddress">GROUND FLOOR,1035,ANANDNAGAR,CHARNIPADA ROAD,RAHNAL,RAHNAL,BHIWANDI,THANE,MAHARASHTRA 421302</textarea>
+                <textarea class="form-control form-control-sm mb-3" id="billedToAddress" rows="2" name="billedToAddress" readonly></textarea>
 
-                <input type="text" class="form-control form-control-sm mb-2" id="gstno" value="GST No:- 27AAEFA1234D1Z5" name="gstno">
+                <input type="text" class="form-control form-control-sm mb-2" id="gstno"  name="gstno" readonly>
             </div>
         </div>
 
@@ -263,13 +275,20 @@
             $('#selectedTotal').text(selectedTrips.reduce((sum, t) => sum + (t.rate || 0), 0));
         }
 
+        function updateTripTotal() {
+            let tripTotal = selectedTrips.reduce((sum, t) => sum + (t.rate || 0), 0);
+            document.getElementById('tripTotal').value = tripTotal.toFixed(2);
+            calculateTotals(); 
+        }
+
+
         function loadTrips() {
             let clientId = $('#filter_client').val();
             let month = $('#filter_month').val();
             if (!clientId || !month) return;
 
             $.get("{{ route('get.trips') }}", { client_id: clientId, month: month }, function (res) {
-                tripsData = res.map(trip => ({
+                tripsData = res.trips.map(trip => ({
                     ...trip,
                     rate: trip.rate || 0
                 }));
@@ -290,6 +309,19 @@
                 });
                 $('#tripsTableBody').html(rows);
                 updateCounts();
+
+                // Client Details Auto-fill
+                if(res.client){
+                    $('#billedTo').val(res.client.client_name ?? '');
+                    $('#billedToAddress').val(
+                        (res.client.billing_address ?? '') + 
+                        (res.client.city ? ', ' + res.client.city : '') + 
+                        (res.client.state ? ', ' + res.client.state : '') + 
+                        (res.client.pin_code ? ' - ' + res.client.pin_code : '')
+                    );
+                    $('#gstno').val("GST No:- " + (res.client.gst_no ?? 'N.A'));
+                }
+
             });
         }
 
@@ -334,11 +366,13 @@
 
             $('#proceedBtn').prop('disabled', selectedTrips.length === 0);
             updateCounts();
+            updateTripTotal();
         });
 
         $(document).on('click', '.removeTrip', function () {
             let id = $(this).data('id');
             $(`.tripCheckbox[data-id="${id}"]`).prop('checked', false).trigger('change');
+             updateTripTotal();
         });
 
             $('#proceedBtn').on('click', function () {
@@ -413,30 +447,95 @@ function calculateTotals(){
     document.querySelectorAll('.otherChargeAmt').forEach(input => {
         otherTotal += parseFloat(input.value) || 0;
     });
+
     document.getElementById('otherTotal').value = otherTotal.toFixed(2);
+
     let netAmount = tripTotal + otherTotal;
     document.getElementById('netAmount').value = netAmount.toFixed(2);
 
-    // Update GST calculation (optional)
+    // Update GST
     updateGST(netAmount);
 }
 
-// Example GST calculation function
-function updateGST(netAmount){
-    let igstPercent = parseFloat(document.getElementById('igstPercent').value) || 0;
-    let cgstPercent = parseFloat(document.getElementById('cgstPercent').value) || 0;
-    let sgstPercent = parseFloat(document.getElementById('sgstPercent').value) || 0;
 
-    let igstValue = netAmount * igstPercent / 100;
-    let cgstValue = netAmount * cgstPercent / 100;
-    let sgstValue = netAmount * sgstPercent / 100;
-    let totalGST = igstValue + cgstValue + sgstValue;
+    // Example GST calculation function
+    // function updateGST(netAmount){
+    //         let igstPercent = parseFloat(document.getElementById('igstPercent').value) || 0;
+    //         let cgstPercent = parseFloat(document.getElementById('cgstPercent').value) || 0;
+    //         let sgstPercent = parseFloat(document.getElementById('sgstPercent').value) || 0;
 
-    document.getElementById('igstValue').value = igstValue.toFixed(2);
-    document.getElementById('cgstValue').value = cgstValue.toFixed(2);
-    document.getElementById('sgstValue').value = sgstValue.toFixed(2);
-    document.getElementById('totalGst').value = totalGST.toFixed(2);
-}
+    //         let igstValue = netAmount * igstPercent / 100;
+    //         let cgstValue = netAmount * cgstPercent / 100;
+    //         let sgstValue = netAmount * sgstPercent / 100;
+    //         let totalGST = igstValue + cgstValue + sgstValue;
+
+    //         document.getElementById('igstValue').value = igstValue.toFixed(2);
+    //         document.getElementById('cgstValue').value = cgstValue.toFixed(2);
+    //         document.getElementById('sgstValue').value = sgstValue.toFixed(2);
+
+    //         // GST table field
+    //         document.getElementById('totalGst').value = totalGST.toFixed(2);
+    //         // Totals Section field
+    //         if(document.getElementById('totalGST')){
+    //             document.getElementById('totalGST').value = totalGST.toFixed(2);
+    //         }
+
+    //         // Gross Total = Net + GST
+    //         let grossTotal = netAmount + totalGST;
+    //         if(document.getElementById('grossTotal')){
+    //             document.getElementById('grossTotal').value = grossTotal.toFixed(2);
+    //         }
+    //     }
+
+    function updateGST(netAmount) {
+            let igstPercent = parseFloat(document.getElementById('igstPercent').value) || 0;
+            let cgstPercent = parseFloat(document.getElementById('cgstPercent').value) || 0;
+            let sgstPercent = parseFloat(document.getElementById('sgstPercent').value) || 0;
+
+            // Laravel blade madhe company ani client state code pass kara
+            let companyState = "{{ $companybillingmasters[0]->state ?? '' }}";
+            let clientState = "{{ $clientmasters[0]->state ?? '' }}";
+
+            console.log("Company State:", companyState);
+            console.log("Client State:", clientState);
+
+            let igstValue = 0, cgstValue = 0, sgstValue = 0, totalGST = 0;
+
+            if (companyState && clientState) {
+                if (companyState === clientState) {
+                    // Same state → CGST + SGST
+                    cgstValue = netAmount * cgstPercent / 100;
+                    sgstValue = netAmount * sgstPercent / 100;
+                    igstValue = 0;
+                } else {
+                    // Different state → IGST
+                    igstValue = netAmount * igstPercent / 100;
+                    cgstValue = 0;
+                    sgstValue = 0;
+                }
+            }
+
+            totalGST = igstValue + cgstValue + sgstValue;
+
+            // Update GST values in table
+            document.getElementById('igstValue').value = igstValue.toFixed(2);
+            document.getElementById('cgstValue').value = cgstValue.toFixed(2);
+            document.getElementById('sgstValue').value = sgstValue.toFixed(2);
+
+            document.getElementById('totalGst').value = totalGST.toFixed(2);
+            if (document.getElementById('totalGST')) {
+                document.getElementById('totalGST').value = totalGST.toFixed(2);
+            }
+
+            // Gross Total = Net + GST
+            let grossTotal = netAmount + totalGST;
+            if (document.getElementById('grossTotal')) {
+                document.getElementById('grossTotal').value = grossTotal.toFixed(2);
+            }
+        }
+
+
+
 </script>
 
 {{-- Add --}}

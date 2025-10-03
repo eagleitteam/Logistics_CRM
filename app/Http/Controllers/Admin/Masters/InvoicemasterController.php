@@ -34,60 +34,67 @@ class InvoicemasterController extends Controller
         return view('admin.masters.invoicemaster')->with(['invoicemasters' => $invoicemasters]);
     }
 
-    public function getTrips(Request $request)
-{
-    $clientId = $request->client_id;
-    $month = $request->month; // e.g. 08
+        public function getTrips(Request $request)
+    {
+        $clientId = $request->client_id;
+        $month = $request->month; // e.g. 08
 
-    $trips = TripMovement::query()
-        ->when($clientId, function ($q) use ($clientId) {
-            $q->where('client_id', $clientId);
-        })
-        ->when($month, function ($q) use ($month) {
-            $q->whereMonth('trip_date', $month);
-        })
-        ->whereNull('invoice_status')
-        ->get();
+        $trips = TripMovement::query()
+            ->when($clientId, function ($q) use ($clientId) {
+                $q->where('client_id', $clientId);
+            })
+            ->when($month, function ($q) use ($month) {
+                $q->whereMonth('trip_date', $month);
+            })
+            ->whereNull('invoice_status')
+            ->get();
 
-    $options = $trips->map(function ($trip) {
-        return [
-            'id' => $trip->id,
-            'text' => '(' . $trip->trip_date . ') '. $trip->origin . ' - '. $trip->destination ,
-            'unique_no' => $trip->unique_no,
-            'vehical_number' => $trip->VehicalNumber ? $trip->VehicalNumber->vehicle_number : '',
-            'pod_number' => $trip->pod_number,
-            'pod_status' => $trip->pod_status,
-            'rate' => $trip->rate ?? 0,
-        ];
-    });
+        $options = $trips->map(function ($trip) {
+            return [
+                'id' => $trip->id,
+                'text' => '(' . $trip->trip_date . ') '. $trip->origin . ' - '. $trip->destination ,
+                'unique_no' => $trip->unique_no,
+                'vehical_number' => $trip->VehicalNumber ? $trip->VehicalNumber->vehicle_number : '',
+                'pod_number' => $trip->pod_number,
+                'pod_status' => $trip->pod_status,
+                'rate' => $trip->rate ?? 0,
+            ];
+        });
 
-    return response()->json($options);
-}
+        // Client info fetch
+        $clientData = $clientId ? Clientmaster::find($clientId) : null;
 
-public function getFilteredTrips(Request $request)
-{
-    $clientId = $request->client_id;
-    $month = $request->month; // 01, 02, ...
-    $tripIds = $request->trips ?? [];
-
-    $query = TripMovement::query();
-
-    if ($clientId) {
-        $query->where('client_id', $clientId);
+        // return response()->json($options);
+        return response()->json([
+            'trips' => $options,
+            'client' => $clientData
+        ]);
     }
 
-    if ($month) {
-        $query->whereMonth('trip_date', $month);
+    public function getFilteredTrips(Request $request)
+    {
+        $clientId = $request->client_id;
+        $month = $request->month; // 01, 02, ...
+        $tripIds = $request->trips ?? [];
+
+        $query = TripMovement::query();
+
+        if ($clientId) {
+            $query->where('client_id', $clientId);
+        }
+
+        if ($month) {
+            $query->whereMonth('trip_date', $month);
+        }
+
+        if (!empty($tripIds)) {
+            $query->whereIn('id', $tripIds);
+        }
+
+        $trips = $query->with('VehicalNumber')->get();
+
+        return response()->json($trips);
     }
-
-    if (!empty($tripIds)) {
-        $query->whereIn('id', $tripIds);
-    }
-
-    $trips = $query->with('VehicalNumber')->get();
-
-    return response()->json($trips);
-}
 
     /**
      * Show the form for creating a new resource.
@@ -102,13 +109,23 @@ public function getFilteredTrips(Request $request)
 
         $invoicemasters = Invoicemaster::latest()->get();
 
+        $companybillingmasters = Companybillingmaster::latest()->get();
+        
+
+
         // 01 ते 12 format मध्ये months बनवतो
         $months = [];
         for ($m = 1; $m <= 12; $m++) {
             $months[] = str_pad($m, 2, '0', STR_PAD_LEFT);
         }
 
-        return view('admin.masters.invoiceadhoc-create')->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters, 'months' => $months]);
+        // gstmaster सोबत companybillingmaster fetch करतो
+        $companybillingmasters = Companybillingmaster::with('gstmaster')->latest()->get();
+
+    
+        // dd($companybillingmasters);
+        // dd($gstmasters);
+        return view('admin.masters.invoiceadhoc-create')->with(['yearmasters' => $yearmasters, 'clientmasters' => $clientmasters, 'gstmasters' => $gstmasters, 'invoicemasters' => $invoicemasters, 'months' => $months, 'companybillingmasters' => $companybillingmasters]);
     }
 
     /**
@@ -251,7 +268,8 @@ public function getFilteredTrips(Request $request)
     {
             // $invoice = Invoicemaster::findOrFail($id);
             $invoice = Invoicemaster::with('trips')->find($id);
-            $companybillingmasters = Companybillingmaster::with('bank')->find($id);
+            // $companybillingmasters = Companybillingmaster::with('bank')->find($id);
+            $companybillingmasters = Companybillingmaster::with(['bank','gstmaster'])->find($id);
             $clientmasters = Clientmaster::latest()->get();
 
              // Debug:

@@ -17,6 +17,11 @@ class Companybillingmaster extends BaseModel
                 return $this->belongsTo(\App\Models\Bankmaster::class, 'Bank_id');
             }
 
+                        public function gstmaster()
+            {
+                return $this->belongsTo(Gstmaster::class, 'gst_code_id', 'id');
+            }
+
 
     public static function booted()
     {

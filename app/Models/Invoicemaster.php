@@ -11,7 +11,7 @@ class Invoicemaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['inv_no', 'inv_date','client_id','year_id','template_id','net_amount','gst_id','gst_amount','index_id','total_amount','bank_id','terms_conditions'];
+    protected $fillable = ['inv_no', 'inv_date','client_id','year_id','template_id','trip_total','net_total','gstMaster_id','igst_percent','igst_amt','cgst_percent','cgst_amt','sgst_percent','sgst_amt','gst_amount','total_amount','bank_id','termsconditionmaster_id',];
 
         // public function trips()
         //     {
