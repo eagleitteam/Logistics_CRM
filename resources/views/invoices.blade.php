@@ -88,7 +88,10 @@
 <table class="no-border">
     <tr>
         <td class="col-10" style="padding:2px; vertical-align:middle;">
-            <img src="admin/images/inv_image/login-logo.png" alt="Company Logo" style="height:60px;">
+            <!-- <img src="admin/images/inv_image/login-logo.png" alt="Company Logo" style="height:60px;"> -->    
+            <img src="{{ $logoSrc }}" alt="Company Logo" style="height:60px;">
+
+
         </td>
         <td class="col-90 text-center" style="padding:5px; vertical-align:middle;">
             <h3 style="font-size:14px; margin:0; letter-spacing:1px; color:#555;">TAX INVOICE</h3>
@@ -127,7 +130,7 @@
         <td class="fw-bold text-left">Regular/Adhoc:</td>
         <td>{{ $invoice->invoiceType ?? 'Adhoc' }}</td>
         <td class="fw-bold text-left">Reverse Charge Apply:</td>
-        <td>{{ $companybillingmasters->revscharge == 1 ? 'Yes' : 'No' }}</td>
+        <td>{{ $companybillingmasters?->revscharge == 1 ? 'Yes' : 'No' }}</td>
     </tr>
 </table>
 
@@ -278,6 +281,22 @@
         </td>
     </tr>
 </table>
+
+<table style="border: none; width:50%; margin-left:auto; margin-right:0; text-align:center;">
+    <tr>
+        <td style="border-right:none;">
+            <img src="{{ $sealSrc }}" alt="Signature" style="width:120px; height:60px;">
+            <br>
+            <span style="font-size:12px; font-weight:bold;">Authorized Signatory</span>
+        </td>
+        <td style="border-left:none;">
+            <img src="{{ $signatureSrc }}" alt="Signature" style="width:120px; height:60px;">
+            <br>
+            <span style="font-size:12px; font-weight:bold;">Authorized Signatory</span>
+        </td>
+    </tr>
+</table>
+
 
 <!-- Disclaimer -->
 <div style="font-size:10px; text-align:center; margin-top:20px;">

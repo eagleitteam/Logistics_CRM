@@ -279,79 +279,79 @@ class InvoicemasterController extends Controller
             // dd($invoice->toArray());
 
         // Paths
-        $sealPath = public_path('admin/images/inv_image/seal.png');
-        $signPath = public_path('admin/images/inv_image/signature.png');
-        $finalPath = public_path('admin/images/inv_image/final_signature.png');
+        // $sealPath = public_path('admin/images/inv_image/seal.png');
+        // $signPath = public_path('admin/images/inv_image/signature.png');
+        // $finalPath = public_path('admin/images/inv_image/final_signature.png');
 
-        if (!file_exists($finalPath)) {
-            $seal = imagecreatefrompng($sealPath);
-            $sign = imagecreatefrompng($signPath);
+        // if (!file_exists($finalPath)) {
+        //     $seal = imagecreatefrompng($sealPath);
+        //     $sign = imagecreatefrompng($signPath);
 
-            // Transparency enable
-            imagesavealpha($seal, true);
-            imagealphablending($seal, true);
+        //     // Transparency enable
+        //     imagesavealpha($seal, true);
+        //     imagealphablending($seal, true);
 
-            imagesavealpha($sign, true);
-            imagealphablending($sign, true);
+        //     imagesavealpha($sign, true);
+        //     imagealphablending($sign, true);
 
-            // sizes
-            $seal_w = imagesx($seal);
-            $seal_h = imagesy($seal);
-            $sign_w = imagesx($sign);
-            $sign_h = imagesy($sign);
+        //     // sizes
+        //     $seal_w = imagesx($seal);
+        //     $seal_h = imagesy($seal);
+        //     $sign_w = imagesx($sign);
+        //     $sign_h = imagesy($sign);
 
-            // ---- Resize Seal proportional to signature ----
-            $maxSealW = $sign_w * 0.8; // seal will cover 80% of signature width
-            $maxSealH = $sign_h * 0.8; // seal will cover 80% of signature height
+        //     // ---- Resize Seal proportional to signature ----
+        //     $maxSealW = $sign_w * 0.8; // seal will cover 80% of signature width
+        //     $maxSealH = $sign_h * 0.8; // seal will cover 80% of signature height
 
-            $ratio = min($maxSealW / $seal_w, $maxSealH / $seal_h);
-            $newSealW = intval($seal_w * $ratio);
-            $newSealH = intval($seal_h * $ratio);
+        //     $ratio = min($maxSealW / $seal_w, $maxSealH / $seal_h);
+        //     $newSealW = intval($seal_w * $ratio);
+        //     $newSealH = intval($seal_h * $ratio);
 
-            $resizedSeal = imagecreatetruecolor($newSealW, $newSealH);
-            imagesavealpha($resizedSeal, true);
-            imagealphablending($resizedSeal, false);
+        //     $resizedSeal = imagecreatetruecolor($newSealW, $newSealH);
+        //     imagesavealpha($resizedSeal, true);
+        //     imagealphablending($resizedSeal, false);
 
-            // transparent background
-            $transparent = imagecolorallocatealpha($resizedSeal, 255, 255, 255, 127);
-            imagefill($resizedSeal, 0, 0, $transparent);
+        //     // transparent background
+        //     $transparent = imagecolorallocatealpha($resizedSeal, 255, 255, 255, 127);
+        //     imagefill($resizedSeal, 0, 0, $transparent);
 
-            imagecopyresampled(
-                $resizedSeal,
-                $seal,
-                0, 0, 0, 0,
-                $newSealW, $newSealH,
-                $seal_w, $seal_h
-            );
+        //     imagecopyresampled(
+        //         $resizedSeal,
+        //         $seal,
+        //         0, 0, 0, 0,
+        //         $newSealW, $newSealH,
+        //         $seal_w, $seal_h
+        //     );
 
-            // ---- Create bigger transparent canvas ----
-            $finalW = max($sign_w, $newSealW);
-            $finalH = max($sign_h, $newSealH);
+        //     // ---- Create bigger transparent canvas ----
+        //     $finalW = max($sign_w, $newSealW);
+        //     $finalH = max($sign_h, $newSealH);
 
-            $canvas = imagecreatetruecolor($finalW, $finalH);
-            imagesavealpha($canvas, true);
-            imagealphablending($canvas, false);
-            $transparent = imagecolorallocatealpha($canvas, 255, 255, 255, 127);
-            imagefill($canvas, 0, 0, $transparent);
+        //     $canvas = imagecreatetruecolor($finalW, $finalH);
+        //     imagesavealpha($canvas, true);
+        //     imagealphablending($canvas, false);
+        //     $transparent = imagecolorallocatealpha($canvas, 255, 255, 255, 127);
+        //     imagefill($canvas, 0, 0, $transparent);
 
-            // ---- Place seal first (background) ----
-            $seal_x = ($finalW - $newSealW) / 2;
-            $seal_y = ($finalH - $newSealH) / 2;
-            imagecopy($canvas, $resizedSeal, $seal_x, $seal_y, 0, 0, $newSealW, $newSealH);
+        //     // ---- Place seal first (background) ----
+        //     $seal_x = ($finalW - $newSealW) / 2;
+        //     $seal_y = ($finalH - $newSealH) / 2;
+        //     imagecopy($canvas, $resizedSeal, $seal_x, $seal_y, 0, 0, $newSealW, $newSealH);
 
-            // ---- Place signature on top ----
-            $sign_x = ($finalW - $sign_w) / 2;
-            $sign_y = ($finalH - $sign_h) / 2;
-            imagecopy($canvas, $sign, $sign_x, $sign_y, 0, 0, $sign_w, $sign_h);
+        //     // ---- Place signature on top ----
+        //     $sign_x = ($finalW - $sign_w) / 2;
+        //     $sign_y = ($finalH - $sign_h) / 2;
+        //     imagecopy($canvas, $sign, $sign_x, $sign_y, 0, 0, $sign_w, $sign_h);
 
-            // save merged image (transparent PNG)
-            imagepng($canvas, $finalPath);
+        //     // save merged image (transparent PNG)
+        //     imagepng($canvas, $finalPath);
 
-            imagedestroy($seal);
-            imagedestroy($sign);
-            imagedestroy($resizedSeal);
-            imagedestroy($canvas);
-        }
+        //     imagedestroy($seal);
+        //     imagedestroy($sign);
+        //     imagedestroy($resizedSeal);
+        //     imagedestroy($canvas);
+        // }
 
         // आता PDF ला final_signature.png पाठव
         // $pdf = Pdf::loadView('test', [
@@ -361,9 +361,25 @@ class InvoicemasterController extends Controller
         // return $pdf->stream('test.pdf'); // opens in browser
 
         //  Load PDF view and pass invoice data
+
+        $logoPath = public_path($companybillingmasters->company_logo);
+        $logoData = base64_encode(file_get_contents($logoPath));
+        $logoSrc = 'data:image/png;base64,' . $logoData;
+
+        $signaturePath = public_path($companybillingmasters->authorised_signature);
+        $signatureData = base64_encode(file_get_contents($signaturePath));
+        $signatureSrc = 'data:image/png;base64,' . $signatureData;
+
+        $sealPath = public_path($companybillingmasters->company_seal);
+        $sealData = base64_encode(file_get_contents($sealPath));
+        $sealSrc = 'data:image/png;base64,' . $sealData;
+
             $pdf = Pdf::loadView('invoices', [
             'invoice' => $invoice,
             'companybillingmasters' => $companybillingmasters,
+            'sealSrc'               => $sealSrc,
+            'signatureSrc'               => $signatureSrc,
+             'logoSrc'               => $logoSrc
             // 'finalSignature' => 'admin/images/inv_image/final_signature.png'
             ]);
 
