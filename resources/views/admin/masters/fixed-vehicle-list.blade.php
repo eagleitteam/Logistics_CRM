@@ -43,6 +43,11 @@
                                         <td>{{ $fixvehicleclients->fixvehicles_count}}</td>
 
                                         <td>
+                                            @can('invoicefixmaster.view')
+                                            <a href="{{ route('invoicefixmaster.attendance.create', $fixvehicleclients->id) }}" class="btn btn-primary btn-sm">
+                                                Add Attendance
+                                            </a>
+                                            @endcan
                                             @can('invoicefixmaster.edit')
                                                <a href="{{ route('invoicefixmaster.show', $fixvehicleclients->id) }}">
                                                 <button class="edit-element btn btn-secondary px-2 py-1" title="View Invoice Fix Master" data-id="{{ $fixvehicleclients->id }}"><i data-feather="eye"></i></button>

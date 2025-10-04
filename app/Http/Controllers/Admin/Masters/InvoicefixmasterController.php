@@ -38,9 +38,44 @@ class InvoicefixmasterController extends Controller
         $VehicleTypeMaster = VehicleTypeMaster::where('deleted_at','=',null)->get();
 
         $clientmasters = Clientmaster::latest()->get();
+
         return view('admin.masters.fixed-vehicle-create')->with(['clientmasters' => $clientmasters, 'VehicleNo'=>$VehicleNo, 'VehicleTypeMaster' => $VehicleTypeMaster, 'readonly' => false]);
         
     }
+
+        public function attendanceCreate($id)
+    {
+        $fixvehicleclient = Fixvehicleclients::with('Fixvehicles')->findOrFail($id);
+        $drivers = \App\Models\Drivermaster::all();
+
+        return view('admin.masters.fixed-vehicle-attendance-create', [
+            'fixvehicleclient' => $fixvehicleclient,
+            'drivers' => $drivers
+        ]);
+    }
+
+    public function attendanceStore(Request $request, $id)
+    {
+        $request->validate([
+            'Fixvehicles_id' => 'required',
+            'drivermasters_id' => 'required',
+            'date' => 'required|date',
+            'attendance_status' => 'required|in:0,1',
+        ]);
+
+        \App\Models\Invoicefixvehicaleattendance::create([
+            'Fixvehicleclients_id' => $id,
+            'Fixvehicles_id'       => $request->Fixvehicles_id,
+            'drivermasters_id'     => $request->drivermasters_id,
+            'date'                 => $request->date,
+            'attendance_status'    => $request->attendance_status,
+            'note'                 => $request->note,
+            'created_by'           => auth()->id(),
+        ]);
+
+        return redirect()->route('invoicefixmaster.show',$id)->with('success','Attendance added successfully!');
+    }
+
 
     /**
      * Store a newly created resource in storage.
