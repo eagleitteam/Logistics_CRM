@@ -26,7 +26,10 @@ class CompanybillingmasterrController extends Controller
 
         $companybillingmasters = Companybillingmaster::latest()->get();
 
-        return view('admin.masters.company-billing-master')->with(['companybillingmasters' => $companybillingmasters, 'statemasters' => $statemasters, 'bankmasters' => $bankmasters, 'gstmasters' => $gstmasters]);
+        // industry standard म्हणजे controller मध्ये count काढून पाठव
+        $hasRecords = $companybillingmasters->isNotEmpty();
+
+        return view('admin.masters.company-billing-master')->with(['companybillingmasters' => $companybillingmasters, 'statemasters' => $statemasters, 'bankmasters' => $bankmasters, 'gstmasters' => $gstmasters, 'hasRecords' => $hasRecords]);
     }
 
     /**

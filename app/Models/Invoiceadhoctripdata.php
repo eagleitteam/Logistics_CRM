@@ -18,6 +18,11 @@ class Invoiceadhoctripdata extends BaseModel
             return $this->belongsTo(Invoicemaster::class, 'invoice_master_id', 'id');
         }
 
+            public function tripMovement()
+        {
+            return $this->belongsTo(TripMovement::class, 'trip_movement_id', 'id')->with('VehicalNumber');
+        }
+
     public static function booted()
     {
         static::created(function (self $user)

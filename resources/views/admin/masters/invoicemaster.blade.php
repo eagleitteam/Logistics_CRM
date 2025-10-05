@@ -3,6 +3,12 @@
     <x-slot name="heading">Invoice Master List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+    
     <div class="row">
         <div class="col-lg-12">
             <div class="card">

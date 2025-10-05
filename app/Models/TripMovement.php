@@ -19,11 +19,11 @@ class TripMovement extends BaseModel
 
     protected $fillable = ['trip_date','vendor_id','vehicle_type_category','vehicle_no','origin','destination','vehicle_type_id','client_id','driver_id','remark','rate','unique_no','pod_no', 'pod_document', 'pod_date', 'courier','courier_date', 'courier_tracking_number','pod_status','courier_status','invoice_no','invoice_status'];
 
-    public function invoices()
-{
-    return $this->belongsToMany(Invoicemaster::class, 'invoice_trip', 'trip_id', 'invoice_id')
-                ->withTimestamps();
-}
+                public function invoices()
+            {
+                return $this->belongsToMany(Invoicemaster::class, 'invoice_trip', 'trip_id', 'invoice_id')
+                            ->withTimestamps();
+            }
 
             public function vendor()
             {
@@ -51,6 +51,11 @@ class TripMovement extends BaseModel
             public function expDetails()
             {
                 return $this->hasMany(TripExpDetail::class, 'trip_id', 'id');
+            }
+
+            public function vehicleforinv()
+            {
+                return $this->belongsTo(SelfVehicle::class, 'vehicle_id', 'id');
             }
 
     public static function booted()

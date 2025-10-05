@@ -80,8 +80,6 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('invoicemaster', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
     Route::resource('invoiceadhoc', App\Http\Controllers\Admin\Masters\InvoicemasterController::class);
     Route::resource('invoicefixmaster', App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class);
-    Route::resource('invoicefixmaster.attendance', App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class)
-    ->only(['create','store']);
     Route::resource('termsconditionmaster', App\Http\Controllers\Admin\Masters\TermsconditionmasterController::class);
 
     Route::get('/filter-trips', [App\Http\Controllers\Admin\Masters\InvoiceMasterController::class, 'filterTrips'])->name('filter.trips');
@@ -103,6 +101,13 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::resource('trip-movement-pod', App\Http\Controllers\Admin\Masters\PODTripMomentController::class);
     Route::resource('trip-exp-detail', App\Http\Controllers\Admin\Masters\TripExpDetailController::class);
+
+    // fix vehicle attendance
+    Route::get('invoicefixmaster/{id}/attendance/create', [App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class, 'attendanceCreate'])
+    ->name('invoicefixmaster.attendance.create');
+
+    Route::post('invoicefixmaster/{id}/attendance', [App\Http\Controllers\Admin\Masters\InvoicefixmasterController::class, 'attendanceStore'])
+        ->name('invoicefixmaster.attendance.store');
 
    
 

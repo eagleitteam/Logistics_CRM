@@ -14,10 +14,11 @@ class SelfVehicle extends BaseModel
     protected $fillable = ['vehicle_type_master_id', 'fule_type','register_date',
     'vehicle_number','chassis_num','eng_num','model_num','toll_stm','remark','type','vendor_name','capacity','status'];
 
- public function vehicleType()
-    {
-        return $this->belongsTo(VehicleTypeMaster::class, 'vehicle_type_master_id', 'id');
-    }
+    public function vehicleType()
+        {
+            return $this->belongsTo(VehicleTypeMaster::class, 'vehicle_type_master_id', 'id');
+        }
+        
     public static function booted()
     {
         static::created(function (self $user)

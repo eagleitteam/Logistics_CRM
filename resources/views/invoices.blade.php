@@ -35,7 +35,7 @@
 
         th, td {
             border: 1px solid #ccc;
-            padding: 6px 8px;
+            padding: 3px 4px;
             vertical-align: middle;
             word-wrap: break-word;
         }
@@ -175,9 +175,9 @@
             <th class="col-5">Sr No</th>
             <th class="col-10">Date</th>
             <th class="col-10">Vehicle No.</th>
+            <th class="col-5">Types</th>
             <th class="col-15">Origin</th>
             <th class="col-15">Destination</th>
-            <th class="col-5">Types</th>
             <th class="col-10">Rate</th>
             <th class="col-10">Toll</th>
             <th class="col-10">Other Charges</th>
@@ -188,28 +188,19 @@
           @forelse($invoice->trips as $key => $trip)
         <tr>
             <td class="text-center">{{ $key + 1 }}</td>
-            <td class="text-center">{{ $trip->trip_date ?? '-' }}</td>
-            <td class="text-center">{{ $trip->vehicle_no ?? '-' }}</td>
-            <td class="text-center">{{ $trip->origin ?? '-' }}</td>
-            <td class="text-center">{{ $trip->destination ?? '-' }}</td>
-            <td class="text-center">{{ $trip->vehicle_type ?? '-' }}</td>
-            <td class="text-right">{{ number_format($trip->rate ?? 0, 2) }}</td>
-            <td class="text-right">{{ number_format($trip->toll ?? 0, 2) }}</td>
-            <td class="text-right">{{ number_format($trip->other_charges ?? 0, 2) }}</td>
-            <td class="text-right">{{ number_format($trip->amount ?? 0, 2) }}</td>
+            <td class="text-center">{{ $trip->tripMovement->trip_date ?? '-' }}</td>
+            <td class="text-center">{{ $trip->tripMovement->VehicalNumber->vehicle_number ?? '-' }}</td>
+            <td class="text-center">{{ $trip->tripMovement->VehicalNumber->vehicleType->type_name ?? '-' }}</td>
+            <td class="text-center">{{ $trip->tripMovement->origin ?? '-' }}</td>
+            <td class="text-center">{{ $trip->tripMovement->destination ?? '-' }}</td>
+            <td class="text-right">{{ number_format($trip->tripMovement->rate ?? 0, 2) }}</td>
+            <td class="text-right">{{ number_format($trip->tripMovement->toll ?? 0, 2) }}</td>
+            <td class="text-right">{{ number_format($trip->tripMovement->other_charges ?? 0, 2) }}</td>
+            <td class="text-right">{{ number_format($trip->tripMovement->amount ?? 0, 2) }}</td>
         </tr>
         @endforeach
     </tbody>
-    <!-- <tbody>
-        <tr>
-            <td>1</td><td>01-09-2025</td><td>MH04AB1234</td><td>Bhiwandi</td><td>Pune</td>
-            <td>Truck</td><td>5000</td><td>300</td><td>20</td><td>5300.00</td>
-        </tr>
-        <tr>
-            <td>2</td><td>03-09-2025</td><td>MH05CD5678</td><td>Bhiwandi</td><td>Nagpur</td>
-            <td>Truck</td><td>12000</td><td>800</td><td>0</td><td>13000.00</td>
-        </tr>
-    </tbody> -->
+    
 </table>
 
 <!-- Totals -->
@@ -285,9 +276,9 @@
 <table style="border: none; width:50%; margin-left:auto; margin-right:0; text-align:center;">
     <tr>
         <td style="border-right:none;">
-            <img src="{{ $sealSrc }}" alt="Signature" style="width:120px; height:60px;">
+            <img src="{{ $sealSrc }}" alt="Signature" style="width:80px; height:60px;">
             <br>
-            <span style="font-size:12px; font-weight:bold;">Authorized Signatory</span>
+            <span style="font-size:12px; font-weight:bold;">Company Seal</span>
         </td>
         <td style="border-left:none;">
             <img src="{{ $signatureSrc }}" alt="Signature" style="width:120px; height:60px;">

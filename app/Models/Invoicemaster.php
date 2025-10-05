@@ -13,17 +13,13 @@ class Invoicemaster extends BaseModel
 
     protected $fillable = ['inv_no', 'inv_date','client_id','year_id','template_id','trip_total','net_total','gstMaster_id','igst_percent','igst_amt','cgst_percent','cgst_amt','sgst_percent','sgst_amt','gst_amount','total_amount','bank_id','termsconditionmaster_id',];
 
-        // public function trips()
-        //     {
-        //         return $this->belongsToMany(\App\Models\TripMovement::class, 'invoice_trip', 'invoice_id', 'trip_id')
-        //                     ->withTimestamps();
-        //     }
-
-        // Relation to ad hoc trip data
+        
+        // App\Models\Invoicemaster.php
         public function trips()
-            {
-                return $this->hasMany(Invoiceadhoctripdata::class, 'invoice_master_id', 'id');
-            }
+        {
+            return $this->hasMany(Invoiceadhoctripdata::class, 'invoice_master_id', 'id')->with('tripMovement');
+        }
+
 
         public function client()
             {

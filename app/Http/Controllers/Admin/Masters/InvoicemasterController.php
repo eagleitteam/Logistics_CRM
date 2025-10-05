@@ -101,6 +101,20 @@ class InvoicemasterController extends Controller
      */
     public function create()
     {
+            // टेबल तपासणी
+        if (Companybillingmaster::count() === 0) {
+            return redirect()->back()->with('error', 'Please fill data in Company Billing Master first.');
+        }
+
+        // if (Yearmaster::count() === 0) {
+        //     return redirect()->back()->with('error', 'Please fill data in Year Master first.');
+        // }
+
+        // Yearmaster check (status=1 & freeze_status=0 )
+        if (!Yearmaster::where('status', 1)->where('freeze_status', 0)->exists()) {
+            return redirect()->back()->with('error', 'Please ensure Year Master has active and unfreezed for any one Year.');
+        }
+
         $yearmasters = Yearmaster::latest()->get();
 
         $clientmasters = Clientmaster::latest()->get();
@@ -267,13 +281,13 @@ class InvoicemasterController extends Controller
     public function show(string $id)
     {
             // $invoice = Invoicemaster::findOrFail($id);
-            $invoice = Invoicemaster::with('trips')->find($id);
+            $invoice = Invoicemaster::with(['trips.tripMovement.VehicalNumber.vehicleType'])->find($id);
             // $companybillingmasters = Companybillingmaster::with('bank')->find($id);
             $companybillingmasters = Companybillingmaster::with(['bank','gstmaster'])->find($id);
             $clientmasters = Clientmaster::latest()->get();
 
              // Debug:
-            // dd($invoice);
+            // dd($invoice);  
             // dd($companybillingmasters);
             // dd($clientmasters);
             // dd($invoice->toArray());
@@ -378,8 +392,8 @@ class InvoicemasterController extends Controller
             'invoice' => $invoice,
             'companybillingmasters' => $companybillingmasters,
             'sealSrc'               => $sealSrc,
-            'signatureSrc'               => $signatureSrc,
-             'logoSrc'               => $logoSrc
+            'signatureSrc'          => $signatureSrc,
+             'logoSrc'              => $logoSrc
             // 'finalSignature' => 'admin/images/inv_image/final_signature.png'
             ]);
 
@@ -448,4 +462,38 @@ public function update(UpdateInvoicemasterRequest $request, Invoicemaster $invoi
             return $this->respondWithAjax($e, 'deleting', 'Invoice master');
         }
     }
+
+            public function attendanceCreate($id)
+        {
+            $fixvehicleclient = Fixvehicleclients::with('Fixvehicles')->findOrFail($id);
+            $drivers = \App\Models\Drivermaster::all();
+
+            return view('admin.masters.fixed-vehicle-attendance-create', [
+                'fixvehicleclient' => $fixvehicleclient,
+                'drivers' => $drivers
+            ]);
+        }
+
+        public function attendanceStore(Request $request, $id)
+        {
+            $request->validate([
+                'Fixvehicles_id' => 'required',
+                'drivermasters_id' => 'required',
+                'date' => 'required|date',
+                'attendance_status' => 'required|in:0,1',
+            ]);
+
+            \App\Models\Invoicefixvehicaleattendance::create([
+                'Fixvehicleclients_id' => $id,
+                'Fixvehicles_id'       => $request->Fixvehicles_id,
+                'drivermasters_id'     => $request->drivermasters_id,
+                'date'                 => $request->date,
+                'attendance_status'    => $request->attendance_status,
+                'note'                 => $request->note,
+                'created_by'           => auth()->id(),
+            ]);
+
+            return redirect()->route('invoicefixmaster.show',$id)->with('success','Attendance added successfully!');
+        }
+
 }

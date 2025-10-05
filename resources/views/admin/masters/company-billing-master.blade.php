@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Financial Year Master</x-slot>
-    <x-slot name="heading">Financial Year Master</x-slot>
+    <x-slot name="title">Company Billing Master</x-slot>
+    <x-slot name="heading">Company Billing Master</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -415,6 +415,7 @@
         <div class="col-lg-12">
             <div class="card">
                 @can('companybillingmaster.create')
+                @if (!$hasRecords)
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
@@ -425,6 +426,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 @endcan
                 <div class="card-body">
                     <div class="table-responsive">
