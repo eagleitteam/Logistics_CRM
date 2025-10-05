@@ -12,18 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('app:store-employee-monthly-loans')->everyMinute();
-
-        $schedule->command('app:store-employee-monthly-lic')->everyMinute();
-
-        $schedule->command('app:freeze-employee-salary')->everyMinute();
-
-        $schedule->command('app:store-employee-monthly-festival-advance')->everyMinute();
-
-        $schedule->command('app:store-attendance')->everyMinute();
-
-        // $schedule->command('app:update-employee-in-users')->everyMinute();
+         $schedule->command('app:document-expire-mail')->dailyAt('08:00');
+        $schedule->command('app:document-expire-mail')->dailyAt('20:00');
 
     }
 
