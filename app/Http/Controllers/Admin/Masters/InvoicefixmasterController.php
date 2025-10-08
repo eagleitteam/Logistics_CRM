@@ -47,11 +47,19 @@ class InvoicefixmasterController extends Controller
     {
         $fixvehicleclient = Fixvehicleclients::with('Fixvehicles')->findOrFail($id);
         $drivers = \App\Models\Drivermaster::all();
+        $VehicleNo = SelfVehicle::where('deleted_at','=',null)->get();
+
+
+        // dd($fixvehicleclient);
+        //  dd($fixvehicleclient->toArray());
 
         return view('admin.masters.fixed-vehicle-attendance-create', [
             'fixvehicleclient' => $fixvehicleclient,
-            'drivers' => $drivers
+            'drivers' => $drivers,
+            'VehicleNo' => $VehicleNo,
         ]);
+
+        
     }
 
     public function attendanceStore(Request $request, $id)
