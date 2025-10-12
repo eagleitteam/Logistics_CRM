@@ -18,19 +18,18 @@
                     <div class="row mb-4">
                         <div class="col-md-8">
                             <label for="vehicleSelect" class="form-label">Select Vehicle</label>
-                            <select class="form-select" id="vehicleSelect">
-                                <option value="">-- Select Vehicle --</option>
-                                <option value="MH04KF7256">MH 04 KF 7256</option>
-                                <option value="MH04LY8342">MH 04 LY 8342</option>
-                                <option value="MH04AB1234">MH 04 AB 1234</option>
-                                <option value="MH04CD5678">MH 04 CD 5678</option>
+                             <select class="form-select" name="vehical_number" id="vehicleNo" required>
+                                <option value="">-- Select Vehicle Number --</option>
+                                @foreach ($SelfVehicle as $vehicle)
+                                    <option value="{{ $vehicle->id }}">{{ $vehicle->vehicle_number }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="reportPeriod" class="form-label">Report Period</label>
                             <select class="form-select" id="reportPeriod">
-                                <option value="7">Last 7 Days</option>
-                                <option value="30" selected>Last 30 Days</option>
+                                <option value="7"selected>Last 7 Days</option>
+                                <option value="30">Last 30 Days</option>
                                 <option value="90">Last 90 Days</option>
                                 <option value="365">Last 1 Year</option>
                                 <option value="custom">Custom Range</option>
@@ -300,18 +299,16 @@
                                 <label for="fuelDate" class="form-label">Date</label>
                                 <input type="date" class="form-control" name="date" id="fuelDate" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="vehicleNo" class="form-label">Vehicle Number</label>
-                                <select class="form-select" name="vehical_number" id="vehicleNo" required>
-                                    <option value="">Select Vehicle</option>
-                                    <option value="MH04KF7256">MH 04 KF 7256</option>
-                                    <option value="MH04LY8342">MH 04 LY 8342</option>
-                                    <option value="MH04AB1234">MH 04 AB 1234</option>
-                                    <option value="MH04CD5678">MH 04 CD 5678</option>
-                                </select>
-                            </div>
+                           <div class="col-md-6 mb-3">
+                            <label for="vehicleNo" class="form-label">Vehicle Number</label>
+                            <select class="form-select" name="vehical_number" id="vehicleNo" required>
+                                <option value="">-- Select Vehicle Number --</option>
+                                @foreach ($SelfVehicle as $vehicle)
+                                    <option value="{{ $vehicle->id }}">{{ $vehicle->vehicle_number }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        
+                        </div>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="currentKM" class="form-label">Current Odometer (KM)</label>
@@ -331,13 +328,14 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="driverName" class="form-label">Driver Name</label>
-                                <select class="form-select" name="driver_name" id="driverName" required>
-                                    <option value="">Select Driver</option>
-                                    <option value="Rajesh Kumar">Rajesh Kumar</option>
-                                    <option value="Amit Sharma">Amit Sharma</option>
-                                    <option value="Sanjay Patel">Sanjay Patel</option>
-                                    <option value="Vijay Singh">Vijay Singh</option>
-                                </select>
+                                 <select class="form-select" name="driver_name" id="driverName" required>
+                                <option value="">-- Select Driver --</option>
+                                @foreach ($drivermasters as $driver)
+                                    <option value="{{ $driver->id }}">
+                                        {{ $driver->first_name }} {{ $driver->last_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="paymentMethod" class="form-label">Payment Method</label>
@@ -389,7 +387,7 @@
 </x-admin.layout>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+<script>
         // Sample data for vehicles
         const vehicleData = {
             "MH04KF7256": {
@@ -722,4 +720,59 @@
             vehicleSelect.dispatchEvent(event);
         });
     </script>
+
+<script>
+    // Global error handling functions
+    function resetErrors() {
+        $('.invalid').text('');
+    }
+
+    function printErrMsg(msg) {
+        $.each(msg, function (key, value) {
+            $('.' + key + '_err').text(value[0]);
+        });
+    }
+
+    $("#addForm").submit(function (e) {
+        e.preventDefault();
+        $("#addSubmit").prop('disabled', true);
+
+        var formdata = new FormData(this);
+
+        $.ajax({
+            url: '{{ route('fuel-master.store') }}',
+            type: 'POST',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#addSubmit").prop('disabled', false);
+
+                if (!data.error2) {
+                    swal("Successful!", data.success, "success")
+                        .then(() => {
+                            window.location.href = '{{ route('fuel-master.index') }}';
+                        });
+                } else {
+                    swal("Error!", data.error2, "error");
+                }
+            },
+            statusCode: {
+                422: function (responseObject) {
+                    $("#addSubmit").prop('disabled', false);
+                    resetErrors();
+                    if (responseObject.responseJSON && responseObject.responseJSON.errors) {
+                        printErrMsg(responseObject.responseJSON.errors);
+                    }
+                },
+                500: function () {
+                    $("#addSubmit").prop('disabled', false);
+                    swal("Error occurred!", "Something went wrong, please try again", "error");
+                }
+            }
+        });
+    });
+</script>
+
+
 

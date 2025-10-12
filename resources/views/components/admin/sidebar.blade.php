@@ -163,7 +163,9 @@
                                         <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
                                     </li>
                                 @endcan
-
+                                      <li class="nav-item">
+                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
+                                    </li>
                             </ul>
                         </div>
                     </li>

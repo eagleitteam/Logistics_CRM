@@ -11,6 +11,8 @@ class Fuelmaster extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'fuelmasters';
+
     protected $fillable = ['date', 'vehical_number', 'current_km', 'fuel_qty', 'fuel_rate', 'driver_name', 'payment_method', 'distance', 'fuel_amt', 'avg', 'note'];
 
     public static function booted()

@@ -23,16 +23,17 @@ class StoreFuelmasterRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'vehical_number' => 'required|integer|exists:driver_masters,id',
+            'vehical_number' => 'required',
             'current_km' => 'required|integer',
             'fuel_qty' => 'required|numeric',
             'fuel_rate' => 'required|numeric',
-            'driver_id' => 'required|integer|exists:driver_masters,id',
+            // 'driver_id' => 'required',
             'payment_method' => 'required|string|max:255',
-            'distance' => 'required|integer',
-            'fuel_amt' => 'required|numeric',
-            'avg' => 'required|numeric',
+            'distance' => 'nullable',
+            'fuel_amt' => 'nullable',
+            // 'avg' => 'required|numeric',
             'note' => 'nullable|string',
+             'driver_name' => 'required|string|max:255'
         ];
     }
 }

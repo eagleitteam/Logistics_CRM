@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\Admin\Masters\StoreFuelmasterRequest;
 use App\Http\Requests\Admin\Masters\UpdateFuelmasterRequest;
 use App\Models\Fuelmaster;
+use App\Models\SelfVehicle;
 use App\Models\Drivermaster;
 use App\Models\Yearmaster;
 use Illuminate\Http\Request;
@@ -24,7 +25,10 @@ class FuelmasterController extends Controller
 
         $fuelmasters = Fuelmaster::latest()->get();
 
-        return view('admin.masters.fuel-master')->with(['fuelmasters' => $fuelmasters, 'drivermasters' => $drivermasters]);
+        $SelfVehicle = SelfVehicle::latest()->get();
+
+        return view('admin.masters.fuel-master')->with(['fuelmasters' => $fuelmasters, 'drivermasters' => $drivermasters,
+        'SelfVehicle'=> $SelfVehicle ]); 
     }
 
     /**
