@@ -12,8 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-         $schedule->command('app:document-expire-mail')->dailyAt('08:00');
+        $schedule->command('app:document-expire-mail')->dailyAt('08:00');
         $schedule->command('app:document-expire-mail')->dailyAt('20:00');
+        $schedule->command('app:trip-movements-mail')->dailyAt('08:00');
 
     }
 

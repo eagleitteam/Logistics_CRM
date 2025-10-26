@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AttendanceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,6 +110,10 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         ->name('invoicefixmaster.attendance.store');
 
    
+    Route::resource('add-attendance', App\Http\Controllers\Admin\AttendanceController::class);
+    Route::get('/attendance/search', [App\Http\Controllers\Admin\AttendanceController::class, 'search'])->name('attendance.search');
+    Route::post('/attendance/update-days', [AttendanceController::class, 'updateDays'])->name('attendance.updateDays');
+
 
 
 

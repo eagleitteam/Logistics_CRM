@@ -174,6 +174,10 @@
                                     </li>
                                 @endcan
 
+                                <li class="nav-item">
+                                        <a href="{{ route('add-attendance.index') }}" class="nav-link {{ request()->routeIs('add-attendance.index') ? 'active' : '' }}" data-key="t-horizontal">Add Attendance</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
