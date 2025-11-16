@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\PdfTestController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,13 +48,13 @@ Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
 
 
 // Authenticated users
-Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
+Route::middleware(['auth','PreventBackHistory', 'CheckYearAccess'])->group(function () {
 
     // Auth Routes
     Route::get('home', fn () => redirect()->route('dashboard'))->name('home');
     // Route::middleware('role:Employee,true')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-    Route::post('logout', [App\Http\Controllers\Admin\AuthController::class, 'Logout'])->name('logout');
+    Route::post('logout', [App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
     Route::get('change-theme-mode', [App\Http\Controllers\Admin\DashboardController::class, 'changeThemeMode'])->name('change-theme-mode');
     Route::get('show-change-password', [App\Http\Controllers\Admin\AuthController::class, 'showChangePassword'])->name('show-change-password');
     Route::post('change-password', [App\Http\Controllers\Admin\AuthController::class, 'changePassword'])->name('change-password');

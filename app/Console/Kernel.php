@@ -27,4 +27,11 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+    protected $routeMiddleware = [
+        'CheckYearAccess' => \app\Http\Middleware\CheckYearAccess::class,
+
+    ];
+
+
 }

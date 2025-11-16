@@ -96,6 +96,16 @@
                                                     <label class="form-check-label" for="auth-remember-check">Remember me</label>
                                                 </div>
 
+                                                <div class="col-md-4">
+                                                    <label for="yearmaster_id" class="form-label">Financial Year</label>
+                                                    <select class="form-select" name="yearmaster_id" id="yearmaster_id" required>
+                                                        <option value="">Select...</option>
+                                                        @foreach($yearmasters as $year)
+                                                            <option value="{{ $year->id }}">{{ $year->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                                 <div class="mt-4">
                                                     <button class="btn btn-primary w-100" type="submit" id="loginForm_submit">Sign In</button>
                                                 </div>

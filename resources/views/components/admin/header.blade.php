@@ -38,7 +38,13 @@
 
 
                 <div class="text-center">
-                    <h4 class="text-white text-right pt-3"><b>Financial Year :- {{ session('financial_year_title') }}</b></h4>
+                    <h4 class="text-white text-right pt-3">
+                        {{-- <b>Financial Year :- {{ session('active_year_id') }}</b> --}}
+                        <b>Financial Year :- {{ session('financial_year_title') }}</b>
+                        <b>Year Status :- {{ session('status') }}</b>
+                        <b>Freeze Status :- {{ session('freeze_status') }}</b>
+                        
+                    </h4>
                 </div>
 
                 @if(session('ward_name'))

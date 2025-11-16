@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Inspiring;
-use App\Models\FinancialYear;
-use App\Models\Ward;
+use App\Models\Yearmaster;
+
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -25,8 +25,11 @@ class AuthController extends Controller
             array_push($quotes, Inspiring::quote());
         }
 
+        $yearmasters = Yearmaster::latest()->get();
 
-        return view('admin.auth.login')->with(['quotes' => $quotes]);
+        // dd($yearmasters);
+
+        return view('admin.auth.login')->with(['quotes' => $quotes,'yearmasters' => $yearmasters,]);
     }
 
     public function login(Request $request)
@@ -36,10 +39,12 @@ class AuthController extends Controller
             [
                 'username'          => 'required',
                 'password'          => 'required',
+                'yearmaster_id'  => 'required|exists:yearmasters,id',
             ],
             [
                 'username.required'         => 'Please Enter Username',
                 'password.required'         => 'Please Enter Password',
+                'yearmaster_id.required'  => 'Please Select Financial Year',
             ]
         );
 
@@ -61,7 +66,17 @@ class AuthController extends Controller
                 if (!auth()->attempt(['mobile' => $username, 'password' => $password], $remember_me))
                     return response()->json(['error2' => 'Your entered credentials are invalid']);
 
+                // ✅ Store active year in session for middleware access
+                $activeYear = Yearmaster::find($request->yearmaster_id);
 
+                if ($activeYear) {
+                    session(['active_year_id' => $activeYear->id, 'financial_year_title' => $activeYear->title,'status' => $activeYear->status,'freeze_status' => $activeYear->freeze_status]);
+
+                    // Log::info('Active Yearmaster ID: ' . $activeYear->id, ['financial_year_title' => $activeYear->title, 'status' => $activeYear->status, 'freeze_status' => $activeYear->freeze_status]);
+
+                }else {
+                    session(['financial_year_title' => 'N/A']);
+                }
 
                 $userType = '';
                 if ($user->hasRole(['User']))
@@ -70,7 +85,9 @@ class AuthController extends Controller
                 if ($user->hasRole(['Employee']))
                     $userType = 'employee';
 
-                return response()->json(['success' => 'login successful', 'user_type' => $userType, 'user'=> $user]);
+                // Log::info('Active Yearmaster ID: ' . session('active_yearmaster_id'));
+
+                return response()->json(['success' => 'login successful', 'user_type' => $userType, 'user'=> $user, 'yearmaster_id' => $request->yearmaster_id]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::info("login error:" . $e);
@@ -81,9 +98,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         auth()->logout();
+
+        $request->session()->invalidate(); // destroy all session data
+        $request->session()->regenerateToken(); // regenerate CSRF token
 
         return redirect()->route('login');
     }
