@@ -4,19 +4,19 @@
         <!-- Dark Logo-->
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_sm.png') }}" alt="" height="50" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_lg.png') }}" alt="" height="50" />
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_sm.png') }}" alt="" height="50" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
+                <img src="{{ asset('admin/images/logo_lg.png') }}" alt="" height="50" />
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -77,15 +77,96 @@
                                     <a href="{{ route('vehicle-types.index') }}" class="nav-link {{ request()->routeIs('vehicle-types.index') ? 'active' : '' }}" data-key="t-horizontal">Vehicle Type</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('self-vehicle.index') }}" class="nav-link {{ request()->routeIs('self-vehicle.index') ? 'active' : '' }}" data-key="t-horizontal">Self Vehicle</a>
+                                    <a href="{{ route('self-vehicle.index') }}" class="nav-link {{ request()->routeIs('self-vehicle.index') ? 'active' : '' }}" data-key="t-horizontal">Add Vehicle</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('master-group.index') }}" class="nav-link {{ request()->routeIs('master-group.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group</a>
                                 </li>
-                           
-                        </ul>
-                    </div>
-                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('group-master-category.index') }}" class="nav-link {{ request()->routeIs('group-master-category.index') ? 'active' : '' }}" data-key="t-horizontal">Master Group Category</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('sub-group-master.index') }}" class="nav-link {{ request()->routeIs('sub-group-master.index') ? 'active' : '' }}" data-key="t-horizontal">Sub Group Master</a>
+                                </li>
+                                @can('yearmasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('year-master.index') }}" class="nav-link {{ request()->routeIs('year-master.index') ? 'active' : '' }}" data-key="t-horizontal">Year Master</a>
+                                    </li>
+                                @endcan
+                                @can('statemasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('state-master.index') }}" class="nav-link {{ request()->routeIs('state-master.index') ? 'active' : '' }}" data-key="t-horizontal">State Master</a>
+                                    </li>
+                                @endcan
+                                @can('vendormaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('vendor-master.index') }}" class="nav-link {{ request()->routeIs('vendor-master.index') ? 'active' : '' }}" data-key="t-horizontal">Vendor Master</a>
+                                    </li>
+                                @endcan
+                                @can('clientmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('client-master.index') }}" class="nav-link {{ request()->routeIs('client-master.index') ? 'active' : '' }}" data-key="t-horizontal">Client Master</a>
+                                    </li>
+                                @endcan
+                                @can('drivermaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('driver-master.index') }}" class="nav-link {{ request()->routeIs('driver-master.index') ? 'active' : '' }}" data-key="t-horizontal">Driver Master</a>
+                                    </li>
+                                @endcan
+                                @can('gstmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('gst-master.index') }}" class="nav-link {{ request()->routeIs('gst-master.index') ? 'active' : '' }}" data-key="t-horizontal">GST Master</a>
+                                    </li>
+                                @endcan
+                                @can('fuelmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('fuel-master.index') }}" class="nav-link {{ request()->routeIs('fuel-master.index') ? 'active' : '' }}" data-key="t-horizontal">Fuel Master</a>
+                                    </li>
+                                @endcan
+                                @can('tripmovement.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('trip-movement.index') }}" class="nav-link {{ request()->routeIs('trip-movement.index') ? 'active' : '' }}" data-key="t-horizontal">Trip Movement</a>
+                                    </li>
+                                @endcan
+                                @can('Podtripmovement.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('trip-movement-curier-list.index') }}" class="nav-link {{ request()->routeIs('trip-movement-curier-list.index') ? 'active' : '' }}" data-key="t-horizontal">Trip Movement Curier</a>
+                                    </li>
+                                @endcan
+                                @can('bankmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('bank-master.index') }}" class="nav-link {{ request()->routeIs('bank-master.index') ? 'active' : '' }}" data-key="t-horizontal">Bank Master</a>
+                                    </li>
+                                @endcan
+                                @can('departmentmasters.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('department-master.index') }}" class="nav-link {{ request()->routeIs('department-master.index') ? 'active' : '' }}" data-key="t-horizontal">Department Master</a>
+                                    </li>
+                                @endcan
+                                @can('branchmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('branch-master.index') }}" class="nav-link {{ request()->routeIs('branch-master.index') ? 'active' : '' }}" data-key="t-horizontal">Branch Master</a>
+                                    </li>
+                                @endcan
+                                @can('companybillingmaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('company-billing-master.index') }}" class="nav-link {{ request()->routeIs('company-billing-master.index') ? 'active' : '' }}" data-key="t-horizontal">Company Billing Data Master</a>
+                                    </li>
+                                @endcan
+                                @can('numberingprefix.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('numbering-prefix-master.index') }}" class="nav-link {{ request()->routeIs('numbering-prefix-master.index') ? 'active' : '' }}" data-key="t-horizontal">Numbering Prefix Master</a>
+                                    </li>
+                                @endcan
+                                @can('invoicemaster.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('invoicemaster.index') }}" class="nav-link {{ request()->routeIs('invoicemaster.index') ? 'active' : '' }}" data-key="t-horizontal">Invoice Master</a>
+                                    </li>
+                                @endcan
+
+                            </ul>
+                        </div>
+                    </li>
                 @endcanany
             </ul>
         </div>

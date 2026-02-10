@@ -26,7 +26,7 @@
                             </div>
 
                              <div class="col-md-4">
-                                <label class="col-form-label" for="vehicle_number">Vehicle Number <span
+                                <label class="form-label" for="vehicle_number">Vehicle Number <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control" id="vehicle_number" name="vehicle_number" type="text"
                                     placeholder="Enter Vehicle Number">
@@ -34,25 +34,22 @@
                             </div>
 
                             <!-- vendor details -->
-                             <div class="row vendor-fields d-none">
+                             <div class="row vendor-fields d-none md-4">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="vendor_name">Vendor Name <span
                                         class="text-danger">*</span></label>
-                                <input class="form-control" id="vendor_name" name="vendor_name" type="text"
-                                    placeholder="Enter Vehicle Number">
+                                <select id="vendor_name"  name="vendor_name" class="form-select" data-choices
+                                    data-choices-sorting="true">
+                                    <option>Select Vebdor</option>
+                                    @foreach ($Vendormaster as $vendor)
+                                        <option value="{{ $vendor->id }}">{{ $vendor->vendor_name }}</option>
+                                    @endforeach
+                                </select>
                                 <span class="text-danger invalid vendor_name_err"></span>
                             </div>
 
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="Capacity">Capacity <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" id="capacity" name="capacity" type="text"
-                                    placeholder="Enter Capacity">
-                                <span class="text-danger invalid capacity_err"></span>
-                            </div>
-
                                <div class="col-md-4">
-                                <label for="FormSelectBankType" class="form-label">Status<span
+                                <label for="FormSelectBankType" class="col-form-label">Status<span
                                         class="text-danger">*</span></label>
                                 <select id="status_type"  name="status" class="form-select" data-choices
                                     data-choices-sorting="true">
@@ -66,7 +63,7 @@
                         </div>
 
                             <!-- self details -->
-                             <div class="row self-fields d-none">
+                             <div class="row self-fields d-none md-4">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Select Vehical Type<span class="text-danger">*</span></label>
                                 <select class="form-control" id="vehicle_id" name="vehicle_type_master_id" >
@@ -79,7 +76,7 @@
                             </div>
 
                             <div class="col-md-4">
-                            <label for="fule_type" class="form-label">Fuel Type <span class="text-danger">*</span></label>
+                            <label for="fule_type" class="col-form-label">Fuel Type <span class="text-danger">*</span></label>
                             <select id="fule_type" name="fule_type" class="form-select" data-choices data-choices-sorting="true">
                             <option value="">Select from list</option>
                             <option value="1">Diesel</option>
@@ -93,7 +90,7 @@
 
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="register_date" class="form-label">Register Date</label>
+                                    <label for="register_date" class="col-form-label">Register Date</label>
                                     <input type="date" class="form-control" id="register_date" name="register_date">
                                     <span class="text-danger invalid register_date_err"></span>
                                 </div>
@@ -132,7 +129,7 @@
                                     placeholder="Enter Remarks">
                                 <span class="text-danger invalid remark_err"></span>
                             </div>
-                        </div>
+                        
 
                             <br><br><br>
                             {{-- Start Tab Menu --}}
@@ -229,18 +226,20 @@
                                     </div><!-- end card-body -->
                                 </div><!-- end card -->
                             </div>
+                            </div>
                         </div>
                         <!--end col-->
 
                         {{-- End Tab Menu --}}
                     </div>
 
-                </div>
+                
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success" id="addSubmit">Submit</button>
                     <button type="reset" class="btn btn-warning">Reset</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
 </div>
@@ -283,12 +282,19 @@
                                             $fuelType = 'CNG';
                                         elseif($selfVehical->fule_type == 3)
                                             $fuelType = 'Electric';
+
+                                        $typeselect = '';
+                                        if($selfVehical->type == 1)
+                                            $typeselect = 'Self';
+                                        elseif($selfVehical->type == 2)
+                                            $typeselect = 'Vendor';
+                                    
                                     @endphp
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <!-- <td>{{ $selfVehical?->vehicle_number }}</td> -->
                                     <td>{{ $selfVehical->vehicle_number }}</td>
-                                    <td>{{ $selfVehical->type }}</td>
+                                    <td>{{ $typeselect }}</td>
                                     <td>
                                          
                                         <button class="edit-element btn btn-secondary px-2 py-1" title="Edit Vehicle Entry"

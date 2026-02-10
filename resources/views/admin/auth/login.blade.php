@@ -29,7 +29,7 @@
                             <div class="row g-0">
 
                                 <div class="col-lg-6">
-                                    <img src="{{ asset('admin/images/Payroll.jpg') }}" alt="" width="100%" height="100%">
+                                    <img src="{{ asset('admin/images/auth-one-bg.png') }}" alt="" width="100%" height="100%">
                                     <div class="p-lg-5 p-4 auth-one-bg h-100 d-none">
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">

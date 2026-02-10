@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterGroup;
 
-class MasterGroupCategory extends Model
+class MasterGroupCategory extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
         protected $fillable = [
         'master_group_id',
         'group_name',
-        'dr_cr',
         'updated_by',
         'deleted_by',
         ];

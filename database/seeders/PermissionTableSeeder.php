@@ -93,8 +93,309 @@ class PermissionTableSeeder extends Seeder
                 'id' => 16,
                 'name' => 'wards.delete',
                 'group' => 'wards',
-            ]
-            
+            ],
+            [
+                'id' => 17,
+                'name' => 'yearmasters.view',
+                'group' => 'yearmasters',
+            ],
+            [
+                'id' => 18,
+                'name' => 'yearmasters.create',
+                'group' => 'yearmasters',
+            ],
+            [
+                'id' => 19,
+                'name' => 'yearmasters.edit',
+                'group' => 'yearmasters',
+            ],
+            [
+                'id' => 20,
+                'name' => 'yearmasters.delete',
+                'group' => 'yearmasters',
+            ],
+            [
+                'id' => 21,
+                'name' => 'statemasters.view',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 22,
+                'name' => 'statemasters.create',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 23,
+                'name' => 'statemasters.edit',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 24,
+                'name' => 'statemasters.delete',
+                'group' => 'statemasters',
+            ],
+            [
+                'id' => 25,
+                'name' => 'vendormaster.view',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 26,
+                'name' => 'vendormaster.create',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 27,
+                'name' => 'vendormaster.edit',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 28,
+                'name' => 'vendormaster.delete',
+                'group' => 'vendormaster',
+            ],
+            [
+                'id' => 29,
+                'name' => 'clientmaster.view',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 30,
+                'name' => 'clientmaster.create',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 31,
+                'name' => 'clientmaster.edit',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 32,
+                'name' => 'clientmaster.delete',
+                'group' => 'clientmaster',
+            ],
+            [
+                'id' => 33,
+                'name' => 'drivermaster.view',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 34,
+                'name' => 'drivermaster.create',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 35,
+                'name' => 'drivermaster.edit',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 36,
+                'name' => 'drivermaster.delete',
+                'group' => 'drivermaster',
+            ],
+            [
+                'id' => 37,
+                'name' => 'gstmaster.view',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 38,
+                'name' => 'gstmaster.create',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 39,
+                'name' => 'gstmaster.edit',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 40,
+                'name' => 'gstmaster.delete',
+                'group' => 'gstmaster',
+            ],
+            [
+                'id' => 41,
+                'name' => 'fuelmaster.view',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 42,
+                'name' => 'fuelmaster.create',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 43,
+                'name' => 'fuelmaster.edit',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 44,
+                'name' => 'fuelmaster.delete',
+                'group' => 'fuelmaster',
+            ],
+            [
+                'id' => 45,
+                'name' => 'bankmaster.view',
+                'group' => 'bankmaster',
+            ],
+            [
+                'id' => 46,
+                'name' => 'bankmaster.create',
+                'group' => 'bankmaster',
+            ],
+            [
+                'id' => 47,
+                'name' => 'bankmaster.edit',
+                'group' => 'bankmaster',
+            ],
+            [
+                'id' => 48,
+                'name' => 'bankmaster.delete',
+                'group' => 'bankmaster',
+            ],
+            [
+                'id' => 49,
+                'name' => 'departmentmasters.view',
+                'group' => 'departmentmasters',
+            ],
+            [
+                'id' => 50,
+                'name' => 'departmentmasters.create',
+                'group' => 'departmentmasters',
+            ],
+            [
+                'id' => 51,
+                'name' => 'departmentmasters.edit',
+                'group' => 'departmentmasters',
+            ],
+            [
+                'id' => 52,
+                'name' => 'departmentmasters.delete',
+                'group' => 'departmentmasters',
+            ],
+            [
+                'id' => 53,
+                'name' => 'branchmaster.view',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 54,
+                'name' => 'branchmaster.create',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 55,
+                'name' => 'branchmaster.edit',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 56,
+                'name' => 'branchmaster.delete',
+                'group' => 'branchmaster',
+            ],
+            [
+                'id' => 57,
+                'name' => 'tripmovement.create',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 58,
+                'name' => 'tripmovement.edit',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 59,
+                'name' => 'tripmovement.delete',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 60,
+                'name' => 'tripmovement.view',
+                'group' => 'tripmovement',
+            ],
+            [
+                'id' => 61,
+                'name' => 'Podtripmovement.view',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 62,
+                'name' => 'Podtripmovement.create',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 63,
+                'name' => 'Podtripmovement.edit',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 64,
+                'name' => 'Podtripmovement.delete',
+                'group' => 'Podtripmovement',
+            ],
+            [
+                'id' => 65,
+                'name' => 'companybillingmaster.view',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 66,
+                'name' => 'companybillingmaster.create',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 67,
+                'name' => 'companybillingmaster.edit',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 68,
+                'name' => 'companybillingmaster.delete',
+                'group' => 'companybillingmaster',
+            ],
+            [
+                'id' => 69,
+                'name' => 'numberingprefix.view',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 70,
+                'name' => 'numberingprefix.create',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 71,
+                'name' => 'numberingprefix.edit',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 72,
+                'name' => 'numberingprefix.delete',
+                'group' => 'numberingprefix',
+            ],
+            [
+                'id' => 73,
+                'name' => 'invoicemaster.view',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 74,
+                'name' => 'invoicemaster.create',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 75,
+                'name' => 'invoicemaster.edit',
+                'group' => 'invoicemaster',
+            ],
+            [
+                'id' => 76,
+                'name' => 'invoicemaster.delete',
+                'group' => 'invoicemaster',
+            ],
+
+
 
 
         ];

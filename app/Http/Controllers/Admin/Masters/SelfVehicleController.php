@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Masters\UpdateVehicleRequest;
 use App\Models\SelfVehicle;
 use App\Models\VehicleTypeMaster;
 use App\Models\SelfVehicleDOcument;
+use App\Models\Vendormaster;
 use App\Models\VehicleDocumentDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -23,9 +24,10 @@ class SelfVehicleController extends Controller
     {
         $SelfVehicle = SelfVehicle::latest()->get();
         $vehicalTypes = VehicleTypeMaster::where('deleted_at','=',null)->get();
+        $Vendormaster = Vendormaster::where('deleted_at','=',null)->get();
         $SelfVehicleDOcument = SelfVehicleDOcument::get();
 
-        return view('admin.masters.self-vehicle')->with(['SelfVehicle' => $SelfVehicle,'vehicalTypes' => $vehicalTypes, 'SelfVehicleDOcument' => $SelfVehicleDOcument]);
+        return view('admin.masters.self-vehicle')->with(['Vendormaster' => $Vendormaster, 'SelfVehicle' => $SelfVehicle,'vehicalTypes' => $vehicalTypes, 'SelfVehicleDOcument' => $SelfVehicleDOcument]);
     }
 
     /**

@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+
+class Departmentmaster extends BaseModel
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = ['department_code','department_name', 'head_of_department','branch_locations','Remark','status'];
+
+    public function Branchmaster()
+    {
+        return $this->belongsTo(Branchmaster::class, 'branch_locations', 'id');
+    }
+
+    public static function booted()
+    {
+        static::created(function (self $user)
+        {
+            if(Auth::check())
+            {
+                self::where('id', $user->id)->update([
+                    'created_by'=> Auth::user()->id,
+                ]);
+            }
+        });
+        static::updated(function (self $user)
+        {
+            if(Auth::check())
+            {
+                self::where('id', $user->id)->update([
+                    'updated_by'=> Auth::user()->id,
+                ]);
+            }
+        });
+        static::deleting(function (self $user)
+        {
+            if(Auth::check())
+            {
+                self::where('id', $user->id)->update([
+                    'deleted_by'=> Auth::user()->id,
+                ]);
+            }
+        });
+    }
+}

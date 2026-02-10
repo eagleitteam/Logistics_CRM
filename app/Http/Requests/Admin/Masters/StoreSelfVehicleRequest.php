@@ -36,7 +36,6 @@ class StoreSelfVehicleRequest extends FormRequest
         if ($this->input('type') == 2) {
             $rules = array_merge($rules, [
                 'vendor_name' => 'required|string|max:255',
-                'capacity'    => 'required|numeric',
                 'status'      => 'required|in:1,2,3',
             ]);
         }
@@ -72,7 +71,6 @@ class StoreSelfVehicleRequest extends FormRequest
 
             // Vendor errors
             'vendor_name.required' => 'Vendor name is required',
-            'capacity.required'    => 'Capacity is required',
             'status.required'      => 'Please select status',
 
             // Document errors (clean names)

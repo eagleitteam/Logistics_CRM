@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('vehicle_type_masters', function (Blueprint $table) {
             $table->id();
-             $table->text('type_name');
-             $table->text('model_no');
-             $table->date('date');
+            $table->text('type_name');
+            $table->text('model_no');
+            $table->date('date');
+
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
